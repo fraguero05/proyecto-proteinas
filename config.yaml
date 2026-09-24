@@ -1,0 +1,106 @@
+# Configuración única del pipeline.
+#
+# Nada de rutas ni IDs hardcodeados en el código: todo lo que cambie entre
+# corridas se declara acá. El archivo se valida con pydantic al arrancar
+# (src/pdpipe/config.py) y cualquier clave desconocida es un error, no un
+# valor ignorado en silencio.
+
+# Semilla global. Se propaga a random, numpy y torch, y queda registrada en
+# el run_manifest.json de cada corrida.
+seed: 42
+
+paths:
+  # Todas relativas a la raíz del proyecto (o absolutas, si preferís).
+  data_raw: data/raw              # descargas crudas, tal cual llegan del PDB/UniProt
+  data_interim: data/interim      # intermedios (estructuras limpias, trayectorias)
+  data_processed: data/processed  # entradas listas para las fases siguientes
+  runs: runs                      # una subcarpeta por corrida, con su manifiesto
+  database: data/pdpipe.sqlite    # base local de la Fase 1
+
+logging:
+  level: INFO                     # DEBUG | INFO | WARNING | ERROR
+  to_file: true                   # además de consola, escribe runs/<run_id>/run.log
+
+# ---------------------------------------------------------------------------
+# Fase 1 — Recolección y curación de datos
+# ---------------------------------------------------------------------------
+data:
+  # Criterios de curación aplicados por `pdpipe curate`.
+  resolution_max: 2.5             # angstroms; descarta estructuras de peor resolución
+  experimental_methods:           # métodos aceptados
+    - X-RAY DIFFRACTION
+    - ELECTRON MICROSCOPY
+  length_min: 30                  # residuos
+  length_max: 600
+  organisms: []                   # lista vacía = sin filtro por organismo
+
+  # Verificación de bioseguridad (ver README). Si está en true, la fase de
+  # recolección rechaza estructuras que caigan en la lista de exclusión.
+  biosafety_check: true
+
+  http:
+    timeout_s: 30
+    max_retries: 3
+    cache: true                   # no vuelve a descargar lo que ya está en data_raw
+
+# ---------------------------------------------------------------------------
+# Fase 2 — Diseño computacional
+# ---------------------------------------------------------------------------
+design:
+  # Orden de preferencia para obtener la estructura predicha.
+  structure_source: alphafold_db  # alphafold_db | colabfold | esmfold
+  plddt_min: 70.0                 # avisa si el modelo predicho está por debajo
+
+  designer: proteinmpnn           # implementación de SequenceDesigner a usar
+  n_sequences: 8                  # variantes a generar por estructura
+  temperature: 0.1                # muestreo de ProteinMPNN (más alto = más diverso)
+  fixed_positions: []             # residuos a no mutar (numeración del PDB)
+
+# ---------------------------------------------------------------------------
+# Fase 3 — Validación estructural (dinámica molecular)
+# ---------------------------------------------------------------------------
+md:
+  gromacs_bin: gmx                # ejecutable; se resuelve en el PATH
+  force_field: amber99sb-ildn
+  water_model: tip3p
+  box_shape: cubic
+  box_padding_nm: 1.0             # distancia mínima proteína-borde de la caja
+  ion_concentration_m: 0.15       # NaCl, además de los iones de neutralización
+
+  minimization_steps: 50000
+  nvt_ps: 100                     # equilibración a volumen constante
+  npt_ps: 100                     # equilibración a presión constante
+  production_ns: 2.0              # prueba de concepto; subir con GPU
+  temperature_k: 300.0
+  pressure_bar: 1.0
+  timestep_fs: 2.0
+  threads: 0                      # 0 = que GROMACS decida según la máquina
+
+# ---------------------------------------------------------------------------
+# Fase 4 — Modelos de IA
+# ---------------------------------------------------------------------------
+ml:
+  window_size: 17                 # ventana deslizante centrada en el residuo
+  test_size: 0.15
+  val_size: 0.15
+  identity_threshold: 0.3         # umbral de redundancia de secuencia entre splits
+
+  model: bilstm                   # bilstm | logistic | random_forest
+  hidden_size: 128
+  num_layers: 2
+  dropout: 0.3
+  batch_size: 32
+  epochs: 30
+  learning_rate: 0.001
+  device: cpu                     # cpu | cuda | auto
+
+# ---------------------------------------------------------------------------
+# Fase 5 — Análisis y comparación
+# ---------------------------------------------------------------------------
+analysis:
+  rmsd_selection: name CA         # selección MDAnalysis para superponer
+  compute_tm_score: true
+  report_formats:
+    - html
+    - markdown
+  figure_dpi: 150
