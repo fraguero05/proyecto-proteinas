@@ -1,0 +1,56 @@
+# Datos y resultados — se regeneran con el pipeline, no se versionan.
+data/raw/*
+data/interim/*
+data/processed/*
+!data/**/.gitkeep
+*.sqlite
+*.sqlite3
+*.db
+
+# Corridas (manifiestos, logs, figuras). Los manifiestos que van a la tesis
+# se copian a mano a donde corresponda.
+runs/
+
+# Artefactos pesados de dinámica molecular
+*.xtc
+*.trr
+*.edr
+*.cpt
+*.tpr
+*.gro
+*.log
+#*.mdp son parámetros de entrada, sí se versionan
+
+# Modelos entrenados
+*.pt
+*.pth
+*.pkl
+*.joblib
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# Herramientas
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+.mypy_cache/
+# uv.lock SÍ se versiona: es lo que fija las versiones exactas entre máquinas.
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Editores y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
