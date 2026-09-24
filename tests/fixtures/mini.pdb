@@ -1,0 +1,21 @@
+HEADER    FIXTURE DE PRUEBA                       01-JAN-26   MINI
+TITLE     TRIPEPTIDO SINTETICO PARA TESTS (NO ES UNA ESTRUCTURA REAL)
+REMARK    Archivo minimo incluido en el repo para que los tests no necesiten red.
+REMARK    Geometria aproximada; sirve para probar parsers y checksums, no ciencia.
+ATOM      1  N   ALA A   1      11.104   6.134  -6.504  1.00 20.00           N
+ATOM      2  CA  ALA A   1      11.639   6.071  -5.147  1.00 20.00           C
+ATOM      3  C   ALA A   1      10.520   6.267  -4.130  1.00 20.00           C
+ATOM      4  O   ALA A   1       9.379   6.569  -4.487  1.00 20.00           O
+ATOM      5  CB  ALA A   1      12.320   4.719  -4.944  1.00 20.00           C
+ATOM      6  N   GLY A   2      10.838   6.101  -2.851  1.00 22.00           N
+ATOM      7  CA  GLY A   2       9.850   6.260  -1.788  1.00 22.00           C
+ATOM      8  C   GLY A   2      10.472   6.050  -0.415  1.00 22.00           C
+ATOM      9  O   GLY A   2      11.687   5.874  -0.291  1.00 22.00           O
+ATOM     10  N   SER A   3       9.632   6.071   0.618  1.00 24.00           N
+ATOM     11  CA  SER A   3      10.104   5.882   1.987  1.00 24.00           C
+ATOM     12  C   SER A   3       8.931   5.998   2.957  1.00 24.00           C
+ATOM     13  O   SER A   3       7.783   6.174   2.544  1.00 24.00           O
+ATOM     14  CB  SER A   3      10.800   4.528   2.132  1.00 24.00           C
+ATOM     15  OG  SER A   3      11.300   4.354   3.446  1.00 24.00           O
+TER      16      SER A   3
+END
