@@ -18,10 +18,10 @@ local de menor costo como alternativa.
 | 4. Modelos de IA | `phase4_ml` | Estructura secundaria a partir de secuencia (BiLSTM vs. baseline) | 4 |
 | 5. Análisis y comparación | `phase5_analysis` | RMSD, TM-score y reportes contra la referencia experimental | 5 |
 
-**Estado actual: Hito 1 completo.** `fetch`, `curate` y `db-stats` funcionan end-to-end.
-Los comandos de las fases 2 a 5 validan sus argumentos y la configuración, pero todavía
-no ejecutan ciencia: informan en qué hito se implementan y terminan con código de
-salida `2`.
+**Estado actual: Hito 1 completo, Hito 2 en curso.** Funcionan `fetch`, `curate`,
+`db-stats` y `predict` (AlphaFold DB + pLDDT). Falta la parte B del Hito 2 (ProteinMPNN)
+y las fases 3 a 5, cuyos comandos validan argumentos y configuración pero informan en
+qué hito se implementan y terminan con código de salida `2`.
 
 ## Instalación
 
@@ -282,6 +282,63 @@ De dónde sale cada tabla:
 | `funciones` | UniProt: términos GO (tres ontologías), keywords y el comentario `FUNCTION` |
 | `interacciones` | UniProt: comentarios `INTERACTION` (IntAct) y `SUBUNIT` |
 | `ptms` | UniProt: features `Modified residue`, `Glycosylation`, `Disulfide bond`, `Cross-link`, `Lipidation`… |
+
+---
+
+## Cómo reproducir el Hito 2, parte A
+
+Fase 2, primer paso: estructura predicha desde AlphaFold DB y confianza por residuo.
+
+```bash
+uv pip install -e ".[data,dev]"     # todavía no hace falta PyTorch
+
+pytest -v
+
+# Descarga el modelo de AlphaFold para la lisozima y reporta su pLDDT
+pdpipe predict --uniprot P00698
+```
+
+**Qué mirar:**
+
+- `Media 93.89` contra `Media según la API 93.88`. Esa fila existe a propósito: el pLDDT
+  se calcula leyendo el campo B-factor del modelo, y contrastarlo con el valor que
+  reporta la propia API es lo que prueba que se está leyendo la columna correcta. El
+  centésimo de diferencia es redondeo — el formato PDB guarda el B-factor con dos
+  decimales y la API calcula sobre la precisión completa.
+- La distribución por banda debe dar `1.4% / 9.5% / 0.7% / 88.4%`, idéntica a los campos
+  `fractionPlddt*` de la API.
+- En `data/processed/AF-P00698-F1_plddt.csv`, que los residuos 1 a 18 tengan pLDDT bajo y
+  del 19 en adelante salte a >90: ese corte es el péptido señal de la lisozima, que es
+  flexible. Si el pLDDT fuera uniforme, estaría mal leído.
+
+Fuentes alternativas (todavía no implementadas, salen con código `2` y un mensaje que
+explica la alternativa):
+
+```bash
+pdpipe predict --uniprot P00698 --source colabfold   # va por notebook, requiere GPU
+pdpipe predict --uniprot P00698 --source esmfold     # pendiente
+```
+
+### pLDDT: qué es y por qué se lee del B-factor
+
+AlphaFold no escribe la confianza en un campo propio: la guarda en la **columna del
+B-factor**, que en una estructura experimental significa otra cosa (el factor de
+temperatura). Por eso un archivo de AlphaFold no se puede interpretar como uno del PDB
+sin saberlo: un "B-factor" de 90 sería pésimo en un cristal y es excelente en una
+predicción.
+
+Las bandas son las que define DeepMind y usa AlphaFold DB para colorear sus modelos:
+
+| Banda | pLDDT | Interpretación |
+|---|---|---|
+| muy baja | < 50 | probablemente desordenado |
+| baja | 50–70 | poco confiable |
+| confiable | 70–90 | buena confianza en el plegamiento |
+| muy alta | ≥ 90 | calidad experimental |
+
+`design.plddt_min` en el `config.yaml` (70 por defecto) dispara un **aviso**, no un error:
+un modelo de confianza media puede seguir sirviendo si las regiones que importan están
+bien resueltas. Quien decide es quien mira los números.
 
 ### Refrescar las fixtures de test
 
