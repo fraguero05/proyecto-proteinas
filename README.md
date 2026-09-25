@@ -18,9 +18,10 @@ local de menor costo como alternativa.
 | 4. Modelos de IA | `phase4_ml` | Estructura secundaria a partir de secuencia (BiLSTM vs. baseline) | 4 |
 | 5. Análisis y comparación | `phase5_analysis` | RMSD, TM-score y reportes contra la referencia experimental | 5 |
 
-**Estado actual: Hito 0 completo** (andamiaje). Los comandos de fase validan sus
-argumentos y la configuración, pero todavía no ejecutan ciencia: informan en qué hito
-se implementan y terminan con código de salida `2`.
+**Estado actual: Hito 1 completo.** `fetch`, `curate` y `db-stats` funcionan end-to-end.
+Los comandos de las fases 2 a 5 validan sus argumentos y la configuración, pero todavía
+no ejecutan ciencia: informan en qué hito se implementan y terminan con código de
+salida `2`.
 
 ## Instalación
 
@@ -61,9 +62,11 @@ source .venv/bin/activate       # Linux / macOS / Git Bash
 Las dependencias pesadas están separadas para que la instalación base sea rápida:
 
 ```bash
-uv pip install -e ".[dev]"        # andamiaje + pytest          (Hito 0)
-uv pip install -e ".[sci,dev]"    # Biopython, NumPy, MDAnalysis (Hitos 1, 3, 5)
-uv pip install -e ".[ml,sci,dev]" # + PyTorch, scikit-learn      (Hito 4)
+uv pip install -e ".[dev]"        # andamiaje + pytest       (Hito 0)
+uv pip install -e ".[data,dev]"   # requests, Biopython      (Hito 1)
+uv pip install -e ".[md,dev]"     # NumPy, MDAnalysis        (Hitos 3 y 5)
+uv pip install -e ".[ml,dev]"     # PyTorch, scikit-learn    (Hito 4)
+uv pip install -e ".[sci,dev]"    # todo lo científico de una
 ```
 
 ### Dependencias externas (no son paquetes de Python)
@@ -83,6 +86,7 @@ pdpipe --help                                        # ayuda general
 pdpipe info                                          # diagnóstico del entorno
 pdpipe fetch --pdb-id 1UBQ                           # Fase 1
 pdpipe curate --resolution-max 2.0 --organism "Homo sapiens"
+pdpipe db-stats                                      # contenido de la base
 pdpipe predict --uniprot P0CG48                      # Fase 2
 pdpipe design --input data/processed/1UBQ.pdb --n-sequences 8
 pdpipe simulate --input designs/1UBQ_var03.pdb --ns 2   # Fase 3
@@ -122,12 +126,31 @@ capítulo de resultados.
 El pipeline trabaja **solo con proteínas de uso académico estándar**: lisozima, ubiquitina,
 GFP, hemoglobina y enzimas metabólicas bien caracterizadas.
 
-La Fase 1 incluye una **verificación explícita** (`data.biosafety_check` en el `config.yaml`,
-activada por defecto) que rechaza estructuras correspondientes a toxinas y a proteínas de
-patógenos de la lista de agentes seleccionados. Cuando una estructura es rechazada, el
-motivo queda registrado en el `run_manifest.json` de la corrida.
+`pdpipe.phase1_data.biosafety` implementa una **verificación explícita**
+(`data.biosafety_check` en el `config.yaml`, activada por defecto) con tres capas
+independientes:
 
-Esa verificación se implementa en el Hito 1; esta sección documenta el criterio desde ya.
+1. **Organismo** — contra una lista de patógenos y agentes seleccionados (HHS/USDA).
+2. **Keywords de UniProt** — anotación curada (`Toxin`, `Neurotoxin`, `Virulence`…), la
+   señal más confiable de las tres.
+3. **Texto libre** — nombre de la proteína y título de la estructura, para casos sin
+   anotar en UniProt.
+
+La comparación de texto es por **palabra completa**, y hay una lista de excepciones, para
+que una *antitoxina* o una enzima de *detoxificación* no se rechacen por contener la
+subcadena "toxin".
+
+**Falla cerrado:** si no hay datos suficientes para verificar (UniProt caído, estructura
+sin accesión), se rechaza. Un falso positivo cuesta una línea en la lista; un falso
+negativo mete en el pipeline algo que no debería estar.
+
+Cuando una estructura es rechazada, **no se descargan sus coordenadas**, y el motivo queda
+registrado en la tabla `proteinas` (`motivo_rechazo`) y en el `run_manifest.json`. Un
+rechazo por bioseguridad no se revierte aflojando los criterios de `curate`.
+
+Las listas son deliberadamente conservadoras: pueden rechazar proteínas inocuas de
+organismos patógenos. Si necesitás una, ajustá `ORGANISMOS_EXCLUIDOS` en
+`src/pdpipe/phase1_data/biosafety.py` y dejá constancia del criterio en la tesis.
 
 ## Desarrollo
 
@@ -196,3 +219,75 @@ pdpipe --config tests/fixtures/no_existe.yaml info
 **Qué mirar:** que `pytest` pase entero, que `runs/<run_id>/run_manifest.json` exista y
 contenga versiones, semillas y config, y que los comandos de fase terminen con código `2`
 diciendo en qué hito se implementan.
+
+---
+
+## Cómo reproducir el Hito 1
+
+Fase 1: descarga desde RCSB PDB y UniProt, curación y base SQLite.
+
+```bash
+uv pip install -e ".[data,dev]"
+
+# 1. La suite completa pasa (sin red: todo contra fixtures grabadas)
+pytest -v
+
+# 2. Descarga de las dos estructuras de referencia
+pdpipe fetch --pdb-id 1UBQ --pdb-id 1LYZ
+
+# 3. Estado de la base
+pdpipe db-stats
+
+# 4. Curación con los criterios del config.yaml
+pdpipe curate
+
+# 5. Curación más estricta: 1LYZ (2.00 Å) queda afuera, 1UBQ (1.80 Å) pasa.
+#    No se re-descarga nada: curate trabaja sobre lo que ya está.
+pdpipe curate --resolution-max 1.9
+
+# 6. La verificación de bioseguridad rechaza una neurotoxina botulínica
+pdpipe fetch --pdb-id 3BTA
+```
+
+**Qué mirar:**
+
+- En el paso 3, `1UBQ` con **longitud 76** y `1LYZ` con **129** — la longitud de la cadena
+  cristalizada, no la de la proteína completa de UniProt (P0CG48 tiene 685 residuos).
+- En el paso 5, que `1LYZ` se rechace con el motivo explícito y que no haya tráfico de red.
+- En el paso 6, que `3BTA` se rechace por organismo, que **no** aparezca `data/raw/3BTA.pdb`
+  en el disco, y que el motivo quede en el `run_manifest.json`.
+
+### Esquema de la base
+
+```
+proteinas(id, pdb_id, uniprot_id, nombre, organismo, tax_id, metodo,
+          resolucion, longitud, secuencia, archivo_path, sha256,
+          fecha_descarga, curada, motivo_rechazo)
+funciones(id, proteina_id→, tipo, termino_go, descripcion, evidencia)
+interacciones(id, proteina_id→, partner_uniprot, partner_gen, tipo, fuente,
+              n_experimentos, evidencia)
+ptms(id, proteina_id→, posicion, posicion_fin, tipo, descripcion, evidencia)
+```
+
+Las tres tablas hijas cuelgan de `proteinas` con `ON DELETE CASCADE`. Las proteínas
+**rechazadas se conservan** con su `motivo_rechazo`: saber qué quedó afuera y por qué es
+parte del resultado de la curación, y es lo que permite justificar en la tesis el tamaño
+del conjunto final.
+
+De dónde sale cada tabla:
+
+| Tabla | Fuente |
+|---|---|
+| `proteinas` | RCSB (método, resolución) + entidad polimérica (longitud, secuencia, organismo) + UniProt (nombre) |
+| `funciones` | UniProt: términos GO (tres ontologías), keywords y el comentario `FUNCTION` |
+| `interacciones` | UniProt: comentarios `INTERACTION` (IntAct) y `SUBUNIT` |
+| `ptms` | UniProt: features `Modified residue`, `Glycosylation`, `Disulfide bond`, `Cross-link`, `Lipidation`… |
+
+### Refrescar las fixtures de test
+
+Los tests corren contra respuestas reales grabadas. Si una API cambia de forma:
+
+```bash
+python tests/fixtures/capturar_fixtures.py
+git diff tests/fixtures/    # revisar qué cambió antes de commitear
+```
