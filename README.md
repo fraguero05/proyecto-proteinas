@@ -18,10 +18,11 @@ local de menor costo como alternativa.
 | 4. Modelos de IA | `phase4_ml` | Estructura secundaria a partir de secuencia (BiLSTM vs. baseline) | 4 |
 | 5. Análisis y comparación | `phase5_analysis` | RMSD, TM-score y reportes contra la referencia experimental | 5 |
 
-**Estado actual: Hito 1 completo, Hito 2 en curso.** Funcionan `fetch`, `curate`,
-`db-stats` y `predict` (AlphaFold DB + pLDDT). Falta la parte B del Hito 2 (ProteinMPNN)
-y las fases 3 a 5, cuyos comandos validan argumentos y configuración pero informan en
-qué hito se implementan y terminan con código de salida `2`.
+**Estado actual: Hitos 1 y 2 completos.** Funcionan `fetch`, `curate`, `db-stats`,
+`predict` (AlphaFold DB + pLDDT) y `design` (variantes de secuencia con ProteinMPNN).
+Dentro del Hito 2 quedan pendientes ColabFold y ESMFold como fuentes alternativas de
+estructura. Faltan las fases 3 a 5, cuyos comandos validan argumentos y configuración
+pero informan en qué hito se implementan y terminan con código de salida `2`.
 
 ## Instalación
 
@@ -73,6 +74,7 @@ uv pip install -e ".[sci,dev]"    # todo lo científico de una
 
 | Herramienta | Necesaria desde | Instalación |
 |-------------|-----------------|-------------|
+| **ProteinMPNN** | Hito 2, parte B | `git clone https://github.com/dauparas/ProteinMPNN tools/ProteinMPNN` — no está en PyPI, trae los pesos adentro |
 | **GROMACS** | Hito 3 | `sudo apt install gromacs` (Ubuntu/WSL) |
 | **DSSP** | Hito 4 | `sudo apt install dssp` |
 | **CD-HIT** | Hito 4 (opcional) | `sudo apt install cd-hit` — si falta, se usa un clustering por identidad con Biopython |
@@ -347,4 +349,83 @@ Los tests corren contra respuestas reales grabadas. Si una API cambia de forma:
 ```bash
 python tests/fixtures/capturar_fixtures.py
 git diff tests/fixtures/    # revisar qué cambió antes de commitear
+```
+
+---
+
+## Cómo reproducir el Hito 2, parte B
+
+Fase 2, segundo paso: dado el esqueleto, qué secuencias podrían plegarse en él.
+
+ProteinMPNN **no es un paquete de PyPI**: es un repositorio que trae los pesos adentro,
+así que se clona y el pipeline lo invoca por subprocess. La carpeta `tools/` está en el
+`.gitignore` justamente por eso.
+
+```bash
+# 1. Clonar ProteinMPNN (trae los pesos adentro) e instalar PyTorch CPU
+git clone https://github.com/dauparas/ProteinMPNN tools/ProteinMPNN
+uv pip install -e ".[data,ml,dev]"
+
+# 2. La suite completa pasa. Sin el clon, el test que corre ProteinMPNN de
+#    verdad se saltea y los otros 33 del diseño siguen corriendo.
+pytest -q
+
+# 3. Generar variantes sobre la ubiquitina
+pdpipe design --input tests/fixtures/1UBQ.pdb --n-sequences 8
+```
+
+Si ProteinMPNN no está clonado, `design` sale con código `2` y el mensaje trae el
+`git clone` exacto. Si lo clonaste en otro lado, apuntá `design.proteinmpnn_home` del
+`config.yaml` a esa ruta.
+
+**Qué mirar:**
+
+- La tabla de variantes: `global_score`, cuántas mutaciones tiene cada una respecto de
+  la original y en qué posiciones. La mejor va resaltada en verde.
+- `data/processed/1UBQ_variantes.fasta`, con la secuencia original primero para poder
+  alinear sin ir a buscarla a otro archivo, y
+  `data/processed/1UBQ_variantes.csv` con el detalle por variante.
+- Que las mutaciones caigan mayoritariamente en la superficie y no en el núcleo
+  hidrofóbico: ProteinMPNN conserva mejor los residuos enterrados porque están más
+  restringidos por el esqueleto.
+- Con `--temperature` más alta, más diversidad y menos identidad con la original. A
+  `0.1` (el valor por defecto) las variantes se parecen bastante al original; a `0.5`
+  se separan notoriamente.
+
+Los scores exactos dependen del modelo de pesos, de la semilla y de la temperatura, así
+que no hay un número fijo que deba salir: lo reproducible es que, con la misma semilla y
+los mismos parámetros, dos corridas den lo mismo. La semilla sale de `seed` en el
+`config.yaml` y queda registrada en el `run_manifest.json`.
+
+### Diseño inverso: qué hace ProteinMPNN
+
+La predicción de estructura va de secuencia a estructura. El diseño va al revés: se fija
+el esqueleto y se busca qué secuencias podrían plegarse en él. Es el paso que convierte
+una estructura depositada en una variante propia.
+
+| Columna | Qué significa |
+|---|---|
+| `global_score` | Log-verosimilitud negativa de toda la secuencia. **Más bajo es mejor**, al revés de lo que sugiere la palabra "score". |
+| `score` | Lo mismo, restringido a las posiciones diseñadas. |
+| `recuperación` | Fracción de la secuencia original que el modelo reprodujo por su cuenta. Alta = el esqueleto determina fuertemente la secuencia. |
+| `identidad` | Fracción de residuos iguales al original, calculada por el pipeline. |
+
+> **Advertencia:** una variante con buen score es una hipótesis computacional, no una
+> proteína que se sepa que funciona. Validar experimentalmente es otro trabajo; el
+> pipeline solo la propone y la caracteriza.
+
+### Posiciones fijas: van en numeración del PDB
+
+`design.fixed_positions` lista los residuos que no se deben mutar (un sitio catalítico,
+por ejemplo) **en la numeración del PDB**, que es la que se ve en un visualizador y la
+que usa el CSV de pLDDT de la parte A.
+
+ProteinMPNN, en cambio, numera las posiciones fijas `1..N` sobre la cadena diseñada. El
+pipeline traduce entre las dos. La distinción importa porque confundirlas no da error:
+congela el residuo equivocado y el resultado parece correcto. Por eso, una posición que
+no exista en la estructura corta la ejecución en vez de ignorarse en silencio.
+
+```yaml
+design:
+  fixed_positions: [35, 52]   # numeración del PDB, no índice de secuencia
 ```
