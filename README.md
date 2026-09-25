@@ -378,24 +378,28 @@ Si ProteinMPNN no está clonado, `design` sale con código `2` y el mensaje trae
 `git clone` exacto. Si lo clonaste en otro lado, apuntá `design.proteinmpnn_home` del
 `config.yaml` a esa ruta.
 
-**Qué mirar:**
+**Qué mirar** (números de una corrida real sobre 1UBQ con `seed: 42`):
 
 - La tabla de variantes: `global_score`, cuántas mutaciones tiene cada una respecto de
   la original y en qué posiciones. La mejor va resaltada en verde.
 - `data/processed/1UBQ_variantes.fasta`, con la secuencia original primero para poder
   alinear sin ir a buscarla a otro archivo, y
   `data/processed/1UBQ_variantes.csv` con el detalle por variante.
-- Que las mutaciones caigan mayoritariamente en la superficie y no en el núcleo
-  hidrofóbico: ProteinMPNN conserva mejor los residuos enterrados porque están más
-  restringidos por el esqueleto.
-- Con `--temperature` más alta, más diversidad y menos identidad con la original. A
-  `0.1` (el valor por defecto) las variantes se parecen bastante al original; a `0.5`
-  se separan notoriamente.
+- **La identidad ronda el 55%, no el 95%.** Es lo esperable y no un error: ProteinMPNN
+  propone secuencias compatibles con el esqueleto, no copias de la original. Recuperar
+  la mitad de la secuencia nativa es el orden de magnitud que reporta el método.
+- **Las mutaciones evitan el núcleo hidrofóbico.** En esa corrida, 28 de 273 mutaciones
+  (10%) cayeron en los 16 residuos del núcleo, que son el 21% de la proteína: la mitad
+  de lo que daría el azar. Los residuos enterrados están más restringidos por el
+  esqueleto, así que el modelo los conserva.
+- El efecto de `--temperature` es real pero moderado: la identidad media pasa de 55.1%
+  a `0.1` a 50.5% a `0.5`. Sube la diversidad entre variantes más que la distancia al
+  original.
 
 Los scores exactos dependen del modelo de pesos, de la semilla y de la temperatura, así
-que no hay un número fijo que deba salir: lo reproducible es que, con la misma semilla y
-los mismos parámetros, dos corridas den lo mismo. La semilla sale de `seed` en el
-`config.yaml` y queda registrada en el `run_manifest.json`.
+que no hay un número fijo que deba salir. Lo que sí es reproducible: dos corridas con la
+misma semilla y los mismos parámetros dan un CSV idéntico. La semilla sale de `seed` en
+el `config.yaml` y queda registrada en el `run_manifest.json`.
 
 ### Diseño inverso: qué hace ProteinMPNN
 
@@ -429,3 +433,15 @@ no exista en la estructura corta la ejecución en vez de ignorarse en silencio.
 design:
   fixed_positions: [35, 52]   # numeración del PDB, no índice de secuencia
 ```
+
+### ProteinMPNN en Windows
+
+ProteinMPNN deriva rutas con `ruta.rfind("/")` en dos lugares: para encontrar sus pesos
+(`protein_mpnn_run.py`) y para nombrar el archivo de salida (`protein_mpnn_utils.py`).
+En Windows las rutas vienen con barras invertidas, `rfind` no encuentra separador y las
+dos deducciones salen mal — busca los pesos bajo `protein_mpnn_run.p` y quiere escribir
+`seqs/C:\...\1UBQ.fa`.
+
+El pipeline lo esquiva solo: pasa `--path_to_model_weights` explícito y le da las rutas
+con barras normales, que Windows acepta igual. No hay que hacer nada, pero si lo corrés
+a mano desde `tools/ProteinMPNN` vas a encontrarte con esos dos errores.
