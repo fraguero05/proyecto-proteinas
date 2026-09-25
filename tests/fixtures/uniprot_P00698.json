@@ -1,0 +1,3059 @@
+{
+  "entryType": "UniProtKB reviewed (Swiss-Prot)",
+  "primaryAccession": "P00698",
+  "secondaryAccessions": [
+    "B8YJN9",
+    "B8YJP1",
+    "B8YJT7",
+    "B8YK79",
+    "Q90884"
+  ],
+  "uniProtkbId": "LYSC_CHICK",
+  "entryAudit": {
+    "firstPublicDate": "1986-07-21",
+    "lastAnnotationUpdateDate": "2026-09-02",
+    "lastSequenceUpdateDate": "1986-07-21",
+    "entryVersion": 252,
+    "sequenceVersion": 1
+  },
+  "annotationScore": 5.0,
+  "organism": {
+    "scientificName": "Gallus gallus",
+    "commonName": "Chicken",
+    "taxonId": 9031,
+    "lineage": [
+      "Eukaryota",
+      "Metazoa",
+      "Chordata",
+      "Craniata",
+      "Vertebrata",
+      "Euteleostomi",
+      "Archelosauria",
+      "Archosauria",
+      "Dinosauria",
+      "Saurischia",
+      "Theropoda",
+      "Coelurosauria",
+      "Aves",
+      "Neognathae",
+      "Galloanserae",
+      "Galliformes",
+      "Phasianidae",
+      "Phasianinae",
+      "Gallus"
+    ]
+  },
+  "proteinExistence": "1: Evidence at protein level",
+  "proteinDescription": {
+    "recommendedName": {
+      "fullName": {
+        "value": "Lysozyme C"
+      },
+      "ecNumbers": [
+        {
+          "value": "3.2.1.17"
+        }
+      ]
+    },
+    "alternativeNames": [
+      {
+        "fullName": {
+          "value": "1,4-beta-N-acetylmuramidase C"
+        }
+      },
+      {
+        "fullName": {
+          "value": "Allergen Gal d IV"
+        }
+      }
+    ],
+    "allergenName": {
+      "value": "Gal d 4"
+    },
+    "flag": "Precursor"
+  },
+  "genes": [
+    {
+      "geneName": {
+        "value": "LYZ"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000255",
+              "source": "PROSITE-ProRule",
+              "id": "PRU00680"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "22044478"
+            }
+          ],
+          "value": "Lysozymes have primarily a bacteriolytic function; those in tissues and body fluids are associated with the monocyte-macrophage system and enhance the activity of immunoagents. Has bacteriolytic activity against M.luteus"
+        }
+      ],
+      "commentType": "FUNCTION"
+    },
+    {
+      "commentType": "CATALYTIC ACTIVITY",
+      "reaction": {
+        "name": "Hydrolysis of (1->4)-beta-linkages between N-acetylmuramic acid and N-acetyl-D-glucosamine residues in a peptidoglycan and between N-acetyl-D-glucosamine residues in chitodextrins.",
+        "ecNumber": "3.2.1.17"
+      }
+    },
+    {
+      "texts": [
+        {
+          "value": "Monomer"
+        }
+      ],
+      "commentType": "SUBUNIT"
+    },
+    {
+      "commentType": "INTERACTION",
+      "interactions": [
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P00698",
+            "intActId": "EBI-1029543"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P00698",
+            "geneName": "LYZ",
+            "intActId": "EBI-1029543"
+          },
+          "numberOfExperiments": 5,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P00698",
+            "intActId": "EBI-1029543"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P0C0V0",
+            "geneName": "degP",
+            "intActId": "EBI-547165"
+          },
+          "numberOfExperiments": 11,
+          "organismDiffer": true
+        }
+      ]
+    },
+    {
+      "commentType": "SUBCELLULAR LOCATION",
+      "subcellularLocations": [
+        {
+          "location": {
+            "value": "Secreted",
+            "id": "SL-0243"
+          }
+        }
+      ]
+    },
+    {
+      "texts": [
+        {
+          "value": "In the egg white and polymorphonuclear leukocytes"
+        }
+      ],
+      "commentType": "TISSUE SPECIFICITY"
+    },
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "15592404"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "19845599"
+            }
+          ],
+          "value": "Numerous polymorphisms have been identified in various strains, predominantly at positions 49 and 71 (PubMed:19845599). The sequence shown here is that of red jungle fowl (PubMed:15592404)"
+        }
+      ],
+      "commentType": "POLYMORPHISM"
+    },
+    {
+      "texts": [
+        {
+          "value": "Causes an allergic reaction in human"
+        }
+      ],
+      "commentType": "ALLERGEN"
+    },
+    {
+      "texts": [
+        {
+          "value": "Lysozyme C is capable of both hydrolysis and transglycosylation; it also shows a slight esterase activity. It acts rapidly on both peptide-substituted and unsubstituted peptidoglycan, and slowly on chitin oligosaccharides"
+        }
+      ],
+      "commentType": "MISCELLANEOUS"
+    },
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000255",
+              "source": "PROSITE-ProRule",
+              "id": "PRU00680"
+            }
+          ],
+          "value": "Belongs to the glycosyl hydrolase 22 family"
+        }
+      ],
+      "commentType": "SIMILARITY"
+    }
+  ],
+  "features": [
+    {
+      "type": "Signal",
+      "location": {
+        "start": {
+          "value": 1,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 18,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "14063294"
+        }
+      ]
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 19,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 147,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Lysozyme C",
+      "featureId": "PRO_0000018495"
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 19,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 147,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "C-type lysozyme",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00680"
+        }
+      ]
+    },
+    {
+      "type": "Active site",
+      "location": {
+        "start": {
+          "value": 53,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 53,
+          "modifier": "EXACT"
+        }
+      },
+      "description": ""
+    },
+    {
+      "type": "Active site",
+      "location": {
+        "start": {
+          "value": 70,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 70,
+          "modifier": "EXACT"
+        }
+      },
+      "description": ""
+    },
+    {
+      "type": "Binding site",
+      "location": {
+        "start": {
+          "value": 119,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 119,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "ligand": {
+        "name": "substrate"
+      }
+    },
+    {
+      "type": "Disulfide bond",
+      "location": {
+        "start": {
+          "value": 24,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 145,
+          "modifier": "EXACT"
+        }
+      },
+      "description": ""
+    },
+    {
+      "type": "Disulfide bond",
+      "location": {
+        "start": {
+          "value": 48,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 133,
+          "modifier": "EXACT"
+        }
+      },
+      "description": ""
+    },
+    {
+      "type": "Disulfide bond",
+      "location": {
+        "start": {
+          "value": 82,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 98,
+          "modifier": "EXACT"
+        }
+      },
+      "description": ""
+    },
+    {
+      "type": "Disulfide bond",
+      "location": {
+        "start": {
+          "value": 94,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 112,
+          "modifier": "EXACT"
+        }
+      },
+      "description": ""
+    },
+    {
+      "type": "Natural variant",
+      "location": {
+        "start": {
+          "value": 49,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 49,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "19845599"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "6934509"
+        }
+      ],
+      "featureId": "",
+      "alternativeSequence": {
+        "originalSequence": "A",
+        "alternativeSequences": [
+          "V"
+        ]
+      }
+    },
+    {
+      "type": "Natural variant",
+      "location": {
+        "start": {
+          "value": 71,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 71,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "19845599"
+        }
+      ],
+      "featureId": "",
+      "alternativeSequence": {
+        "originalSequence": "Y",
+        "alternativeSequences": [
+          "F"
+        ]
+      }
+    },
+    {
+      "type": "Natural variant",
+      "location": {
+        "start": {
+          "value": 71,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 71,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "19845599"
+        }
+      ],
+      "featureId": "",
+      "alternativeSequence": {
+        "originalSequence": "Y",
+        "alternativeSequences": [
+          "S"
+        ]
+      }
+    },
+    {
+      "type": "Sequence conflict",
+      "location": {
+        "start": {
+          "value": 121,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 121,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "in Ref. 7; AA sequence",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000305"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "N",
+        "alternativeSequences": [
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "Sequence conflict",
+      "location": {
+        "start": {
+          "value": 124,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 124,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "in Ref. 1; CAA23711",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000305"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "N",
+        "alternativeSequences": [
+          "S"
+        ]
+      }
+    },
+    {
+      "type": "Sequence conflict",
+      "location": {
+        "start": {
+          "value": 132,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 132,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "in Ref. 8; AAA48944",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000305"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "S"
+        ]
+      }
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 23,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 32,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 38,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 40,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7AVF"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 43,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 54,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 55,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 57,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2HS7"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 61,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 63,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 65,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 67,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3D9A"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 69,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 71,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Turn",
+      "location": {
+        "start": {
+          "value": 72,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 75,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Turn",
+      "location": {
+        "start": {
+          "value": 78,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 81,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 85,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 87,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "1IEE"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 95,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 97,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6P4A"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 98,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 102,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 103,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 106,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 107,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 118,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 119,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 121,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "8ZST"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 123,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 125,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 127,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 132,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Turn",
+      "location": {
+        "start": {
+          "value": 133,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 135,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 138,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 141,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    },
+    {
+      "type": "Turn",
+      "location": {
+        "start": {
+          "value": 142,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 144,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "2VB1"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    {
+      "id": "KW-0002",
+      "category": "Technical term",
+      "name": "3D-structure"
+    },
+    {
+      "id": "KW-0020",
+      "category": "Disease",
+      "name": "Allergen"
+    },
+    {
+      "id": "KW-0929",
+      "category": "Molecular function",
+      "name": "Antimicrobial"
+    },
+    {
+      "id": "KW-0081",
+      "category": "Molecular function",
+      "name": "Bacteriolytic enzyme"
+    },
+    {
+      "id": "KW-0903",
+      "category": "Technical term",
+      "name": "Direct protein sequencing"
+    },
+    {
+      "id": "KW-1015",
+      "category": "PTM",
+      "name": "Disulfide bond"
+    },
+    {
+      "id": "KW-0326",
+      "category": "Molecular function",
+      "name": "Glycosidase"
+    },
+    {
+      "id": "KW-0378",
+      "category": "Molecular function",
+      "name": "Hydrolase"
+    },
+    {
+      "id": "KW-1185",
+      "category": "Technical term",
+      "name": "Reference proteome"
+    },
+    {
+      "id": "KW-0964",
+      "category": "Cellular component",
+      "name": "Secreted"
+    },
+    {
+      "id": "KW-0732",
+      "category": "Domain",
+      "name": "Signal"
+    }
+  ],
+  "references": [
+    {
+      "referenceNumber": 1,
+      "citation": {
+        "id": "6934509",
+        "citationType": "journal article",
+        "authors": [
+          "Jung A.",
+          "Sippel A.E.",
+          "Grez M.",
+          "Schutz G."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "6934509"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1073/pnas.77.10.5759"
+          }
+        ],
+        "title": "Exons encode functional and structural units of chicken lysozyme.",
+        "publicationDate": "1980",
+        "journal": "Proc. Natl. Acad. Sci. U.S.A.",
+        "firstPage": "5759",
+        "lastPage": "5763",
+        "volume": "77"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [GENOMIC DNA]",
+        "SEQUENCE REVISION TO 121",
+        "VARIANT VAL-49"
+      ]
+    },
+    {
+      "referenceNumber": 2,
+      "citation": {
+        "id": "11788708",
+        "citationType": "journal article",
+        "authors": [
+          "Chong S.",
+          "Riggs A.D.",
+          "Bonifer C."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "11788708"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1093/nar/30.2.463"
+          }
+        ],
+        "title": "The chicken lysozyme chromatin domain contains a second, widely expressed gene.",
+        "publicationDate": "2002",
+        "journal": "Nucleic Acids Res.",
+        "firstPage": "463",
+        "lastPage": "467",
+        "volume": "30"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [GENOMIC DNA]"
+      ]
+    },
+    {
+      "referenceNumber": 3,
+      "citation": {
+        "id": "15592404",
+        "citationType": "journal article",
+        "authors": [
+          "Hillier L.W.",
+          "Miller W.",
+          "Birney E.",
+          "Warren W.",
+          "Hardison R.C.",
+          "Ponting C.P.",
+          "Bork P.",
+          "Burt D.W.",
+          "Groenen M.A.M.",
+          "Delany M.E.",
+          "Dodgson J.B.",
+          "Chinwalla A.T.",
+          "Cliften P.F.",
+          "Clifton S.W.",
+          "Delehaunty K.D.",
+          "Fronick C.",
+          "Fulton R.S.",
+          "Graves T.A.",
+          "Kremitzki C.",
+          "Layman D.",
+          "Magrini V.",
+          "McPherson J.D.",
+          "Miner T.L.",
+          "Minx P.",
+          "Nash W.E.",
+          "Nhan M.N.",
+          "Nelson J.O.",
+          "Oddy L.G.",
+          "Pohl C.S.",
+          "Randall-Maher J.",
+          "Smith S.M.",
+          "Wallis J.W.",
+          "Yang S.-P.",
+          "Romanov M.N.",
+          "Rondelli C.M.",
+          "Paton B.",
+          "Smith J.",
+          "Morrice D.",
+          "Daniels L.",
+          "Tempest H.G.",
+          "Robertson L.",
+          "Masabanda J.S.",
+          "Griffin D.K.",
+          "Vignal A.",
+          "Fillon V.",
+          "Jacobbson L.",
+          "Kerje S.",
+          "Andersson L.",
+          "Crooijmans R.P.",
+          "Aerts J.",
+          "van der Poel J.J.",
+          "Ellegren H.",
+          "Caldwell R.B.",
+          "Hubbard S.J.",
+          "Grafham D.V.",
+          "Kierzek A.M.",
+          "McLaren S.R.",
+          "Overton I.M.",
+          "Arakawa H.",
+          "Beattie K.J.",
+          "Bezzubov Y.",
+          "Boardman P.E.",
+          "Bonfield J.K.",
+          "Croning M.D.R.",
+          "Davies R.M.",
+          "Francis M.D.",
+          "Humphray S.J.",
+          "Scott C.E.",
+          "Taylor R.G.",
+          "Tickle C.",
+          "Brown W.R.A.",
+          "Rogers J.",
+          "Buerstedde J.-M.",
+          "Wilson S.A.",
+          "Stubbs L.",
+          "Ovcharenko I.",
+          "Gordon L.",
+          "Lucas S.",
+          "Miller M.M.",
+          "Inoko H.",
+          "Shiina T.",
+          "Kaufman J.",
+          "Salomonsen J.",
+          "Skjoedt K.",
+          "Wong G.K.-S.",
+          "Wang J.",
+          "Liu B.",
+          "Wang J.",
+          "Yu J.",
+          "Yang H.",
+          "Nefedov M.",
+          "Koriabine M.",
+          "Dejong P.J.",
+          "Goodstadt L.",
+          "Webber C.",
+          "Dickens N.J.",
+          "Letunic I.",
+          "Suyama M.",
+          "Torrents D.",
+          "von Mering C.",
+          "Zdobnov E.M.",
+          "Makova K.",
+          "Nekrutenko A.",
+          "Elnitski L.",
+          "Eswara P.",
+          "King D.C.",
+          "Yang S.-P.",
+          "Tyekucheva S.",
+          "Radakrishnan A.",
+          "Harris R.S.",
+          "Chiaromonte F.",
+          "Taylor J.",
+          "He J.",
+          "Rijnkels M.",
+          "Griffiths-Jones S.",
+          "Ureta-Vidal A.",
+          "Hoffman M.M.",
+          "Severin J.",
+          "Searle S.M.J.",
+          "Law A.S.",
+          "Speed D.",
+          "Waddington D.",
+          "Cheng Z.",
+          "Tuzun E.",
+          "Eichler E.",
+          "Bao Z.",
+          "Flicek P.",
+          "Shteynberg D.D.",
+          "Brent M.R.",
+          "Bye J.M.",
+          "Huckle E.J.",
+          "Chatterji S.",
+          "Dewey C.",
+          "Pachter L.",
+          "Kouranov A.",
+          "Mourelatos Z.",
+          "Hatzigeorgiou A.G.",
+          "Paterson A.H.",
+          "Ivarie R.",
+          "Brandstrom M.",
+          "Axelsson E.",
+          "Backstrom N.",
+          "Berlin S.",
+          "Webster M.T.",
+          "Pourquie O.",
+          "Reymond A.",
+          "Ucla C.",
+          "Antonarakis S.E.",
+          "Long M.",
+          "Emerson J.J.",
+          "Betran E.",
+          "Dupanloup I.",
+          "Kaessmann H.",
+          "Hinrichs A.S.",
+          "Bejerano G.",
+          "Furey T.S.",
+          "Harte R.A.",
+          "Raney B.",
+          "Siepel A.",
+          "Kent W.J.",
+          "Haussler D.",
+          "Eyras E.",
+          "Castelo R.",
+          "Abril J.F.",
+          "Castellano S.",
+          "Camara F.",
+          "Parra G.",
+          "Guigo R.",
+          "Bourque G.",
+          "Tesler G.",
+          "Pevzner P.A.",
+          "Smit A.",
+          "Fulton L.A.",
+          "Mardis E.R.",
+          "Wilson R.K."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "15592404"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/nature03154"
+          }
+        ],
+        "title": "Sequence and comparative analysis of the chicken genome provide unique perspectives on vertebrate evolution.",
+        "publicationDate": "2004",
+        "journal": "Nature",
+        "firstPage": "695",
+        "lastPage": "716",
+        "volume": "432"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA]"
+      ],
+      "referenceComments": [
+        {
+          "value": "Red jungle fowl",
+          "type": "STRAIN"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 4,
+      "citation": {
+        "id": "19845599",
+        "citationType": "journal article",
+        "authors": [
+          "Downing T.",
+          "O'Farrelly C.",
+          "Bhuiyan A.K.",
+          "Silva P.",
+          "Naqvi A.N.",
+          "Sanfo R.",
+          "Sow R.S.",
+          "Podisi B.",
+          "Hanotte O.",
+          "Bradley D.G."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "19845599"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1111/j.1365-2052.2009.01974.x"
+          }
+        ],
+        "title": "Variation in chicken populations may affect the enzymatic activity of lysozyme.",
+        "publicationDate": "2010",
+        "journal": "Anim. Genet.",
+        "firstPage": "213",
+        "lastPage": "217",
+        "volume": "41"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [GENOMIC DNA]",
+        "VARIANTS VAL-49; PHE-71 AND SER-71"
+      ]
+    },
+    {
+      "referenceNumber": 5,
+      "citation": {
+        "id": "CI-390LIS9RBT4MG",
+        "citationType": "submission",
+        "authors": [
+          "Yan H."
+        ],
+        "title": "LYZC haplotype in a line of Rhode Island Red layer chicken.",
+        "publicationDate": "MAR-2016",
+        "submissionDatabase": "EMBL/GenBank/DDBJ databases"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [GENOMIC DNA]"
+      ]
+    },
+    {
+      "referenceNumber": 6,
+      "citation": {
+        "id": "893412",
+        "citationType": "journal article",
+        "authors": [
+          "Palmiter R.D.",
+          "Gagnon J.",
+          "Ericsson L.H.",
+          "Walsh K.A."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "893412"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/s0021-9258(17)39969-6"
+          }
+        ],
+        "title": "Precursor of egg white lysozyme. Amino acid sequence of an NH2-terminal extension.",
+        "publicationDate": "1977",
+        "journal": "J. Biol. Chem.",
+        "firstPage": "6386",
+        "lastPage": "6393",
+        "volume": "252"
+      },
+      "referencePositions": [
+        "PROTEIN SEQUENCE OF 1-20 (PRECURSOR PROTEIN)"
+      ]
+    },
+    {
+      "referenceNumber": 7,
+      "citation": {
+        "id": "14063294",
+        "citationType": "journal article",
+        "authors": [
+          "Canfield R.E."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "14063294"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/s0021-9258(18)67888-3"
+          }
+        ],
+        "title": "The amino acid sequence of egg white lysozyme.",
+        "publicationDate": "1963",
+        "journal": "J. Biol. Chem.",
+        "firstPage": "2698",
+        "lastPage": "2707",
+        "volume": "238"
+      },
+      "referencePositions": [
+        "PROTEIN SEQUENCE OF 19-147"
+      ]
+    },
+    {
+      "referenceNumber": 8,
+      "citation": {
+        "id": "383714",
+        "citationType": "journal article",
+        "authors": [
+          "Buell G.N.",
+          "Wickens M.P.",
+          "Carbon J.",
+          "Schimke R.T."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "383714"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/s0021-9258(19)86841-2"
+          }
+        ],
+        "title": "Isolation of recombinant plasmids bearing cDNA to hen ovomucoid and lysozyme mRNAs.",
+        "publicationDate": "1979",
+        "journal": "J. Biol. Chem.",
+        "firstPage": "9277",
+        "lastPage": "9283",
+        "volume": "254"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [MRNA] OF 123-146"
+      ]
+    },
+    {
+      "referenceNumber": 9,
+      "citation": {
+        "id": "14301784",
+        "citationType": "journal article",
+        "authors": [
+          "Canfield R.E.",
+          "Liu A.K."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "14301784"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/s0021-9258(18)97416-8"
+          }
+        ],
+        "title": "The disulfide bonds of egg white lysozyme (muramidase).",
+        "publicationDate": "1965",
+        "journal": "J. Biol. Chem.",
+        "firstPage": "1997",
+        "lastPage": "2002",
+        "volume": "240"
+      },
+      "referencePositions": [
+        "DISULFIDE BONDS"
+      ]
+    },
+    {
+      "referenceNumber": 10,
+      "citation": {
+        "id": "5857373",
+        "citationType": "journal article",
+        "authors": [
+          "Jauregui-Adell J.",
+          "Jolles J.",
+          "Jolles P."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "5857373"
+          }
+        ],
+        "title": "The disulfide bridges of hen's egg-white lysozyme.",
+        "publicationDate": "1965",
+        "journal": "Biochim. Biophys. Acta",
+        "firstPage": "97",
+        "lastPage": "111",
+        "volume": "107"
+      },
+      "referencePositions": [
+        "DISULFIDE BONDS"
+      ]
+    },
+    {
+      "referenceNumber": 11,
+      "citation": {
+        "id": "3325501",
+        "citationType": "journal article",
+        "authors": [
+          "Kumagai I.",
+          "Kojima S.",
+          "Tamaki E.",
+          "Miura K."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "3325501"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1093/oxfordjournals.jbchem.a122111"
+          }
+        ],
+        "title": "Conversion of Trp 62 of hen egg-white lysozyme to Tyr by site-directed mutagenesis.",
+        "publicationDate": "1987",
+        "journal": "J. Biochem.",
+        "firstPage": "733",
+        "lastPage": "740",
+        "volume": "102"
+      },
+      "referencePositions": [
+        "MUTAGENESIS"
+      ]
+    },
+    {
+      "referenceNumber": 12,
+      "citation": {
+        "id": "22044478",
+        "citationType": "journal article",
+        "authors": [
+          "Maehashi K.",
+          "Matano M.",
+          "Irisawa T.",
+          "Uchino M.",
+          "Kashiwagi Y.",
+          "Watanabe T."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "22044478"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/j.gene.2011.10.021"
+          }
+        ],
+        "title": "Molecular characterization of goose- and chicken-type lysozymes in emu (Dromaius novaehollandiae): evidence for extremely low lysozyme levels in emu egg white.",
+        "publicationDate": "2012",
+        "journal": "Gene",
+        "firstPage": "244",
+        "lastPage": "249",
+        "volume": "492"
+      },
+      "referencePositions": [
+        "FUNCTION"
+      ]
+    },
+    {
+      "referenceNumber": 13,
+      "citation": {
+        "id": "CI-AB8UMU84VUFIC",
+        "citationType": "book",
+        "authors": [
+          "Imoto T.",
+          "Johnson L.N.",
+          "North A.C.T.",
+          "Phillips D.C.",
+          "Rupley J.A."
+        ],
+        "title": "Vertebrate lysozymes.",
+        "publicationDate": "1972",
+        "bookName": "The enzymes (3rd ed.)",
+        "editors": [
+          "Boyer P.D."
+        ],
+        "firstPage": "665",
+        "lastPage": "868",
+        "volume": "7",
+        "publisher": "Academic Press",
+        "address": "New York"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.0 ANGSTROMS)",
+        "REVIEW"
+      ]
+    },
+    {
+      "referenceNumber": 14,
+      "citation": {
+        "id": "5891407",
+        "citationType": "journal article",
+        "authors": [
+          "Blake C.C.F.",
+          "Koenig D.F.",
+          "Mair G.A.",
+          "North A.C.T.",
+          "Phillips D.C.",
+          "Sarma V.R."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "5891407"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/206757a0"
+          }
+        ],
+        "title": "Structure of hen egg-white lysozyme. A three-dimensional Fourier synthesis at 2-A resolution.",
+        "publicationDate": "1965",
+        "journal": "Nature",
+        "firstPage": "757",
+        "lastPage": "761",
+        "volume": "206"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.0 ANGSTROMS)"
+      ]
+    },
+    {
+      "referenceNumber": 15,
+      "citation": {
+        "id": "1255711",
+        "citationType": "journal article",
+        "authors": [
+          "Moult J.",
+          "Yonath A.",
+          "Traub W.",
+          "Smilansky A.",
+          "Podjarny A.",
+          "Rabinovich D.",
+          "Saya A."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "1255711"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/s0022-2836(76)80147-7"
+          }
+        ],
+        "title": "The structure of triclinic lysozyme at 2.5-A resolution.",
+        "publicationDate": "1976",
+        "journal": "J. Mol. Biol.",
+        "firstPage": "179",
+        "lastPage": "195",
+        "volume": "100"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.5 ANGSTROMS) OF TRICLINIC LYSOZYME"
+      ]
+    },
+    {
+      "referenceNumber": 16,
+      "citation": {
+        "id": "1255720",
+        "citationType": "journal article",
+        "authors": [
+          "Kurachi K.",
+          "Sieker L.C.",
+          "Jensen L.H."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "1255720"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/0022-2836(76)90063-2"
+          }
+        ],
+        "title": "Structures of triclinic mono- and di-N-acetylglucosamine: lysozyme complexes -- a crystallographic study.",
+        "publicationDate": "1976",
+        "journal": "J. Mol. Biol.",
+        "firstPage": "11",
+        "lastPage": "24",
+        "volume": "101"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (1.9 ANGSTROMS) OF TRICLINIC LYSOZYME"
+      ]
+    },
+    {
+      "referenceNumber": 17,
+      "citation": {
+        "id": "1712773",
+        "citationType": "journal article",
+        "authors": [
+          "Fischmann T.O.",
+          "Bentley G.A.",
+          "Bhat T.N.",
+          "Boulot G.",
+          "Mariuzza R.A.",
+          "Phillips S.E.",
+          "Tello D.",
+          "Poljak R.J."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "1712773"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/s0021-9258(18)98782-x"
+          }
+        ],
+        "title": "Crystallographic refinement of the three-dimensional structure of the FabD1.3-lysozyme complex at 2.5-A resolution.",
+        "publicationDate": "1991",
+        "journal": "J. Biol. Chem.",
+        "firstPage": "12915",
+        "lastPage": "12920",
+        "volume": "266"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.5 ANGSTROMS) OF COMPLEX WITH ANTIBODY"
+      ]
+    },
+    {
+      "referenceNumber": 18,
+      "citation": {
+        "id": "3349024",
+        "citationType": "journal article",
+        "authors": [
+          "Redfield C.",
+          "Dobson C.M."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "3349024"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1021/bi00401a020"
+          }
+        ],
+        "title": "Sequential 1H NMR assignments and secondary structure of hen egg white lysozyme in solution.",
+        "publicationDate": "1988",
+        "journal": "Biochemistry",
+        "firstPage": "122",
+        "lastPage": "136",
+        "volume": "27"
+      },
+      "referencePositions": [
+        "STRUCTURE BY NMR"
+      ]
+    },
+    {
+      "referenceNumber": 19,
+      "citation": {
+        "id": "9220986",
+        "citationType": "journal article",
+        "authors": [
+          "Schwalbe H.",
+          "Fiebig K.M.",
+          "Buck M.",
+          "Jones J.A.",
+          "Grimshaw S.B.",
+          "Spencer A.",
+          "Glaser S.J.",
+          "Smith L.J.",
+          "Dobson C.M."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "9220986"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1021/bi970049q"
+          }
+        ],
+        "title": "Structural and dynamical properties of a denatured protein. Heteronuclear 3D NMR experiments and theoretical simulations of lysozyme in 8 M urea.",
+        "publicationDate": "1997",
+        "journal": "Biochemistry",
+        "firstPage": "8977",
+        "lastPage": "8991",
+        "volume": "36"
+      },
+      "referencePositions": [
+        "STRUCTURE BY NMR"
+      ]
+    },
+    {
+      "referenceNumber": 20,
+      "citation": {
+        "id": "CI-66JV6VB263DL4",
+        "citationType": "submission",
+        "authors": [
+          "Fernandez D.",
+          "Russi S."
+        ],
+        "title": "Protein Structural Changes on a CubeSat under Rocket Acceleration Profile.",
+        "publicationDate": "MAR-2020",
+        "submissionDatabase": "PDB data bank"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (1.60 ANGSTROMS) OF 19-147",
+        "DISULFIDE BONDS"
+      ]
+    }
+  ],
+  "uniProtKBCrossReferences": [
+    {
+      "database": "EMBL",
+      "id": "J00885",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "AAA48943.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "Genomic_DNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "V00428",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "CAA23711.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "mRNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "AF410481",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "AAL69327.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "Genomic_DNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "M10640",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "AAA48944.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "mRNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "FJ542373",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ACL81571.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "Genomic_DNA"
+        }
+      ]
+    },
+    {
+      "database": "PIR",
+      "id": "A93859",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "LZCH"
+        }
+      ]
+    },
+    {
+      "database": "RefSeq",
+      "id": "NP_990612.2",
+      "properties": [
+        {
+          "key": "NucleotideSequenceId",
+          "value": "NM_205281.2"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "132L",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "1.80 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A=19-147"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "193L",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "1.33 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A=19-147"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "194L",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "1.40 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A=19-147"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1A2Y",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "1.50 A"
+        },
+        {
+          "key": "Chains",
+          "value": "C=19-147"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1AKI",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "1.50 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A=19-147"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "132L",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "193L",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "194L",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "1A2Y",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "1AKI",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "AlphaFoldDB",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BMRB",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-0864",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-10090",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-18669",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-1981",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-1982",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "MDposit",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "MDRepo",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PCDDB",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "SASBDB",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "SMR",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BioGRID",
+      "id": "676478",
+      "properties": [
+        {
+          "key": "Interactions",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "DIP",
+      "id": "DIP-46258N",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "FunCoup",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Number of interactors",
+          "value": "126"
+        }
+      ]
+    },
+    {
+      "database": "IntAct",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Interactions",
+          "value": "6"
+        }
+      ]
+    },
+    {
+      "database": "MINT",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "STRING",
+      "id": "9031.ENSGALP00000016177",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BindingDB",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "ChEMBL",
+      "id": "CHEMBL1932892",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Allergome",
+      "id": "3294",
+      "properties": [
+        {
+          "key": "AllergenName",
+          "value": "Gal d 4.0101"
+        }
+      ]
+    },
+    {
+      "database": "Allergome",
+      "id": "362",
+      "properties": [
+        {
+          "key": "AllergenName",
+          "value": "Gal d 4"
+        }
+      ]
+    },
+    {
+      "database": "CAZy",
+      "id": "GH22",
+      "properties": [
+        {
+          "key": "FamilyName",
+          "value": "Glycoside Hydrolase Family 22"
+        }
+      ]
+    },
+    {
+      "database": "CarbonylDB",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "GlyGen",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "glycosylation",
+          "value": "2 sites"
+        }
+      ]
+    },
+    {
+      "database": "iPTMnet",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PaxDb",
+      "id": "9031-ENSGALP00000016177",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "ABCD",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "antibodies",
+          "value": "54 sequenced antibodies"
+        }
+      ]
+    },
+    {
+      "database": "Ensembl",
+      "id": "ENSGALT00010028688.1",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ENSGALP00010016495.1"
+        },
+        {
+          "key": "GeneId",
+          "value": "ENSGALG00010011983.1"
+        }
+      ]
+    },
+    {
+      "database": "GeneID",
+      "id": "396218",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "KEGG",
+      "id": "gga:396218",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "CTD",
+      "id": "4069",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "VEuPathDB",
+      "id": "HostDB:geneid_396218",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "eggNOG",
+      "id": "ENOG502S1S1",
+      "properties": [
+        {
+          "key": "ToxonomicScope",
+          "value": "Eukaryota"
+        }
+      ]
+    },
+    {
+      "database": "GeneTree",
+      "id": "ENSGT00940000153832",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "HOGENOM",
+      "id": "CLU_111620_0_1_1",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "InParanoid",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "OMA",
+      "id": "GNGMNAW",
+      "properties": [
+        {
+          "key": "Fingerprint",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "OrthoDB",
+      "id": "17373at2759",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PhylomeDB",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BRENDA",
+      "id": "3.2.1.17",
+      "properties": [
+        {
+          "key": "OrganismId",
+          "value": "1306"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-GGA-5653890",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "Lactose synthesis"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-GGA-6798695",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "Neutrophil degranulation"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-GGA-6803157",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "Antimicrobial peptides"
+        }
+      ]
+    },
+    {
+      "database": "SABIO-RK",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "CD-CODE",
+      "id": "783B6188",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Synthetic Condensate 000211"
+        }
+      ]
+    },
+    {
+      "database": "CD-CODE",
+      "id": "870FBEC9",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Synthetic Condensate 000218"
+        }
+      ]
+    },
+    {
+      "database": "EvolutionaryTrace",
+      "id": "P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PRO",
+      "id": "PR:P00698",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Proteomes",
+      "id": "UP000000539",
+      "properties": [
+        {
+          "key": "Component",
+          "value": "Chromosome 1"
+        }
+      ]
+    },
+    {
+      "database": "Bgee",
+      "id": "ENSGALG00000009963",
+      "properties": [
+        {
+          "key": "ExpressionPatterns",
+          "value": "Expressed in spleen and 7 other cell types or tissues"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005737",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:cytoplasm"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IDA:CAFA"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000314",
+          "source": "PubMed",
+          "id": "5440837"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005783",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:endoplasmic reticulum"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IDA:AgBase"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000314",
+          "source": "PubMed",
+          "id": "6930851"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005576",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:extracellular region"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IDA:AgBase"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000314",
+          "source": "PubMed",
+          "id": "10875774"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005794",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:Golgi apparatus"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IEA:Ensembl"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0016231",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "F:beta-N-acetylglucosaminidase activity"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IDA:AgBase"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000314",
+          "source": "PubMed",
+          "id": "16721662"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0042802",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "F:identical protein binding"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IPI:IntAct"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000353",
+          "source": "PubMed",
+          "id": "18697939"
+        },
+        {
+          "evidenceCode": "ECO:0000353",
+          "source": "PubMed",
+          "id": "23058288"
+        },
+        {
+          "evidenceCode": "ECO:0000353",
+          "source": "PubMed",
+          "id": "23416304"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0003796",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "F:lysozyme activity"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IDA:CACAO"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000314",
+          "source": "PubMed",
+          "id": "37167"
+        },
+        {
+          "evidenceCode": "ECO:0000314",
+          "source": "PubMed",
+          "id": "5440837"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0016998",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "P:cell wall macromolecule catabolic process"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IDA:CAFA"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000314",
+          "source": "PubMed",
+          "id": "5440837"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0042742",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "P:defense response to bacterium"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "TAS:AgBase"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000304",
+          "source": "PubMed",
+          "id": "16721662"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0050829",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "P:defense response to Gram-negative bacterium"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IBA:GO_Central"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0050830",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "P:defense response to Gram-positive bacterium"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IBA:GO_Central"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0031640",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "P:killing of cells of another organism"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IEA:Ensembl"
+        }
+      ]
+    },
+    {
+      "database": "CDD",
+      "id": "cd16897",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "LYZ_C"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "FunFam",
+      "id": "1.10.530.10:FF:000001",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Lysozyme C"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "Gene3D",
+      "id": "1.10.530.10",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "-"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR001916",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Glyco_hydro_22"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR019799",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Glyco_hydro_22_CS"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR000974",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Glyco_hydro_22_lys"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR023346",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Lysozyme-like_dom_sf"
+        }
+      ]
+    },
+    {
+      "database": "PANTHER",
+      "id": "PTHR11407",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "LYSOZYME C"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "PANTHER",
+      "id": "PTHR11407:SF28",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "LYSOZYME C"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "Pfam",
+      "id": "PF00062",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Lys"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "PRINTS",
+      "id": "PR00137",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "LYSOZYME"
+        }
+      ]
+    },
+    {
+      "database": "PRINTS",
+      "id": "PR00135",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "LYZLACT"
+        }
+      ]
+    },
+    {
+      "database": "SMART",
+      "id": "SM00263",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "LYZ1"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "SUPFAM",
+      "id": "SSF53955",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Lysozyme-like"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "PROSITE",
+      "id": "PS00128",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "GLYCOSYL_HYDROL_F22_1"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "PROSITE",
+      "id": "PS51348",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "GLYCOSYL_HYDROL_F22_2"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "sequence": {
+    "value": "MRSLLILVLCFLPLAALGKVFGRCELAAAMKRHGLDNYRGYSLGNWVCAAKFESNFNTQATNRNTDGSTDYGILQINSRWWCNDGRTPGSRNLCNIPCSALLSSDITASVNCAKKIVSDGNGMNAWVAWRNRCKGTDVQAWIRGCRL",
+    "length": 147,
+    "molWeight": 16239,
+    "crc64": "81E85743FF579468",
+    "md5": "E485279D5BF21CAA3B7967C566C68A5A"
+  },
+  "extraAttributes": {
+    "countByCommentType": {
+      "FUNCTION": 1,
+      "CATALYTIC ACTIVITY": 1,
+      "SUBUNIT": 1,
+      "INTERACTION": 2,
+      "SUBCELLULAR LOCATION": 1,
+      "TISSUE SPECIFICITY": 1,
+      "POLYMORPHISM": 1,
+      "ALLERGEN": 1,
+      "MISCELLANEOUS": 1,
+      "SIMILARITY": 1
+    },
+    "countByFeatureType": {
+      "Signal": 1,
+      "Chain": 1,
+      "Domain": 1,
+      "Active site": 2,
+      "Binding site": 1,
+      "Disulfide bond": 4,
+      "Natural variant": 3,
+      "Sequence conflict": 3,
+      "Helix": 8,
+      "Beta strand": 8,
+      "Turn": 4
+    },
+    "uniParcId": "UPI0000000F06"
+  },
+  "_fixture_nota": "xrefs recortadas a 5 por base de datos (originales: 2967)"
+}

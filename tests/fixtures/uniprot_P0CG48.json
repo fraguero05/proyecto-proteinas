@@ -1,0 +1,6821 @@
+{
+  "entryType": "UniProtKB reviewed (Swiss-Prot)",
+  "primaryAccession": "P0CG48",
+  "secondaryAccessions": [
+    "P02248",
+    "P02249",
+    "P02250",
+    "P62988",
+    "Q29120",
+    "Q6LBL4",
+    "Q6LDU5",
+    "Q8WYN8",
+    "Q91887",
+    "Q91888",
+    "Q9BWD6",
+    "Q9BX98",
+    "Q9UEF2",
+    "Q9UEG1",
+    "Q9UEK8",
+    "Q9UPK7"
+  ],
+  "uniProtkbId": "UBC_HUMAN",
+  "entryAudit": {
+    "firstPublicDate": "2010-08-10",
+    "lastAnnotationUpdateDate": "2026-09-02",
+    "lastSequenceUpdateDate": "2012-06-13",
+    "entryVersion": 138,
+    "sequenceVersion": 3
+  },
+  "annotationScore": 5.0,
+  "organism": {
+    "scientificName": "Homo sapiens",
+    "commonName": "Human",
+    "taxonId": 9606,
+    "lineage": [
+      "Eukaryota",
+      "Metazoa",
+      "Chordata",
+      "Craniata",
+      "Vertebrata",
+      "Euteleostomi",
+      "Mammalia",
+      "Eutheria",
+      "Euarchontoglires",
+      "Primates",
+      "Haplorrhini",
+      "Catarrhini",
+      "Hominidae",
+      "Homo"
+    ]
+  },
+  "proteinExistence": "1: Evidence at protein level",
+  "proteinDescription": {
+    "recommendedName": {
+      "fullName": {
+        "value": "Polyubiquitin-C"
+      }
+    },
+    "contains": [
+      {
+        "recommendedName": {
+          "fullName": {
+            "value": "Ubiquitin"
+          }
+        }
+      }
+    ],
+    "flag": "Precursor"
+  },
+  "genes": [
+    {
+      "geneName": {
+        "value": "UBC"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "16543144"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "34239127"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "38326650"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "39548056"
+            },
+            {
+              "evidenceCode": "ECO:0000303",
+              "source": "PubMed",
+              "id": "19754430"
+            }
+          ],
+          "value": "Exists either covalently attached to another protein, or free (unanchored). When covalently bound, it is conjugated to target proteins via an isopeptide bond either as a monomer (monoubiquitin), a polymer linked via different Lys residues of the ubiquitin (polyubiquitin chains) or a linear polymer linked via the initiator Met of the ubiquitin (linear polyubiquitin chains). Polyubiquitin chains, when attached to a target protein, have different functions depending on the Lys residue of the ubiquitin that is linked: Lys-6-linked may be involved in DNA repair; Lys-11-linked is involved in ERAD (endoplasmic reticulum-associated degradation) and in cell-cycle regulation; Lys-29-linked is involved in proteotoxic stress response and cell cycle; Lys-33-linked is involved in kinase modification; Lys-48-linked is involved in protein degradation via the proteasome; Lys-63-linked is involved in endocytosis, DNA-damage responses as well as in signaling processes leading to activation of the transcription factor NF-kappa-B. Linear polymer chains formed via attachment by the initiator Met lead to cell signaling. Ubiquitin is usually conjugated to Lys residues of target proteins, however, in rare cases, conjugation to Cys or Ser residues has been observed. When polyubiquitin is free (unanchored-polyubiquitin), it also has distinct roles, such as in activation of protein kinases, and in signaling. During ubiquitination, the acceptor ubiquitin is positioned in the active site via direct interaction with the E2 ubiquitin-conjugating enzymes such as UBE2R2 (PubMed:38326650). As a monoubiquitin, its C-terminal glycine is recognized as a C-degron by Cul2-RING (CRL2) E3 ubiquitin-protein ligase complexes (PubMed:39548056)"
+        }
+      ],
+      "commentType": "FUNCTION",
+      "molecule": "Ubiquitin"
+    },
+    {
+      "commentType": "INTERACTION",
+      "interactions": [
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9UNQ0",
+            "geneName": "ABCG2",
+            "intActId": "EBI-1569435"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q16186",
+            "geneName": "ADRM1",
+            "intActId": "EBI-954387"
+          },
+          "numberOfExperiments": 11,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9ULH1",
+            "geneName": "ASAP1",
+            "intActId": "EBI-346622"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O43150",
+            "geneName": "ASAP2",
+            "intActId": "EBI-310968"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P54252-1",
+            "geneName": "ATXN3",
+            "intActId": "EBI-946068"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9HB09-1",
+            "geneName": "BCL2L12",
+            "intActId": "EBI-6968951"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P35226",
+            "geneName": "BMI1",
+            "intActId": "EBI-2341576"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O60566",
+            "geneName": "BUB1B",
+            "intActId": "EBI-1001438"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9H305",
+            "geneName": "CDIP1",
+            "intActId": "EBI-2876678"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P06493",
+            "geneName": "CDK1",
+            "intActId": "EBI-444308"
+          },
+          "numberOfExperiments": 6,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q99062",
+            "geneName": "CSF3R",
+            "intActId": "EBI-7331284"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9UER7",
+            "geneName": "DAXX",
+            "intActId": "EBI-77321"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q15038",
+            "geneName": "DAZAP2",
+            "intActId": "EBI-724310"
+          },
+          "numberOfExperiments": 6,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O43583",
+            "geneName": "DENR",
+            "intActId": "EBI-716083"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q6ICB0",
+            "geneName": "DESI1",
+            "intActId": "EBI-2806959"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q86Y01",
+            "geneName": "DTX1",
+            "intActId": "EBI-1755174"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q15717",
+            "geneName": "ELAVL1",
+            "intActId": "EBI-374260"
+          },
+          "numberOfExperiments": 4,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O95208-2",
+            "geneName": "EPN2",
+            "intActId": "EBI-12135243"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q92567-2",
+            "geneName": "FAM168A",
+            "intActId": "EBI-11978259"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P25098",
+            "geneName": "GRK2",
+            "intActId": "EBI-3904795"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P42858",
+            "geneName": "HTT",
+            "intActId": "EBI-466029"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9Y6K9",
+            "geneName": "IKBKG",
+            "intActId": "EBI-81279"
+          },
+          "numberOfExperiments": 4,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q13887",
+            "geneName": "KLF5",
+            "intActId": "EBI-2696013"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P06239",
+            "geneName": "LCK",
+            "intActId": "EBI-1348"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P48357-3",
+            "geneName": "LEPR",
+            "intActId": "EBI-7886448"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9UDY8",
+            "geneName": "MALT1",
+            "intActId": "EBI-1047372"
+          },
+          "numberOfExperiments": 4,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9Y6R4",
+            "geneName": "MAP3K4",
+            "intActId": "EBI-448104"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O43318",
+            "geneName": "MAP3K7",
+            "intActId": "EBI-358684"
+          },
+          "numberOfExperiments": 5,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9NX47",
+            "geneName": "MARCHF5",
+            "intActId": "EBI-2341610"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q00987",
+            "geneName": "MDM2",
+            "intActId": "EBI-389668"
+          },
+          "numberOfExperiments": 6,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q8N3F0",
+            "geneName": "MTURN",
+            "intActId": "EBI-11980301"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P01106",
+            "geneName": "MYC",
+            "intActId": "EBI-447544"
+          },
+          "numberOfExperiments": 5,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q14596",
+            "geneName": "NBR1",
+            "intActId": "EBI-742698"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O43639",
+            "geneName": "NCK2",
+            "intActId": "EBI-713635"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q14934",
+            "geneName": "NFATC4",
+            "intActId": "EBI-3905796"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P25963",
+            "geneName": "NFKBIA",
+            "intActId": "EBI-307386"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q8TAT6",
+            "geneName": "NPLOC4",
+            "intActId": "EBI-1994109"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P09874",
+            "geneName": "PARP1",
+            "intActId": "EBI-355676"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P35227",
+            "geneName": "PCGF2",
+            "intActId": "EBI-2129767"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q96CS7",
+            "geneName": "PLEKHB2",
+            "intActId": "EBI-373552"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9NRQ2",
+            "geneName": "PLSCR4",
+            "intActId": "EBI-769257"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9Y253",
+            "geneName": "POLH",
+            "intActId": "EBI-2827270"
+          },
+          "numberOfExperiments": 4,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9UNA4",
+            "geneName": "POLI",
+            "intActId": "EBI-741774"
+          },
+          "numberOfExperiments": 4,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P17252",
+            "geneName": "PRKCA",
+            "intActId": "EBI-1383528"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P55036",
+            "geneName": "PSMD4",
+            "intActId": "EBI-359318"
+          },
+          "numberOfExperiments": 4,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P54727",
+            "geneName": "RAD23B",
+            "intActId": "EBI-954531"
+          },
+          "numberOfExperiments": 5,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q96NR8",
+            "geneName": "RDH12",
+            "intActId": "EBI-3916363"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q04206",
+            "geneName": "RELA",
+            "intActId": "EBI-73886"
+          },
+          "numberOfExperiments": 6,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q8N488",
+            "geneName": "RYBP",
+            "intActId": "EBI-752324"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9H4L4",
+            "geneName": "SENP3",
+            "intActId": "EBI-2880236"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q96B97",
+            "geneName": "SH3KBP1",
+            "intActId": "EBI-346595"
+          },
+          "numberOfExperiments": 6,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9Y5X1",
+            "geneName": "SNX9",
+            "intActId": "EBI-77848"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q13501",
+            "geneName": "SQSTM1",
+            "intActId": "EBI-307104"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q92783",
+            "geneName": "STAM",
+            "intActId": "EBI-752333"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q86VP1",
+            "geneName": "TAX1BP1",
+            "intActId": "EBI-529518"
+          },
+          "numberOfExperiments": 8,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P04637",
+            "geneName": "TP53",
+            "intActId": "EBI-366083"
+          },
+          "numberOfExperiments": 15,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9Y4K3",
+            "geneName": "TRAF6",
+            "intActId": "EBI-359276"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9BSL1",
+            "geneName": "UBAC1",
+            "intActId": "EBI-749370"
+          },
+          "numberOfExperiments": 4,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q8TF42",
+            "geneName": "UBASH3B",
+            "intActId": "EBI-1380492"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P60604",
+            "geneName": "UBE2G2",
+            "intActId": "EBI-1051028"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q05086-3",
+            "geneName": "UBE3A",
+            "intActId": "EBI-11026619"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9UHD9",
+            "geneName": "UBQLN2",
+            "intActId": "EBI-947187"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P98170",
+            "geneName": "XIAP",
+            "intActId": "EBI-517127"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q5VVQ6",
+            "geneName": "YOD1",
+            "intActId": "EBI-2510804"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O76080",
+            "geneName": "ZFAND5",
+            "intActId": "EBI-8028844"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9UGI0",
+            "geneName": "ZRANB1",
+            "intActId": "EBI-527853"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": false
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P40087",
+            "geneName": "DDI1",
+            "intActId": "EBI-5717"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P48510",
+            "geneName": "DSK2",
+            "intActId": "EBI-6174"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q61088",
+            "geneName": "Fzd4",
+            "intActId": "EBI-7987880"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O88522",
+            "geneName": "Ikbkg",
+            "intActId": "EBI-998011"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P32628",
+            "geneName": "RAD23",
+            "intActId": "EBI-14668"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q84L31",
+            "geneName": "RAD23C",
+            "intActId": "EBI-4437395"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q62921",
+            "geneName": "Rbck1",
+            "intActId": "EBI-7266339"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P0C6X7",
+            "geneName": "rep",
+            "chainId": "PRO_0000037311",
+            "intActId": "EBI-25474079"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P0DTD1",
+            "geneName": "rep",
+            "chainId": "PRO_0000449621",
+            "intActId": "EBI-25492388"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P04325",
+            "geneName": "rev",
+            "intActId": "EBI-7061954"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "P55034",
+            "geneName": "RPN10",
+            "intActId": "EBI-2620423"
+          },
+          "numberOfExperiments": 2,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "O48726",
+            "geneName": "RPN13",
+            "intActId": "EBI-7710745"
+          },
+          "numberOfExperiments": 9,
+          "organismDiffer": true
+        },
+        {
+          "interactantOne": {
+            "uniProtKBAccession": "P0CG48",
+            "intActId": "EBI-3390054"
+          },
+          "interactantTwo": {
+            "uniProtKBAccession": "Q9EPK8",
+            "geneName": "Trpv4",
+            "intActId": "EBI-7091763"
+          },
+          "numberOfExperiments": 3,
+          "organismDiffer": true
+        }
+      ]
+    },
+    {
+      "commentType": "SUBCELLULAR LOCATION",
+      "molecule": "Ubiquitin",
+      "subcellularLocations": [
+        {
+          "location": {
+            "evidences": [
+              {
+                "evidenceCode": "ECO:0000250"
+              }
+            ],
+            "value": "Cytoplasm",
+            "id": "SL-0086"
+          }
+        },
+        {
+          "location": {
+            "evidences": [
+              {
+                "evidenceCode": "ECO:0000250"
+              }
+            ],
+            "value": "Nucleus",
+            "id": "SL-0191"
+          }
+        },
+        {
+          "location": {
+            "evidences": [
+              {
+                "evidenceCode": "ECO:0000269",
+                "source": "PubMed",
+                "id": "24751536"
+              }
+            ],
+            "value": "Mitochondrion outer membrane",
+            "id": "SL-0172"
+          },
+          "topology": {
+            "evidences": [
+              {
+                "evidenceCode": "ECO:0000305",
+                "source": "PubMed",
+                "id": "24751536"
+              }
+            ],
+            "value": "Peripheral membrane protein",
+            "id": "SL-9903"
+          }
+        }
+      ]
+    },
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "24660806"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "24751536"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "24784582"
+            },
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "25527291"
+            }
+          ],
+          "value": "Phosphorylated at Ser-65 by PINK1 during mitophagy. Phosphorylated ubiquitin specifically binds and activates parkin (PRKN), triggering mitophagy (PubMed:24660806, PubMed:24751536, PubMed:24784582, PubMed:25527291). Phosphorylation does not affect E1-mediated E2 charging of ubiquitin but affects discharging of E2 enzymes to form polyubiquitin chains. It also affects deubiquitination by deubiquitinase enzymes such as USP30 (PubMed:25527291)"
+        }
+      ],
+      "commentType": "PTM",
+      "molecule": "Ubiquitin"
+    },
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "28525742"
+            }
+          ],
+          "value": "Mono-ADP-ribosylated at the C-terminus by PARP9, a component of the PPAR9-DTX3L complex. ADP-ribosylation requires processing by E1 and E2 enzymes and prevents ubiquitin conjugation to substrates such as histones"
+        }
+      ],
+      "commentType": "PTM",
+      "molecule": "Ubiquitin"
+    },
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000269",
+              "source": "PubMed",
+              "id": "32330457"
+            }
+          ],
+          "value": "(Microbial infection) Mono-ADP-ribosylated at Thr-66 by the C.violaceum CteC virulence factor. ADP-ribosylation causes the shutdown of polyubiquitin synthesis and disrupts the recognition and reversal of polyubiquitin"
+        }
+      ],
+      "commentType": "PTM",
+      "molecule": "Ubiquitin"
+    },
+    {
+      "texts": [
+        {
+          "value": "Ubiquitin is encoded by 4 different genes. UBA52 and RPS27A genes code for a single copy of ubiquitin fused to the ribosomal proteins eL40 and eS31, respectively. UBB and UBC genes code for a polyubiquitin precursor with exact head to tail repeats, the number of repeats differ between species and strains"
+        }
+      ],
+      "commentType": "MISCELLANEOUS"
+    },
+    {
+      "texts": [
+        {
+          "value": "For the sake of clarity sequence features are annotated only for the first chain, and are not repeated for each of the following chains"
+        }
+      ],
+      "commentType": "MISCELLANEOUS"
+    },
+    {
+      "texts": [
+        {
+          "evidences": [
+            {
+              "evidenceCode": "ECO:0000305"
+            }
+          ],
+          "value": "Belongs to the ubiquitin family"
+        }
+      ],
+      "commentType": "SIMILARITY"
+    }
+  ],
+  "features": [
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 1,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 76,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396178"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 77,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 152,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396179"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 153,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 228,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396180"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 229,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 304,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396181"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 305,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 380,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396182"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 381,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 456,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396183"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 457,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 532,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396184"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 533,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 608,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396185"
+    },
+    {
+      "type": "Chain",
+      "location": {
+        "start": {
+          "value": 609,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 684,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin",
+      "featureId": "PRO_0000396186"
+    },
+    {
+      "type": "Propeptide",
+      "location": {
+        "start": {
+          "value": 685,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 685,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "featureId": "PRO_0000396187"
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 1,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 76,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 1",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 77,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 152,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 2",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 153,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 228,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 3",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 229,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 304,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 4",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 305,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 380,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 5",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 381,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 456,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 6",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 457,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 532,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 7",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 533,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 608,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 8",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Domain",
+      "location": {
+        "start": {
+          "value": 609,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 684,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Ubiquitin-like 9",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000255",
+          "source": "PROSITE-ProRule",
+          "id": "PRU00214"
+        }
+      ]
+    },
+    {
+      "type": "Site",
+      "location": {
+        "start": {
+          "value": 54,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 54,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Interacts with activating enzyme"
+    },
+    {
+      "type": "Site",
+      "location": {
+        "start": {
+          "value": 68,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 68,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Essential for function"
+    },
+    {
+      "type": "Site",
+      "location": {
+        "start": {
+          "value": 72,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 72,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Interacts with activating enzyme"
+    },
+    {
+      "type": "Modified residue",
+      "location": {
+        "start": {
+          "value": 65,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 65,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Phosphoserine; by PINK1",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24660806"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24751536"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24784582"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "25527291"
+        }
+      ]
+    },
+    {
+      "type": "Modified residue",
+      "location": {
+        "start": {
+          "value": 66,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 66,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "(Microbial infection) ADP-ribosylthreonine",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "32330457"
+        }
+      ]
+    },
+    {
+      "type": "Modified residue",
+      "location": {
+        "start": {
+          "value": 76,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 76,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "ADP-ribosylglycine",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "28525742"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 6,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 6,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Lys-Gly) (interchain with G-Cter in ubiquitin)",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "16443603"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 11,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 11,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Lys-Gly) (interchain with G-Cter in ubiquitin)",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "16443603"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "16543144"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 27,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 27,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Lys-Gly) (interchain with G-Cter in ubiquitin)",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000305",
+          "source": "PubMed",
+          "id": "15466860"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 29,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 29,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Lys-Gly) (interchain with G-Cter in ubiquitin)",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "16543144"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "25752573"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "25752577"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "34239127"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 33,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 33,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Lys-Gly) (interchain with G-Cter in ubiquitin)",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "25752577"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 48,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 48,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Lys-Gly) (interchain with G-Cter in ubiquitin)",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "16443603"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "16543144"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 63,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 63,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Lys-Gly) (interchain with G-Cter in ubiquitin)",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "16543144"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "18719106"
+        }
+      ]
+    },
+    {
+      "type": "Cross-link",
+      "location": {
+        "start": {
+          "value": 76,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 76,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Glycyl lysine isopeptide (Gly-Lys) (interchain with K-? in acceptor proteins)"
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 7,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 7,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with D-9.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "T",
+        "alternativeSequences": [
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 9,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 9,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with D-7.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "T",
+        "alternativeSequences": [
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 42,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 42,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with D-44. Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with A-72.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "E"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 44,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 44,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with E-42. Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with A-68.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "I",
+        "alternativeSequences": [
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 48,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 48,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "No effect on HLTF-mediated polyubiquitination of PCNA. Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "18719106"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "K",
+        "alternativeSequences": [
+          "R"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 54,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 54,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Decreases affinity for UBE2R2 in CRL2(FEM1C)-UBE2R2 complex.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "38326650"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 60,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 60,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Decreases affinity for UBE2R2 in CRL2(FEM1C)-UBE2R2 complex.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "38326650"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "N",
+        "alternativeSequences": [
+          "R"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 63,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 63,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Abolishes HLTF-mediated polyubiquitination of PCNA.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "18719106"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "K",
+        "alternativeSequences": [
+          "R"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 65,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 65,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Prevents phosphorylation in case of mitophagy. Decreased localization of PRKN to mitochondria.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24660806"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24751536"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24784582"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "S",
+        "alternativeSequences": [
+          "A"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 65,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 65,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Phosphomimetic mutant that binds and activates PRKN.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24751536"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "S",
+        "alternativeSequences": [
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 65,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 65,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Phosphomimetic mutant that binds and activates PRKN.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24751536"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "S",
+        "alternativeSequences": [
+          "E"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 66,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 66,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Abolishes CteC-catalyzed ADP-ribosylation.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "32330457"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "T",
+        "alternativeSequences": [
+          "A"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 68,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 68,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Decreases affinity for UBE2R2 in ECS(FEM1C)-UBE2R2 complex. Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with D-44. Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with A-72.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "38326650"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "H",
+        "alternativeSequences": [
+          "A"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 68,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 68,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Loss of DTX3L-mediated polyubiquitination of histone H3 and H4.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "28525742"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "H",
+        "alternativeSequences": [
+          "G"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 72,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 72,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with E-42. Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex; when associated with A-68.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "A"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 72,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 72,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "No effect on ADP-ribosylation.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "28525742"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "G"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 72,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 72,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "No effect on ADP-ribosylation, when associated with K-74.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "28525742"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "K"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 74,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 74,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "No effect on ADP-ribosylation.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "28525742"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "G"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 74,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 74,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "No effect on ADP-ribosylation, when associated with K-72.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "28525742"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "R",
+        "alternativeSequences": [
+          "K"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 75,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 75,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "No effect on ubiquitination by CRL2(KLHDC3) E3 ligase complex. Impairs ubiquitination by CRL2(KLHDC10) E3 ligase complex.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "G",
+        "alternativeSequences": [
+          "R",
+          "Q"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 76,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 76,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Loss of ADP-ribosylation. Impairs ubiquitination by CRL2(KLHDC3) E3 ligase complex. No effect on ubiquitination by CRL2(KLHDC10) E3 ligase complex.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "28525742"
+        },
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "G",
+        "alternativeSequences": [
+          "A"
+        ]
+      }
+    },
+    {
+      "type": "Mutagenesis",
+      "location": {
+        "start": {
+          "value": 76,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 76,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "Impairs ubiquitination by CRL2(KLHDC3) and CRL2(KLHDC10) E3 ligase complex.",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "39548056"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "G",
+        "alternativeSequences": [
+          "D"
+        ]
+      }
+    },
+    {
+      "type": "Sequence conflict",
+      "location": {
+        "start": {
+          "value": 190,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 190,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "in Ref. 4; AC126309",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000305"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "P",
+        "alternativeSequences": [
+          "S"
+        ]
+      }
+    },
+    {
+      "type": "Sequence conflict",
+      "location": {
+        "start": {
+          "value": 397,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 397,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "in Ref. 6; BAA09860",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000305"
+        }
+      ],
+      "alternativeSequence": {
+        "originalSequence": "V",
+        "alternativeSequences": [
+          "G"
+        ]
+      }
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 381,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 386,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7YUI"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 392,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 397,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7YUI"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 403,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 414,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7YUI"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 418,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 420,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7YUI"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 421,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 425,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7YUI"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 428,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 430,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5B83"
+        }
+      ]
+    },
+    {
+      "type": "Turn",
+      "location": {
+        "start": {
+          "value": 436,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 440,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7YUI"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 446,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 451,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7YUI"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 458,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 463,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5H07"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 468,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 472,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5H07"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 479,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 490,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5H07"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 494,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 496,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5H07"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 497,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 501,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5H07"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 513,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 515,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5H07"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 522,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 527,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5H07"
+        }
+      ]
+    },
+    {
+      "type": "Turn",
+      "location": {
+        "start": {
+          "value": 529,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 531,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "7EB9"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 534,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 539,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3B08"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 540,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 542,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6N6R"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 544,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 548,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3B08"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 555,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 566,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3B08"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 570,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 572,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3B08"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 573,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 577,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3B08"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 579,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 581,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3N3K"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 586,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 588,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6N6R"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 589,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 591,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3B08"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 598,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 603,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3B08"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 610,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 615,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6Q00"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 616,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 618,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "4K1R"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 620,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 624,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6Q00"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 627,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 630,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "1G6J"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 631,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 642,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6Q00"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 646,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 648,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6Q00"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 649,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 653,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6Q00"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 656,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 658,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6TUV"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 662,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 664,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "3VUX"
+        }
+      ]
+    },
+    {
+      "type": "Helix",
+      "location": {
+        "start": {
+          "value": 665,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 667,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6Q00"
+        }
+      ]
+    },
+    {
+      "type": "Turn",
+      "location": {
+        "start": {
+          "value": 668,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 670,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "5OXH"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 671,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 673,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6EQI"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 674,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 679,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6Q00"
+        }
+      ]
+    },
+    {
+      "type": "Beta strand",
+      "location": {
+        "start": {
+          "value": 681,
+          "modifier": "EXACT"
+        },
+        "end": {
+          "value": 683,
+          "modifier": "EXACT"
+        }
+      },
+      "description": "",
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007829",
+          "source": "PDB",
+          "id": "6TUV"
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    {
+      "id": "KW-0002",
+      "category": "Technical term",
+      "name": "3D-structure"
+    },
+    {
+      "id": "KW-0013",
+      "category": "PTM",
+      "name": "ADP-ribosylation"
+    },
+    {
+      "id": "KW-0963",
+      "category": "Cellular component",
+      "name": "Cytoplasm"
+    },
+    {
+      "id": "KW-0903",
+      "category": "Technical term",
+      "name": "Direct protein sequencing"
+    },
+    {
+      "id": "KW-1017",
+      "category": "PTM",
+      "name": "Isopeptide bond"
+    },
+    {
+      "id": "KW-0472",
+      "category": "Cellular component",
+      "name": "Membrane"
+    },
+    {
+      "id": "KW-0496",
+      "category": "Cellular component",
+      "name": "Mitochondrion"
+    },
+    {
+      "id": "KW-1000",
+      "category": "Cellular component",
+      "name": "Mitochondrion outer membrane"
+    },
+    {
+      "id": "KW-0539",
+      "category": "Cellular component",
+      "name": "Nucleus"
+    },
+    {
+      "id": "KW-0597",
+      "category": "PTM",
+      "name": "Phosphoprotein"
+    },
+    {
+      "id": "KW-1185",
+      "category": "Technical term",
+      "name": "Reference proteome"
+    },
+    {
+      "id": "KW-0677",
+      "category": "Domain",
+      "name": "Repeat"
+    },
+    {
+      "id": "KW-0832",
+      "category": "PTM",
+      "name": "Ubl conjugation"
+    }
+  ],
+  "references": [
+    {
+      "referenceNumber": 1,
+      "citation": {
+        "id": "2988935",
+        "citationType": "journal article",
+        "authors": [
+          "Wiborg O.",
+          "Pedersen M.S.",
+          "Wind A.",
+          "Berglund L.E.",
+          "Marcker K.A.",
+          "Vuust J."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "2988935"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1002/j.1460-2075.1985.tb03693.x"
+          }
+        ],
+        "title": "The human ubiquitin multigene family: some genes contain multiple directly repeated ubiquitin coding sequences.",
+        "publicationDate": "1985",
+        "journal": "EMBO J.",
+        "firstPage": "755",
+        "lastPage": "759",
+        "volume": "4"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [MRNA]"
+      ]
+    },
+    {
+      "referenceNumber": 2,
+      "citation": {
+        "id": "9644242",
+        "citationType": "journal article",
+        "authors": [
+          "Kim N.S.",
+          "Yamaguchi T.",
+          "Sekine S.",
+          "Saeki M.",
+          "Iwamuro S.",
+          "Kato S."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "9644242"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1093/oxfordjournals.jbchem.a022093"
+          }
+        ],
+        "title": "Cloning of human polyubiquitin cDNAs and a ubiquitin-binding assay involving its in vitro translation product.",
+        "publicationDate": "1998",
+        "journal": "J. Biochem.",
+        "firstPage": "35",
+        "lastPage": "39",
+        "volume": "124"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [MRNA]"
+      ]
+    },
+    {
+      "referenceNumber": 3,
+      "citation": {
+        "id": "14745543",
+        "citationType": "journal article",
+        "authors": [
+          "Tachikui H.",
+          "Saitou N.",
+          "Nakajima T.",
+          "Hayasaka I.",
+          "Ishida T.",
+          "Inoue I."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "14745543"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1007/s00239-003-2532-4"
+          }
+        ],
+        "title": "Lineage-specific homogenization of the polyubiquitin gene among human and great apes.",
+        "publicationDate": "2003",
+        "journal": "J. Mol. Evol.",
+        "firstPage": "737",
+        "lastPage": "744",
+        "volume": "57"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [GENOMIC DNA]"
+      ]
+    },
+    {
+      "referenceNumber": 4,
+      "citation": {
+        "id": "16541075",
+        "citationType": "journal article",
+        "authors": [
+          "Scherer S.E.",
+          "Muzny D.M.",
+          "Buhay C.J.",
+          "Chen R.",
+          "Cree A.",
+          "Ding Y.",
+          "Dugan-Rocha S.",
+          "Gill R.",
+          "Gunaratne P.",
+          "Harris R.A.",
+          "Hawes A.C.",
+          "Hernandez J.",
+          "Hodgson A.V.",
+          "Hume J.",
+          "Jackson A.",
+          "Khan Z.M.",
+          "Kovar-Smith C.",
+          "Lewis L.R.",
+          "Lozado R.J.",
+          "Metzker M.L.",
+          "Milosavljevic A.",
+          "Miner G.R.",
+          "Montgomery K.T.",
+          "Morgan M.B.",
+          "Nazareth L.V.",
+          "Scott G.",
+          "Sodergren E.",
+          "Song X.-Z.",
+          "Steffen D.",
+          "Lovering R.C.",
+          "Wheeler D.A.",
+          "Worley K.C.",
+          "Yuan Y.",
+          "Zhang Z.",
+          "Adams C.Q.",
+          "Ansari-Lari M.A.",
+          "Ayele M.",
+          "Brown M.J.",
+          "Chen G.",
+          "Chen Z.",
+          "Clerc-Blankenburg K.P.",
+          "Davis C.",
+          "Delgado O.",
+          "Dinh H.H.",
+          "Draper H.",
+          "Gonzalez-Garay M.L.",
+          "Havlak P.",
+          "Jackson L.R.",
+          "Jacob L.S.",
+          "Kelly S.H.",
+          "Li L.",
+          "Li Z.",
+          "Liu J.",
+          "Liu W.",
+          "Lu J.",
+          "Maheshwari M.",
+          "Nguyen B.-V.",
+          "Okwuonu G.O.",
+          "Pasternak S.",
+          "Perez L.M.",
+          "Plopper F.J.H.",
+          "Santibanez J.",
+          "Shen H.",
+          "Tabor P.E.",
+          "Verduzco D.",
+          "Waldron L.",
+          "Wang Q.",
+          "Williams G.A.",
+          "Zhang J.",
+          "Zhou J.",
+          "Allen C.C.",
+          "Amin A.G.",
+          "Anyalebechi V.",
+          "Bailey M.",
+          "Barbaria J.A.",
+          "Bimage K.E.",
+          "Bryant N.P.",
+          "Burch P.E.",
+          "Burkett C.E.",
+          "Burrell K.L.",
+          "Calderon E.",
+          "Cardenas V.",
+          "Carter K.",
+          "Casias K.",
+          "Cavazos I.",
+          "Cavazos S.R.",
+          "Ceasar H.",
+          "Chacko J.",
+          "Chan S.N.",
+          "Chavez D.",
+          "Christopoulos C.",
+          "Chu J.",
+          "Cockrell R.",
+          "Cox C.D.",
+          "Dang M.",
+          "Dathorne S.R.",
+          "David R.",
+          "Davis C.M.",
+          "Davy-Carroll L.",
+          "Deshazo D.R.",
+          "Donlin J.E.",
+          "D'Souza L.",
+          "Eaves K.A.",
+          "Egan A.",
+          "Emery-Cohen A.J.",
+          "Escotto M.",
+          "Flagg N.",
+          "Forbes L.D.",
+          "Gabisi A.M.",
+          "Garza M.",
+          "Hamilton C.",
+          "Henderson N.",
+          "Hernandez O.",
+          "Hines S.",
+          "Hogues M.E.",
+          "Huang M.",
+          "Idlebird D.G.",
+          "Johnson R.",
+          "Jolivet A.",
+          "Jones S.",
+          "Kagan R.",
+          "King L.M.",
+          "Leal B.",
+          "Lebow H.",
+          "Lee S.",
+          "LeVan J.M.",
+          "Lewis L.C.",
+          "London P.",
+          "Lorensuhewa L.M.",
+          "Loulseged H.",
+          "Lovett D.A.",
+          "Lucier A.",
+          "Lucier R.L.",
+          "Ma J.",
+          "Madu R.C.",
+          "Mapua P.",
+          "Martindale A.D.",
+          "Martinez E.",
+          "Massey E.",
+          "Mawhiney S.",
+          "Meador M.G.",
+          "Mendez S.",
+          "Mercado C.",
+          "Mercado I.C.",
+          "Merritt C.E.",
+          "Miner Z.L.",
+          "Minja E.",
+          "Mitchell T.",
+          "Mohabbat F.",
+          "Mohabbat K.",
+          "Montgomery B.",
+          "Moore N.",
+          "Morris S.",
+          "Munidasa M.",
+          "Ngo R.N.",
+          "Nguyen N.B.",
+          "Nickerson E.",
+          "Nwaokelemeh O.O.",
+          "Nwokenkwo S.",
+          "Obregon M.",
+          "Oguh M.",
+          "Oragunye N.",
+          "Oviedo R.J.",
+          "Parish B.J.",
+          "Parker D.N.",
+          "Parrish J.",
+          "Parks K.L.",
+          "Paul H.A.",
+          "Payton B.A.",
+          "Perez A.",
+          "Perrin W.",
+          "Pickens A.",
+          "Primus E.L.",
+          "Pu L.-L.",
+          "Puazo M.",
+          "Quiles M.M.",
+          "Quiroz J.B.",
+          "Rabata D.",
+          "Reeves K.",
+          "Ruiz S.J.",
+          "Shao H.",
+          "Sisson I.",
+          "Sonaike T.",
+          "Sorelle R.P.",
+          "Sutton A.E.",
+          "Svatek A.F.",
+          "Svetz L.A.",
+          "Tamerisa K.S.",
+          "Taylor T.R.",
+          "Teague B.",
+          "Thomas N.",
+          "Thorn R.D.",
+          "Trejos Z.Y.",
+          "Trevino B.K.",
+          "Ukegbu O.N.",
+          "Urban J.B.",
+          "Vasquez L.I.",
+          "Vera V.A.",
+          "Villasana D.M.",
+          "Wang L.",
+          "Ward-Moore S.",
+          "Warren J.T.",
+          "Wei X.",
+          "White F.",
+          "Williamson A.L.",
+          "Wleczyk R.",
+          "Wooden H.S.",
+          "Wooden S.H.",
+          "Yen J.",
+          "Yoon L.",
+          "Yoon V.",
+          "Zorrilla S.E.",
+          "Nelson D.",
+          "Kucherlapati R.",
+          "Weinstock G.",
+          "Gibbs R.A."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "16541075"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/nature04569"
+          }
+        ],
+        "title": "The finished DNA sequence of human chromosome 12.",
+        "publicationDate": "2006",
+        "journal": "Nature",
+        "firstPage": "346",
+        "lastPage": "351",
+        "volume": "440"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA]"
+      ]
+    },
+    {
+      "referenceNumber": 5,
+      "citation": {
+        "id": "15489334",
+        "citationType": "journal article",
+        "authoringGroup": [
+          "The MGC Project Team"
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "15489334"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1101/gr.2596504"
+          }
+        ],
+        "title": "The status, quality, and expansion of the NIH full-length cDNA project: the Mammalian Gene Collection (MGC).",
+        "publicationDate": "2004",
+        "journal": "Genome Res.",
+        "firstPage": "2121",
+        "lastPage": "2127",
+        "volume": "14"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [LARGE SCALE MRNA]"
+      ],
+      "referenceComments": [
+        {
+          "value": "Brain",
+          "type": "TISSUE"
+        },
+        {
+          "value": "Liver",
+          "type": "TISSUE"
+        },
+        {
+          "value": "Lung",
+          "type": "TISSUE"
+        },
+        {
+          "value": "Placenta",
+          "type": "TISSUE"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 6,
+      "citation": {
+        "id": "8917096",
+        "citationType": "journal article",
+        "authors": [
+          "Nenoi M.",
+          "Mita K.",
+          "Ichimura S.",
+          "Cartwright I.L.",
+          "Takahashi E.",
+          "Yamauchi M.",
+          "Tsuji H."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "8917096"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/0378-1119(96)00145-x"
+          }
+        ],
+        "title": "Heterogeneous structure of the polyubiquitin gene UbC of HeLa S3 cells.",
+        "publicationDate": "1996",
+        "journal": "Gene",
+        "firstPage": "179",
+        "lastPage": "185",
+        "volume": "175"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [GENOMIC DNA] OF 1-611"
+      ]
+    },
+    {
+      "referenceNumber": 7,
+      "citation": {
+        "id": "1128706",
+        "citationType": "journal article",
+        "authors": [
+          "Schlesinger D.H.",
+          "Goldstein G."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "1128706"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/255423a0"
+          }
+        ],
+        "title": "Molecular conservation of 74 amino acid sequence of ubiquitin between cattle and man.",
+        "publicationDate": "1975",
+        "journal": "Nature",
+        "firstPage": "423",
+        "lastPage": "424",
+        "volume": "255"
+      },
+      "referencePositions": [
+        "PROTEIN SEQUENCE OF 1-74"
+      ]
+    },
+    {
+      "referenceNumber": 8,
+      "citation": {
+        "id": "CI-652NQH91LIDA8",
+        "citationType": "submission",
+        "authors": [
+          "Lubec G.",
+          "Chen W.-Q.",
+          "Sun Y."
+        ],
+        "publicationDate": "DEC-2008",
+        "submissionDatabase": "UniProtKB"
+      },
+      "referencePositions": [
+        "PROTEIN SEQUENCE OF 1-27; 30-42 AND 55-72",
+        "IDENTIFICATION BY MASS SPECTROMETRY"
+      ],
+      "referenceComments": [
+        {
+          "value": "Fetal brain cortex",
+          "type": "TISSUE"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 9,
+      "citation": {
+        "id": "16443603",
+        "citationType": "journal article",
+        "authors": [
+          "Cripps D.",
+          "Thomas S.N.",
+          "Jeng Y.",
+          "Yang F.",
+          "Davies P.",
+          "Yang A.J."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "16443603"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1074/jbc.m512786200"
+          }
+        ],
+        "title": "Alzheimer disease-specific conformation of hyperphosphorylated paired helical filament-tau is polyubiquitinated through Lys-48, Lys-11, and Lys-6 ubiquitin conjugation.",
+        "publicationDate": "2006",
+        "journal": "J. Biol. Chem.",
+        "firstPage": "10825",
+        "lastPage": "10838",
+        "volume": "281"
+      },
+      "referencePositions": [
+        "PROTEIN SEQUENCE OF 1-27 AND 43-54",
+        "UBIQUITINATION AT LYS-6; LYS-11 AND LYS-48",
+        "IDENTIFICATION BY MASS SPECTROMETRY"
+      ]
+    },
+    {
+      "referenceNumber": 10,
+      "citation": {
+        "id": "9504932",
+        "citationType": "journal article",
+        "authors": [
+          "Nenoi M.",
+          "Mita K.",
+          "Ichimura S.",
+          "Kawano A."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "9504932"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1093/genetics/148.2.867"
+          }
+        ],
+        "title": "Higher frequency of concerted evolutionary events in rodents than in man at the polyubiquitin gene VNTR locus.",
+        "publicationDate": "1998",
+        "journal": "Genetics",
+        "firstPage": "867",
+        "lastPage": "876",
+        "volume": "148"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [GENOMIC DNA] OF 77-685"
+      ]
+    },
+    {
+      "referenceNumber": 11,
+      "citation": {
+        "id": "2820408",
+        "citationType": "journal article",
+        "authors": [
+          "Einspanier R.",
+          "Sharma H.S.",
+          "Scheit K.H."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "2820408"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/0006-291x(87)90970-3"
+          }
+        ],
+        "title": "Cloning and sequence analysis of a cDNA encoding poly-ubiquitin in human ovarian granulosa cells.",
+        "publicationDate": "1987",
+        "journal": "Biochem. Biophys. Res. Commun.",
+        "firstPage": "581",
+        "lastPage": "587",
+        "volume": "147"
+      },
+      "referencePositions": [
+        "NUCLEOTIDE SEQUENCE [MRNA] OF 417-685"
+      ]
+    },
+    {
+      "referenceNumber": 12,
+      "citation": {
+        "id": "16543144",
+        "citationType": "journal article",
+        "authors": [
+          "Huang F.",
+          "Kirkpatrick D.",
+          "Jiang X.",
+          "Gygi S.P.",
+          "Sorkin A."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "16543144"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/j.molcel.2006.02.018"
+          }
+        ],
+        "title": "Differential regulation of EGF receptor internalization and degradation by multiubiquitination within the kinase domain.",
+        "publicationDate": "2006",
+        "journal": "Mol. Cell",
+        "firstPage": "737",
+        "lastPage": "748",
+        "volume": "21"
+      },
+      "referencePositions": [
+        "FUNCTION",
+        "UBIQUITINATION AT LYS-11; LYS-29; LYS-48 AND LYS-63",
+        "IDENTIFICATION BY MASS SPECTROMETRY"
+      ]
+    },
+    {
+      "referenceNumber": 13,
+      "citation": {
+        "id": "15466860",
+        "citationType": "journal article",
+        "authors": [
+          "Okumura F.",
+          "Hatakeyama S.",
+          "Matsumoto M.",
+          "Kamura T.",
+          "Nakayama K."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "15466860"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1074/jbc.m402916200"
+          }
+        ],
+        "title": "Functional regulation of FEZ1 by the U-box-type ubiquitin ligase E4B contributes to neuritogenesis.",
+        "publicationDate": "2004",
+        "journal": "J. Biol. Chem.",
+        "firstPage": "53533",
+        "lastPage": "53543",
+        "volume": "279"
+      },
+      "referencePositions": [
+        "UBIQUITINATION AT LYS-27"
+      ]
+    },
+    {
+      "referenceNumber": 14,
+      "citation": {
+        "id": "18719106",
+        "citationType": "journal article",
+        "authors": [
+          "Motegi A.",
+          "Liaw H.-J.",
+          "Lee K.-Y.",
+          "Roest H.P.",
+          "Maas A.",
+          "Wu X.",
+          "Moinova H.",
+          "Markowitz S.D.",
+          "Ding H.",
+          "Hoeijmakers J.H.J.",
+          "Myung K."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "18719106"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1073/pnas.0805685105"
+          }
+        ],
+        "title": "Polyubiquitination of proliferating cell nuclear antigen by HLTF and SHPRH prevents genomic instability from stalled replication forks.",
+        "publicationDate": "2008",
+        "journal": "Proc. Natl. Acad. Sci. U.S.A.",
+        "firstPage": "12411",
+        "lastPage": "12416",
+        "volume": "105"
+      },
+      "referencePositions": [
+        "UBIQUITINATION AT LYS-63",
+        "MUTAGENESIS OF LYS-48 AND LYS-63"
+      ]
+    },
+    {
+      "referenceNumber": 15,
+      "citation": {
+        "id": "19754430",
+        "citationType": "journal article",
+        "authors": [
+          "Komander D."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "19754430"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1042/bst0370937"
+          }
+        ],
+        "title": "The emerging complexity of protein ubiquitination.",
+        "publicationDate": "2009",
+        "journal": "Biochem. Soc. Trans.",
+        "firstPage": "937",
+        "lastPage": "953",
+        "volume": "37"
+      },
+      "referencePositions": [
+        "REVIEW",
+        "FUNCTION"
+      ]
+    },
+    {
+      "referenceNumber": 16,
+      "citation": {
+        "id": "24660806",
+        "citationType": "journal article",
+        "authors": [
+          "Kazlauskaite A.",
+          "Kondapalli C.",
+          "Gourlay R.",
+          "Campbell D.G.",
+          "Ritorto M.S.",
+          "Hofmann K.",
+          "Alessi D.R.",
+          "Knebel A.",
+          "Trost M.",
+          "Muqit M.M."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "24660806"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1042/bj20140334"
+          }
+        ],
+        "title": "Parkin is activated by PINK1-dependent phosphorylation of ubiquitin at Ser65.",
+        "publicationDate": "2014",
+        "journal": "Biochem. J.",
+        "firstPage": "127",
+        "lastPage": "139",
+        "volume": "460"
+      },
+      "referencePositions": [
+        "PHOSPHORYLATION AT SER-65",
+        "MUTAGENESIS OF SER-65"
+      ]
+    },
+    {
+      "referenceNumber": 17,
+      "citation": {
+        "id": "24751536",
+        "citationType": "journal article",
+        "authors": [
+          "Kane L.A.",
+          "Lazarou M.",
+          "Fogel A.I.",
+          "Li Y.",
+          "Yamano K.",
+          "Sarraf S.A.",
+          "Banerjee S.",
+          "Youle R.J."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "24751536"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1083/jcb.201402104"
+          }
+        ],
+        "title": "PINK1 phosphorylates ubiquitin to activate Parkin E3 ubiquitin ligase activity.",
+        "publicationDate": "2014",
+        "journal": "J. Cell Biol.",
+        "firstPage": "143",
+        "lastPage": "153",
+        "volume": "205"
+      },
+      "referencePositions": [
+        "SUBCELLULAR LOCATION",
+        "PHOSPHORYLATION AT SER-65",
+        "MUTAGENESIS OF SER-65"
+      ]
+    },
+    {
+      "referenceNumber": 18,
+      "citation": {
+        "id": "24784582",
+        "citationType": "journal article",
+        "authors": [
+          "Koyano F.",
+          "Okatsu K.",
+          "Kosako H.",
+          "Tamura Y.",
+          "Go E.",
+          "Kimura M.",
+          "Kimura Y.",
+          "Tsuchiya H.",
+          "Yoshihara H.",
+          "Hirokawa T.",
+          "Endo T.",
+          "Fon E.A.",
+          "Trempe J.F.",
+          "Saeki Y.",
+          "Tanaka K.",
+          "Matsuda N."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "24784582"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/nature13392"
+          }
+        ],
+        "title": "Ubiquitin is phosphorylated by PINK1 to activate parkin.",
+        "publicationDate": "2014",
+        "journal": "Nature",
+        "firstPage": "162",
+        "lastPage": "166",
+        "volume": "510"
+      },
+      "referencePositions": [
+        "PHOSPHORYLATION AT SER-65",
+        "MUTAGENESIS OF SER-65"
+      ]
+    },
+    {
+      "referenceNumber": 19,
+      "citation": {
+        "id": "28525742",
+        "citationType": "journal article",
+        "authors": [
+          "Yang C.S.",
+          "Jividen K.",
+          "Spencer A.",
+          "Dworak N.",
+          "Ni L.",
+          "Oostdyk L.T.",
+          "Chatterjee M.",
+          "Kusmider B.",
+          "Reon B.",
+          "Parlak M.",
+          "Gorbunova V.",
+          "Abbas T.",
+          "Jeffery E.",
+          "Sherman N.E.",
+          "Paschal B.M."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "28525742"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/j.molcel.2017.04.028"
+          }
+        ],
+        "title": "Ubiquitin Modification by the E3 Ligase/ADP-Ribosyltransferase Dtx3L/Parp9.",
+        "publicationDate": "2017",
+        "journal": "Mol. Cell",
+        "firstPage": "503",
+        "lastPage": "516",
+        "volume": "66"
+      },
+      "referencePositions": [
+        "ADP-RIBOSYLATION AT GLY-76",
+        "MUTAGENESIS OF HIS-68; ARG-72; ARG-74 AND GLY-76"
+      ]
+    },
+    {
+      "referenceNumber": 20,
+      "citation": {
+        "id": "34239127",
+        "citationType": "journal article",
+        "authors": [
+          "Yu Y.",
+          "Zheng Q.",
+          "Erramilli S.K.",
+          "Pan M.",
+          "Park S.",
+          "Xie Y.",
+          "Li J.",
+          "Fei J.",
+          "Kossiakoff A.A.",
+          "Liu L.",
+          "Zhao M."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "34239127"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/s41589-021-00823-5"
+          }
+        ],
+        "title": "K29-linked ubiquitin signaling regulates proteotoxic stress response and cell cycle.",
+        "publicationDate": "2021",
+        "journal": "Nat. Chem. Biol.",
+        "firstPage": "896",
+        "lastPage": "905",
+        "volume": "17"
+      },
+      "referencePositions": [
+        "FUNCTION (UBIQUITIN)",
+        "UBIQUITINATION AT LYS-29"
+      ]
+    },
+    {
+      "referenceNumber": 21,
+      "citation": {
+        "id": "25752573",
+        "citationType": "journal article",
+        "authors": [
+          "Kristariyanto Y.A.",
+          "Abdul Rehman S.A.",
+          "Campbell D.G.",
+          "Morrice N.A.",
+          "Johnson C.",
+          "Toth R.",
+          "Kulathu Y."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "25752573"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/j.molcel.2015.01.041"
+          }
+        ],
+        "title": "K29-selective ubiquitin binding domain reveals structural basis of specificity and heterotypic nature of K29 polyubiquitin.",
+        "publicationDate": "2015",
+        "journal": "Mol. Cell",
+        "firstPage": "83",
+        "lastPage": "94",
+        "volume": "58"
+      },
+      "referencePositions": [
+        "UBIQUITINATION AT LYS-29"
+      ]
+    },
+    {
+      "referenceNumber": 22,
+      "citation": {
+        "id": "3041007",
+        "citationType": "journal article",
+        "authors": [
+          "Vijay-Kumar S.",
+          "Bugg C.E.",
+          "Cook W.J."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "3041007"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/0022-2836(87)90679-6"
+          }
+        ],
+        "title": "Structure of ubiquitin refined at 1.8-A resolution.",
+        "publicationDate": "1987",
+        "journal": "J. Mol. Biol.",
+        "firstPage": "531",
+        "lastPage": "544",
+        "volume": "194"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (1.80 ANGSTROMS) OF 1-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "1UBQ"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 23,
+      "citation": {
+        "id": "8166633",
+        "citationType": "journal article",
+        "authors": [
+          "Ramage R.",
+          "Green J.",
+          "Muir T.W.",
+          "Ogunjobi O.M.",
+          "Love S.",
+          "Shaw K."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "8166633"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1042/bj2990151"
+          }
+        ],
+        "title": "Synthetic, structural and biological studies of the ubiquitin system: the total chemical synthesis of ubiquitin.",
+        "publicationDate": "1994",
+        "journal": "Biochem. J.",
+        "firstPage": "151",
+        "lastPage": "158",
+        "volume": "299"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (1.80 ANGSTROMS) OF 1-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "1UBI"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 24,
+      "citation": {
+        "id": "8107144",
+        "citationType": "journal article",
+        "authors": [
+          "Cook W.J.",
+          "Jeffrey L.C.",
+          "Kasperek E.",
+          "Pickart C.M."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "8107144"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1006/jmbi.1994.1169"
+          }
+        ],
+        "title": "Structure of tetraubiquitin shows how multiubiquitin chains can be formed.",
+        "publicationDate": "1994",
+        "journal": "J. Mol. Biol.",
+        "firstPage": "601",
+        "lastPage": "609",
+        "volume": "236"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.40 ANGSTROMS) OF 1-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "1TBE"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 25,
+      "citation": {
+        "id": "11173499",
+        "citationType": "journal article",
+        "authors": [
+          "Phillips C.L.",
+          "Thrower J.",
+          "Pickart C.M.",
+          "Hill C.P."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "11173499"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1107/s090744490001800x"
+          }
+        ],
+        "title": "Structure of a new crystal form of tetraubiquitin.",
+        "publicationDate": "2001",
+        "journal": "Acta Crystallogr. D",
+        "firstPage": "341",
+        "lastPage": "344",
+        "volume": "57"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.70 ANGSTROMS) OF 1-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "1F9J"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 26,
+      "citation": {
+        "id": "12507430",
+        "citationType": "journal article",
+        "authors": [
+          "Hu M.",
+          "Li P.",
+          "Li M.",
+          "Li W.",
+          "Yao T.",
+          "Wu J.-W.",
+          "Gu W.",
+          "Cohen R.E.",
+          "Shi Y."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "12507430"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/s0092-8674(02)01199-6"
+          }
+        ],
+        "title": "Crystal structure of a UBP-family deubiquitinating enzyme in isolation and in complex with ubiquitin aldehyde.",
+        "publicationDate": "2002",
+        "journal": "Cell",
+        "firstPage": "1041",
+        "lastPage": "1054",
+        "volume": "111"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.30 ANGSTROMS) OF 1-76 IN COMPLEX WITH USP7"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "1NBF"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 27,
+      "citation": {
+        "id": "21399617",
+        "citationType": "journal article",
+        "authors": [
+          "Ye Y.",
+          "Akutsu M.",
+          "Reyes-Turcu F.",
+          "Enchev R.I.",
+          "Wilkinson K.D.",
+          "Komander D."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "21399617"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/embor.2011.17"
+          }
+        ],
+        "title": "Polyubiquitin binding and cross-reactivity in the USP domain deubiquitinase USP21.",
+        "publicationDate": "2011",
+        "journal": "EMBO Rep.",
+        "firstPage": "350",
+        "lastPage": "357",
+        "volume": "12"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.70 ANGSTROMS) OF 1-152 IN COMPLEX WITH USP21"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "2Y5B"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 28,
+      "citation": {
+        "id": "20622874",
+        "citationType": "journal article",
+        "authors": [
+          "Bremm A.",
+          "Freund S.M.",
+          "Komander D."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "20622874"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/nsmb.1873"
+          }
+        ],
+        "title": "Lys11-linked ubiquitin chains adopt compact conformations and are preferentially hydrolyzed by the deubiquitinase Cezanne.",
+        "publicationDate": "2010",
+        "journal": "Nat. Struct. Mol. Biol.",
+        "firstPage": "939",
+        "lastPage": "947",
+        "volume": "17"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.20 ANGSTROMS) OF 1-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "2XEW"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 29,
+      "citation": {
+        "id": "23827681",
+        "citationType": "journal article",
+        "authors": [
+          "Mevissen T.E.",
+          "Hospenthal M.K.",
+          "Geurink P.P.",
+          "Elliott P.R.",
+          "Akutsu M.",
+          "Arnaudo N.",
+          "Ekkebus R.",
+          "Kulathu Y.",
+          "Wauer T.",
+          "El Oualid F.",
+          "Freund S.M.",
+          "Ovaa H.",
+          "Komander D."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "23827681"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/j.cell.2013.05.046"
+          }
+        ],
+        "title": "OTU deubiquitinases reveal mechanisms of linkage specificity and enable ubiquitin chain restriction analysis.",
+        "publicationDate": "2013",
+        "journal": "Cell",
+        "firstPage": "169",
+        "lastPage": "184",
+        "volume": "154"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.35 ANGSTROMS) OF 609-684 IN COMPLEX WITH YOD1"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "4BOS"
+        },
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "4BOZ"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 30,
+      "citation": {
+        "id": "25527291",
+        "citationType": "journal article",
+        "authors": [
+          "Wauer T.",
+          "Swatek K.N.",
+          "Wagstaff J.L.",
+          "Gladkova C.",
+          "Pruneda J.N.",
+          "Michel M.A.",
+          "Gersch M.",
+          "Johnson C.M.",
+          "Freund S.M.",
+          "Komander D."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "25527291"
+          },
+          {
+            "database": "DOI",
+            "id": "10.15252/embj.201489847"
+          }
+        ],
+        "title": "Ubiquitin Ser65 phosphorylation affects ubiquitin structure, chain assembly and hydrolysis.",
+        "publicationDate": "2015",
+        "journal": "EMBO J.",
+        "firstPage": "307",
+        "lastPage": "325",
+        "volume": "34"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (1.90 ANGSTROMS) OF 153-228 PHOSPHORYLATED AT SER-65",
+        "PHOSPHORYLATION AT SER-65"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "4WZP"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 31,
+      "citation": {
+        "id": "25752577",
+        "citationType": "journal article",
+        "authors": [
+          "Michel M.A.",
+          "Elliott P.R.",
+          "Swatek K.N.",
+          "Simicek M.",
+          "Pruneda J.N.",
+          "Wagstaff J.L.",
+          "Freund S.M.",
+          "Komander D."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "25752577"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/j.molcel.2015.01.042"
+          }
+        ],
+        "title": "Assembly and specific recognition of K29- and K33-linked polyubiquitin.",
+        "publicationDate": "2015",
+        "journal": "Mol. Cell",
+        "firstPage": "95",
+        "lastPage": "109",
+        "volume": "58"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (1.68 ANGSTROMS) OF 1-76 IN COMPLEX WITH ZRANB1",
+        "UBIQUITINATION AT LYS-29 AND LYS-33"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "5AF4"
+        },
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "5AF5"
+        },
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "5AF6"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 32,
+      "citation": {
+        "id": "32330457",
+        "citationType": "journal article",
+        "authors": [
+          "Yan F.",
+          "Huang C.",
+          "Wang X.",
+          "Tan J.",
+          "Cheng S.",
+          "Wan M.",
+          "Wang Z.",
+          "Wang S.",
+          "Luo S.",
+          "Li A.",
+          "Guo X.",
+          "Feng M.",
+          "Liu X.",
+          "Zhu Y.",
+          "Zhou Y."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "32330457"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1016/j.molcel.2020.03.016"
+          }
+        ],
+        "title": "Threonine ADP-ribosylation of ubiquitin by a bacterial effector family blocks host ubiquitination.",
+        "publicationDate": "2020",
+        "journal": "Mol. Cell",
+        "firstPage": "641",
+        "lastPage": "652",
+        "volume": "78"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (2.55 ANGSTROMS) OF 1-76",
+        "ADP-RIBOSYLATION AT THR-66 (MICROBIAL INFECTION)",
+        "MUTAGENESIS OF THR-66"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "6K2U"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 33,
+      "citation": {
+        "id": "32066963",
+        "citationType": "journal article",
+        "authors": [
+          "Alcon P.",
+          "Shakeel S.",
+          "Chen Z.A.",
+          "Rappsilber J.",
+          "Patel K.J.",
+          "Passmore L.A."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "32066963"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/s41594-020-0380-1"
+          }
+        ],
+        "title": "FANCD2-FANCI is a clamp stabilized on DNA by monoubiquitination of FANCD2 during DNA repair.",
+        "publicationDate": "2020",
+        "journal": "Nat. Struct. Mol. Biol.",
+        "firstPage": "240",
+        "lastPage": "248",
+        "volume": "27"
+      },
+      "referencePositions": [
+        "STRUCTURE BY ELECTRON MICROSCOPY (3.80 ANGSTROMS) OF 1-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "6TNF"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 34,
+      "citation": {
+        "id": "36385258",
+        "citationType": "journal article",
+        "authors": [
+          "Lemonidis K.",
+          "Rennie M.L.",
+          "Arkinson C.",
+          "Chaugule V.K.",
+          "Clarke M.",
+          "Streetley J.",
+          "Walden H."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "36385258"
+          },
+          {
+            "database": "DOI",
+            "id": "10.15252/embj.2022111898"
+          }
+        ],
+        "title": "Structural and biochemical basis of interdependent FANCI-FANCD2 ubiquitination.",
+        "publicationDate": "2023",
+        "journal": "EMBO J.",
+        "firstPage": "e111898",
+        "lastPage": "e111898",
+        "volume": "42"
+      },
+      "referencePositions": [
+        "STRUCTURE BY ELECTRON MICROSCOPY (4.14 ANGSTROMS) OF 1-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "7ZF1"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 35,
+      "citation": {
+        "id": "38326650",
+        "citationType": "journal article",
+        "authors": [
+          "Liwocha J.",
+          "Li J.",
+          "Purser N.",
+          "Rattanasopa C.",
+          "Maiwald S.",
+          "Krist D.T.",
+          "Scott D.C.",
+          "Steigenberger B.",
+          "Prabu J.R.",
+          "Schulman B.A.",
+          "Kleiger G."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "38326650"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/s41594-023-01206-1"
+          }
+        ],
+        "title": "Mechanism of millisecond Lys48-linked poly-ubiquitin chain formation by cullin-RING ligases.",
+        "publicationDate": "2024",
+        "journal": "Nat. Struct. Mol. Biol.",
+        "firstPage": "378",
+        "lastPage": "389",
+        "volume": "31"
+      },
+      "referencePositions": [
+        "STRUCTURE BY ELECTRON MICROSCOPY (3.76 ANGSTROMS) IN COMPLEX WITH UBE2R2 AND CRL2(FEM1C) COMPLEX",
+        "FUNCTION",
+        "MUTAGENESIS OF ARG-54; ASN-60 AND HIS-68"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "8PQL"
+        }
+      ]
+    },
+    {
+      "referenceNumber": 36,
+      "citation": {
+        "id": "39548056",
+        "citationType": "journal article",
+        "authors": [
+          "Scott D.C.",
+          "Chittori S.",
+          "Purser N.",
+          "King M.T.",
+          "Maiwald S.A.",
+          "Churion K.",
+          "Nourse A.",
+          "Lee C.",
+          "Paulo J.A.",
+          "Miller D.J.",
+          "Elledge S.J.",
+          "Harper J.W.",
+          "Kleiger G.",
+          "Schulman B.A."
+        ],
+        "citationCrossReferences": [
+          {
+            "database": "PubMed",
+            "id": "39548056"
+          },
+          {
+            "database": "DOI",
+            "id": "10.1038/s41467-024-54126-z"
+          }
+        ],
+        "title": "Structural basis for C-degron selectivity across KLHDCX family E3 ubiquitin ligases.",
+        "publicationDate": "2024",
+        "journal": "Nat. Commun.",
+        "firstPage": "9899",
+        "lastPage": "9899",
+        "volume": "15"
+      },
+      "referencePositions": [
+        "X-RAY CRYSTALLOGRAPHY (1.88 ANGSTROMS) OF 1-76 IN COMPLEX WITH KLHDC3; ELOB AND ELOC",
+        "STRUCTURE BY ELECTRON MICROSCOPY (3.20 ANGSTROMS) OF 1-76 IN COMPLEX WITH KLHDC10; ELOB AND ELOC",
+        "FUNCTION",
+        "MUTAGENESIS OF THR-7; THR-9; ARG-42; ILE-44; LYS-48; HIS-68; ARG-72; GLY-75 AND GLY-76"
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "9D1I"
+        },
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "9D1Y"
+        },
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "9D1Z"
+        },
+        {
+          "evidenceCode": "ECO:0007744",
+          "source": "PDB",
+          "id": "9D8P"
+        }
+      ]
+    }
+  ],
+  "uniProtKBCrossReferences": [
+    {
+      "database": "EMBL",
+      "id": "M26880",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "AAA36789.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "mRNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "AB009010",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "BAA23632.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "mRNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "AB089613",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "BAC56951.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "Genomic_DNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "AC126309",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "-"
+        },
+        {
+          "key": "Status",
+          "value": "NOT_ANNOTATED_CDS"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "Genomic_DNA"
+        }
+      ]
+    },
+    {
+      "database": "EMBL",
+      "id": "BC039193",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "AAH39193.1"
+        },
+        {
+          "key": "Status",
+          "value": "-"
+        },
+        {
+          "key": "MoleculeType",
+          "value": "mRNA"
+        }
+      ]
+    },
+    {
+      "database": "CCDS",
+      "id": "CCDS9260.1",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PIR",
+      "id": "A02574",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "UQHU"
+        }
+      ]
+    },
+    {
+      "database": "PIR",
+      "id": "A22005",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "UQHUC"
+        }
+      ]
+    },
+    {
+      "database": "PIR",
+      "id": "A29526",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "A29526"
+        }
+      ]
+    },
+    {
+      "database": "RefSeq",
+      "id": "NP_066289.3",
+      "properties": [
+        {
+          "key": "NucleotideSequenceId",
+          "value": "NM_021009.7"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "11SY",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "EM"
+        },
+        {
+          "key": "Resolution",
+          "value": "4.28 A"
+        },
+        {
+          "key": "Chains",
+          "value": "H/I/J/K=1-76"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1C3T",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "NMR"
+        },
+        {
+          "key": "Resolution",
+          "value": "-"
+        },
+        {
+          "key": "Chains",
+          "value": "A=1-76"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1CMX",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "2.25 A"
+        },
+        {
+          "key": "Chains",
+          "value": "B/D=1-76"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1D3Z",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "NMR"
+        },
+        {
+          "key": "Resolution",
+          "value": "-"
+        },
+        {
+          "key": "Chains",
+          "value": "A=1-76"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1F9J",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "2.70 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A/B=1-76"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "11SY",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "1C3T",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "1CMX",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "1D3Z",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PDBsum",
+      "id": "1F9J",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "AlphaFoldDB",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BMRB",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-0480",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-10415",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-10531",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-10585",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "EMDB",
+      "id": "EMD-12037",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "MDposit",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "SASBDB",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "SMR",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BioGRID",
+      "id": "113164",
+      "properties": [
+        {
+          "key": "Interactions",
+          "value": "2350"
+        }
+      ]
+    },
+    {
+      "database": "FunCoup",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Number of interactors",
+          "value": "1876"
+        }
+      ]
+    },
+    {
+      "database": "IntAct",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Interactions",
+          "value": "230"
+        }
+      ]
+    },
+    {
+      "database": "MINT",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "NDEx",
+      "id": "IQUERY-CP-UBC",
+      "properties": [
+        {
+          "key": "Evidences",
+          "value": "8 NDEx IQuery Curated Pathways"
+        }
+      ]
+    },
+    {
+      "database": "STRING",
+      "id": "9606.ENSP00000441543",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "ChEMBL",
+      "id": "CHEMBL4523179",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "DrugBank",
+      "id": "DB04464",
+      "properties": [
+        {
+          "key": "GenericName",
+          "value": "N-Formylmethionine"
+        }
+      ]
+    },
+    {
+      "database": "MoonDB",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Type",
+          "value": "Predicted"
+        }
+      ]
+    },
+    {
+      "database": "GlyGen",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "glycosylation",
+          "value": "1 site, 1 O-linked glycan (1 site)"
+        }
+      ]
+    },
+    {
+      "database": "iPTMnet",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PhosphoSitePlus",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "SwissPalm",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BioMuta",
+      "id": "UBC",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "DMDM",
+      "id": "391358178",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "jPOST",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "MassIVE",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PaxDb",
+      "id": "9606-ENSP00000441543",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PeptideAtlas",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "ProteomicsDB",
+      "id": "52475",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Pumba",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "TopDownProteomics",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "ABCD",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "antibodies",
+          "value": "7 sequenced antibodies"
+        }
+      ]
+    },
+    {
+      "database": "Antibodypedia",
+      "id": "3954",
+      "properties": [
+        {
+          "key": "antibodies",
+          "value": "347 antibodies from 33 providers"
+        }
+      ]
+    },
+    {
+      "database": "DNASU",
+      "id": "7316",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Ensembl",
+      "id": "ENST00000339647.6",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ENSP00000344818.5"
+        },
+        {
+          "key": "GeneId",
+          "value": "ENSG00000150991.17"
+        }
+      ]
+    },
+    {
+      "database": "Ensembl",
+      "id": "ENST00000536769.1",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ENSP00000441543.1"
+        },
+        {
+          "key": "GeneId",
+          "value": "ENSG00000150991.17"
+        }
+      ]
+    },
+    {
+      "database": "Ensembl",
+      "id": "ENST00000874892.1",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ENSP00000544951.1"
+        },
+        {
+          "key": "GeneId",
+          "value": "ENSG00000150991.17"
+        }
+      ]
+    },
+    {
+      "database": "Ensembl",
+      "id": "ENST00000874893.1",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ENSP00000544952.1"
+        },
+        {
+          "key": "GeneId",
+          "value": "ENSG00000150991.17"
+        }
+      ]
+    },
+    {
+      "database": "Ensembl",
+      "id": "ENST00000964560.1",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ENSP00000634619.1"
+        },
+        {
+          "key": "GeneId",
+          "value": "ENSG00000150991.17"
+        }
+      ]
+    },
+    {
+      "database": "GeneID",
+      "id": "7316",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "KEGG",
+      "id": "hsa:7316",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "MANE-Select",
+      "id": "ENST00000339647.6",
+      "properties": [
+        {
+          "key": "ProteinId",
+          "value": "ENSP00000344818.5"
+        },
+        {
+          "key": "RefSeqNucleotideId",
+          "value": "NM_021009.7"
+        },
+        {
+          "key": "RefSeqProteinId",
+          "value": "NP_066289.3"
+        }
+      ]
+    },
+    {
+      "database": "UCSC",
+      "id": "uc001ugs.5",
+      "properties": [
+        {
+          "key": "OrganismName",
+          "value": "human"
+        }
+      ]
+    },
+    {
+      "database": "AGR",
+      "id": "HGNC:12468",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "CTD",
+      "id": "7316",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "DisGeNET",
+      "id": "7316",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "GeneCards",
+      "id": "UBC",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "HGNC",
+      "id": "HGNC:12468",
+      "properties": [
+        {
+          "key": "GeneName",
+          "value": "UBC"
+        }
+      ]
+    },
+    {
+      "database": "HPA",
+      "id": "ENSG00000150991",
+      "properties": [
+        {
+          "key": "ExpressionPatterns",
+          "value": "Low tissue specificity"
+        }
+      ]
+    },
+    {
+      "database": "MIM",
+      "id": "191340",
+      "properties": [
+        {
+          "key": "Type",
+          "value": "gene"
+        }
+      ]
+    },
+    {
+      "database": "OpenTargets",
+      "id": "ENSG00000150991",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "VEuPathDB",
+      "id": "HostDB:ENSG00000150991",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "eggNOG",
+      "id": "KOG0001",
+      "properties": [
+        {
+          "key": "ToxonomicScope",
+          "value": "Eukaryota"
+        }
+      ]
+    },
+    {
+      "database": "GeneTree",
+      "id": "ENSGT00940000163900",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "HOGENOM",
+      "id": "CLU_010412_1_1_1",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "InParanoid",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "OMA",
+      "id": "CIWYCVY",
+      "properties": [
+        {
+          "key": "Fingerprint",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "OrthoDB",
+      "id": "9979733at2759",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PAN-GO",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Number of GO annotations",
+          "value": "6 GO annotations based on evolutionary models"
+        }
+      ]
+    },
+    {
+      "database": "BioCyc",
+      "id": "MetaCyc:ENSG00000150991-MONOMER",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "PathwayCommons",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-HSA-110312",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "Translesion synthesis by REV1"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-HSA-110314",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "Recognition of DNA damage by PCNA-containing replication complex"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-HSA-110320",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "Translesion Synthesis by POLH"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-HSA-1169091",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "Activation of NF-kappaB in B cells"
+        }
+      ]
+    },
+    {
+      "database": "Reactome",
+      "id": "R-HSA-1169408",
+      "properties": [
+        {
+          "key": "PathwayName",
+          "value": "ISG15 antiviral mechanism"
+        }
+      ]
+    },
+    {
+      "database": "SignaLink",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "SIGNOR",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Agora",
+      "id": "ENSG00000150991",
+      "properties": [
+        {
+          "key": "NominatedTarget",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "BioGRID-ORCS",
+      "id": "7316",
+      "properties": [
+        {
+          "key": "hits",
+          "value": "375 hits in 1150 CRISPR screens"
+        }
+      ]
+    },
+    {
+      "database": "CD-CODE",
+      "id": "139BF52E",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Synthetic Condensate 000072"
+        }
+      ]
+    },
+    {
+      "database": "CD-CODE",
+      "id": "91857CE7",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Nucleolus"
+        }
+      ]
+    },
+    {
+      "database": "CD-CODE",
+      "id": "EF6CBD8C",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Synthetic Condensate 000070"
+        }
+      ]
+    },
+    {
+      "database": "CD-CODE",
+      "id": "F5639AB0",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Synthetic Condensate 000096"
+        }
+      ]
+    },
+    {
+      "database": "CD-CODE",
+      "id": "FB4E32DD",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Presynaptic clusters and postsynaptic densities"
+        }
+      ]
+    },
+    {
+      "database": "ChiTaRS",
+      "id": "UBC",
+      "properties": [
+        {
+          "key": "OrganismName",
+          "value": "human"
+        }
+      ]
+    },
+    {
+      "database": "EvolutionaryTrace",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "GeneWiki",
+      "id": "Ubiquitin_C",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "GenomeRNAi",
+      "id": "7316",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Pharos",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "DevelopmentLevel",
+          "value": "Tbio"
+        }
+      ]
+    },
+    {
+      "database": "PRO",
+      "id": "PR:P0CG48",
+      "properties": [
+        {
+          "key": "Description",
+          "value": "-"
+        }
+      ]
+    },
+    {
+      "database": "Proteomes",
+      "id": "UP000005640",
+      "properties": [
+        {
+          "key": "Component",
+          "value": "Chromosome 12"
+        }
+      ]
+    },
+    {
+      "database": "RNAct",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "moleculeType",
+          "value": "protein"
+        }
+      ]
+    },
+    {
+      "database": "Bgee",
+      "id": "ENSG00000150991",
+      "properties": [
+        {
+          "key": "ExpressionPatterns",
+          "value": "Expressed in olfactory bulb and 215 other cell types or tissues"
+        }
+      ]
+    },
+    {
+      "database": "ExpressionAtlas",
+      "id": "P0CG48",
+      "properties": [
+        {
+          "key": "ExpressionPatterns",
+          "value": "baseline and differential"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005829",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:cytosol"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "TAS:Reactome"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0022626",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:cytosolic ribosome"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IBA:GO_Central"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0030666",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:endocytic vesicle membrane"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "TAS:Reactome"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005789",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:endoplasmic reticulum membrane"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "TAS:Reactome"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0010008",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:endosome membrane"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "TAS:Reactome"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0070062",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:extracellular exosome"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "HDA:UniProtKB"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007005",
+          "source": "PubMed",
+          "id": "23533145"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005576",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:extracellular region"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "HDA:UniProtKB"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007005",
+          "source": "PubMed",
+          "id": "16502470"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005741",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:mitochondrial outer membrane"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "EXP:UniProtKB"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0000269",
+          "source": "PubMed",
+          "id": "24751536"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005654",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:nucleoplasm"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "TAS:Reactome"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005634",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:nucleus"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "HDA:UniProtKB"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007005",
+          "source": "PubMed",
+          "id": "21630459"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0005886",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:plasma membrane"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "TAS:Reactome"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0031982",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "C:vesicle"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "HDA:UniProtKB"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007005",
+          "source": "PubMed",
+          "id": "19190083"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0031386",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "F:protein tag activity"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IBA:GO_Central"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0003723",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "F:RNA binding"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "HDA:UniProtKB"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceCode": "ECO:0007005",
+          "source": "PubMed",
+          "id": "22681889"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0019941",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "P:modification-dependent protein catabolic process"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IBA:GO_Central"
+        }
+      ]
+    },
+    {
+      "database": "GO",
+      "id": "GO:0016567",
+      "properties": [
+        {
+          "key": "GoTerm",
+          "value": "P:protein ubiquitination"
+        },
+        {
+          "key": "GoEvidenceType",
+          "value": "IBA:GO_Central"
+        }
+      ]
+    },
+    {
+      "database": "CDD",
+      "id": "cd01803",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Ubl_ubiquitin"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "database": "FunFam",
+      "id": "3.10.20.90:FF:000158",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Polyubiquitin 5"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "database": "Gene3D",
+      "id": "3.10.20.90",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Phosphatidylinositol 3-kinase Catalytic Subunit, Chain A, domain 1"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR000626",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Ubiquitin-like_dom"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR029071",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Ubiquitin-like_domsf"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR019954",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Ubiquitin_CS"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR019956",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Ubiquitin_dom"
+        }
+      ]
+    },
+    {
+      "database": "InterPro",
+      "id": "IPR050158",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Ubiquitin_ubiquitin-like"
+        }
+      ]
+    },
+    {
+      "database": "PANTHER",
+      "id": "PTHR10666",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "UBIQUITIN"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "database": "Pfam",
+      "id": "PF00240",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "ubiquitin"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "database": "PRINTS",
+      "id": "PR00348",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "UBIQUITIN"
+        }
+      ]
+    },
+    {
+      "database": "SMART",
+      "id": "SM00213",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "UBQ"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "database": "SUPFAM",
+      "id": "SSF54236",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "Ubiquitin-like"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "database": "PROSITE",
+      "id": "PS00299",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "UBIQUITIN_1"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "database": "PROSITE",
+      "id": "PS50053",
+      "properties": [
+        {
+          "key": "EntryName",
+          "value": "UBIQUITIN_2"
+        },
+        {
+          "key": "MatchStatus",
+          "value": "9"
+        }
+      ]
+    }
+  ],
+  "sequence": {
+    "value": "MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGMQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGGV",
+    "length": 685,
+    "molWeight": 77039,
+    "crc64": "B6E7BC06FEE77196",
+    "md5": "63210F385305542B5E9A895D4FE2BABB"
+  },
+  "extraAttributes": {
+    "countByCommentType": {
+      "FUNCTION": 1,
+      "INTERACTION": 79,
+      "SUBCELLULAR LOCATION": 1,
+      "PTM": 3,
+      "MISCELLANEOUS": 2,
+      "SIMILARITY": 1
+    },
+    "countByFeatureType": {
+      "Chain": 9,
+      "Propeptide": 1,
+      "Domain": 9,
+      "Site": 3,
+      "Modified residue": 3,
+      "Cross-link": 8,
+      "Mutagenesis": 22,
+      "Sequence conflict": 2,
+      "Beta strand": 26,
+      "Helix": 11,
+      "Turn": 3
+    },
+    "uniParcId": "UPI000000D74D"
+  },
+  "_fixture_nota": "xrefs recortadas a 5 por base de datos (originales: 1074)"
+}

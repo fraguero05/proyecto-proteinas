@@ -48,7 +48,17 @@ def test_sin_argumentos_muestra_ayuda():
 
 @pytest.mark.parametrize(
     "comando",
-    ["fetch", "curate", "predict", "design", "simulate", "analyze", "report", "info"],
+    [
+        "fetch",
+        "curate",
+        "predict",
+        "design",
+        "simulate",
+        "analyze",
+        "report",
+        "info",
+        "db-stats",
+    ],
 )
 def test_cada_comando_tiene_help(comando: str):
     resultado = runner.invoke(app, [comando, "--help"])
@@ -99,8 +109,6 @@ def test_info_save_escribe_el_manifiesto(config_file: Path):
 @pytest.mark.parametrize(
     ("argumentos", "hito"),
     [
-        (["fetch", "--pdb-id", "1UBQ"], 1),
-        (["curate"], 1),
         (["predict", "--uniprot", "P0CG48"], 2),
         (["analyze", "--run-id", "20260101T000000Z-abcdef"], 5),
         (["report", "--run-id", "20260101T000000Z-abcdef"], 5),
@@ -161,6 +169,42 @@ def test_simulate_con_input_inexistente_es_error(cfg, tmp_path: Path):
 def test_analyze_sin_run_id_es_error(cfg):
     resultado = runner.invoke(app, [*cfg, "analyze"])
     assert resultado.exit_code == EXIT_ERROR
+
+
+# ------------------------------------------------------------ Fase 1 (Hito 1)
+
+
+def test_db_stats_sin_base_avisa(cfg):
+    resultado = runner.invoke(app, [*cfg, "db-stats"])
+    assert resultado.exit_code == EXIT_ERROR
+    assert "fetch" in resultado.output
+
+
+def test_db_stats_muestra_el_contenido(config_file: Path):
+    """Con una base poblada a mano, sin red."""
+    from pdpipe.config import load_config
+    from pdpipe.phase1_data import BaseDatos
+    from pdpipe.phase1_data.models import Proteina
+
+    cfg_obj = load_config(config_file)
+    with BaseDatos(cfg_obj.resolved_paths()["database"]) as db:
+        db.guardar_proteina(
+            Proteina(
+                pdb_id="1UBQ",
+                uniprot_id="P0CG48",
+                organismo="Homo sapiens",
+                metodo="X-RAY DIFFRACTION",
+                resolucion=1.8,
+                longitud=76,
+                curada=True,
+            )
+        )
+
+    resultado = runner.invoke(app, ["--config", str(config_file), "db-stats"])
+    assert resultado.exit_code == 0
+    assert "1UBQ" in resultado.output
+    assert "P0CG48" in resultado.output
+    assert "curada" in resultado.output
 
 
 # ------------------------------------------------------------------ overrides
