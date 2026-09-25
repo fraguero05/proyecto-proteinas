@@ -377,6 +377,44 @@ def test_registra_las_salidas_en_el_manifiesto(cfg, tmp_path: Path, monkeypatch)
     assert resultado.tabla.name in datos["outputs"]
 
 
+# ------------------------------------- salidas reales del repo de ProteinMPNN
+
+# El clon trae en outputs/ las salidas de sus propios ejemplos. Parsearlas es
+# la prueba más fuerte de que el formato que espera el pipeline es el real, y
+# no cuesta una corrida: son archivos ya grabados.
+_OUTPUTS_MPNN = Path(__file__).parent.parent / "tools" / "ProteinMPNN" / "outputs"
+_SALIDAS_REALES = sorted(_OUTPUTS_MPNN.rglob("*.fa")) if _OUTPUTS_MPNN.is_dir() else []
+
+sin_clon = pytest.mark.skipif(
+    not _SALIDAS_REALES,
+    reason="ProteinMPNN no está clonado (ver README, Hito 2 parte B)",
+)
+
+
+@sin_clon
+@pytest.mark.parametrize("fasta", _SALIDAS_REALES, ids=lambda p: p.parent.parent.name + "/" + p.name)
+def test_parsea_las_salidas_reales_del_repo(fasta: Path):
+    """Cada salida de ejemplo se parsea entera, o se rechaza por multicadena.
+
+    Lo que no puede pasar es que una monocadena se parsee a medias: si el
+    formato del encabezado cambiara, las variantes saldrían sin score y sin
+    recuperación, en silencio.
+    """
+    try:
+        original, variantes = parsear_fasta_mpnn(fasta.read_text(encoding="utf-8"))
+    except ErrorDeDiseno as exc:
+        assert "multicadena" in str(exc), exc
+        return
+
+    assert original and variantes
+    for v in variantes:
+        assert v.global_score is not None
+        assert v.score is not None
+        assert v.recuperacion is not None
+        assert v.temperatura is not None
+        assert len(v.secuencia) == len(original)
+
+
 # ------------------------------------------------------ corrida real (opcional)
 
 
