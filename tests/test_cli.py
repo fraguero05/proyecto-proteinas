@@ -119,10 +119,15 @@ def test_comandos_pendientes_informan_su_hito(cfg, argumentos, hito):
     assert f"Hito {hito}" in resultado.output
 
 
-def test_design_pendiente(cfg, pdb_fixture: Path):
+def test_design_sin_proteinmpnn_explica_como_instalarlo(cfg, pdb_fixture: Path):
+    """Implementado en el Hito 2B, pero ProteinMPNN se clona aparte.
+
+    Sigue saliendo con EXIT_PENDING porque falta una herramienta del entorno,
+    no porque falten datos: el mensaje tiene que traer el git clone.
+    """
     resultado = runner.invoke(app, [*cfg, "design", "--input", str(pdb_fixture)])
     assert resultado.exit_code == EXIT_PENDING
-    assert "Hito 2" in resultado.output
+    assert "git clone" in resultado.output
 
 
 def test_simulate_pendiente(cfg, pdb_fixture: Path):
@@ -209,17 +214,26 @@ def test_db_stats_muestra_el_contenido(config_file: Path):
 # ------------------------------------------------------------------ overrides
 
 
-def test_design_usa_el_n_del_config(cfg, pdb_fixture: Path):
+def _params_del_manifiesto(tmp_path: Path) -> dict:
+    """Lee los params del único run_manifest.json que dejó la corrida."""
+    manifiestos = list((tmp_path / "runs").glob("*/run_manifest.json"))
+    assert len(manifiestos) == 1, manifiestos
+    return json.loads(manifiestos[0].read_text(encoding="utf-8"))["params"]
+
+
+def test_design_usa_el_n_del_config(cfg, pdb_fixture: Path, tmp_path: Path):
     """Sin --n-sequences toma el valor del config (4 en la fixture)."""
-    resultado = runner.invoke(app, [*cfg, "design", "--input", str(pdb_fixture)])
-    assert "4 variantes" in resultado.output
+    runner.invoke(app, [*cfg, "design", "--input", str(pdb_fixture)])
+
+    assert _params_del_manifiesto(tmp_path)["n_sequences"] == 4
 
 
-def test_design_respeta_el_override_de_cli(cfg, pdb_fixture: Path):
-    resultado = runner.invoke(
+def test_design_respeta_el_override_de_cli(cfg, pdb_fixture: Path, tmp_path: Path):
+    runner.invoke(
         app, [*cfg, "design", "--input", str(pdb_fixture), "--n-sequences", "16"]
     )
-    assert "16 variantes" in resultado.output
+
+    assert _params_del_manifiesto(tmp_path)["n_sequences"] == 16
 
 
 def test_predict_respeta_el_override_de_fuente(cfg):

@@ -1,0 +1,18 @@
+# Salida de ProteinMPNN (seqs/1UBQ.fa) usada como fixture de test.
+# Reproduce el formato que deja protein_mpnn_run.py: los datos van en el
+# encabezado como clave=valor, el primer registro es la secuencia original
+# del PDB y los siguientes son las variantes muestreadas.
+#
+# La secuencia original es la real de tests/fixtures/1UBQ.pdb; las variantes
+# llevan mutaciones puestas a mano (var01: K11R,K48R / var02: ninguna /
+# var03: M1A,I34S,G76A) para poder verificar el diff contra un valor conocido.
+# var03 va envuelta en varias lineas a proposito, para ejercitar el parser.
+>1UBQ, score=1.0543, global_score=1.0543, fixed_chains=[], designed_chains=['A'], model_name=v_48_020, git_hash=8907e6671bfbfc92303b5f79c4b5e6ce47cdef57, seed=42
+MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG
+>T=0.1, sample=1, score=0.8234, global_score=0.8901, seq_recovery=0.9737
+MQIFVKTLTGRTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGRQLEDGRTLSDYNIQKESTLHLVLRLRGG
+>T=0.1, sample=2, score=0.9012, global_score=0.9455, seq_recovery=1.0000
+MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQKESTLHLVLRLRGG
+>T=0.1, sample=3, score=0.7765, global_score=0.8123, seq_recovery=0.9605
+AQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKSGIPPDQQRLIFAGKQLEDGRTLSDYN
+IQKESTLHLVLRLRGA
