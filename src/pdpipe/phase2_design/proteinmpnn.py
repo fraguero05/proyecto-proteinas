@@ -41,6 +41,11 @@ logger = get_logger(__name__)
 SCRIPT = "protein_mpnn_run.py"
 MODELO_POR_DEFECTO = "v_48_020"
 
+# Los pesos que usa el pipeline. ProteinMPNN trae además ca_model_weights (solo
+# carbonos alfa) y soluble_model_weights (proteínas solubles), que no se usan
+# acá porque requieren banderas propias que no exponemos.
+CARPETA_PESOS = "vanilla_model_weights"
+
 # Una corrida en CPU de una proteína chica tarda segundos; el techo alto es
 # para no cortar un caso grande por las dudas, no una expectativa.
 TIMEOUT_S = 1800
@@ -72,8 +77,29 @@ class DisenadorProteinMPNN(SequenceDesigner):
     def script(self) -> Path:
         return self.home / SCRIPT
 
+    @property
+    def pesos(self) -> Path:
+        """Carpeta de pesos que se le pasa explícitamente al script.
+
+        ProteinMPNN sabe deducirla solo, pero lo hace con
+        ``file_path.rfind("/")`` sobre la ruta de su propio archivo: en Windows
+        esa ruta viene con barras invertidas, ``rfind`` devuelve -1 y el
+        recorte se come el último carácter, con lo que busca los pesos bajo
+        ``protein_mpnn_run.p`` y no encuentra nada. Pasar
+        ``--path_to_model_weights`` esquiva ese camino por completo.
+        """
+        return self.home / CARPETA_PESOS
+
+    @property
+    def archivo_pesos(self) -> Path:
+        return self.pesos / f"{self.modelo}.pt"
+
     def disponible(self) -> bool:
-        return self.script.is_file() and find_spec("torch") is not None
+        return (
+            self.script.is_file()
+            and self.archivo_pesos.is_file()
+            and find_spec("torch") is not None
+        )
 
     def motivo_no_disponible(self) -> str:
         if not self.script.is_file():
@@ -84,6 +110,13 @@ class DisenadorProteinMPNN(SequenceDesigner):
                 f"{self.home}\n\n"
                 "Si lo clonaste en otro lado, apuntá design.proteinmpnn_home "
                 "del config.yaml a esa ruta."
+            )
+        if not self.archivo_pesos.is_file():
+            disponibles = sorted(p.stem for p in self.pesos.glob("*.pt"))
+            return (
+                f"No están los pesos '{self.modelo}' en '{self.pesos}'.\n"
+                f"Disponibles: {disponibles or '(ninguno)'}\n\n"
+                "Corregí design.proteinmpnn_model en el config.yaml."
             )
         return (
             "PyTorch no está instalado y ProteinMPNN lo necesita. La versión "
@@ -115,11 +148,19 @@ class DisenadorProteinMPNN(SequenceDesigner):
             comando = [
                 sys.executable,
                 str(self.script.resolve()),
-                "--pdb_path", str(estructura),
-                "--out_folder", str(salida),
+                # Barras POSIX a propósito, no por estilo: ProteinMPNN deriva
+                # el nombre de la salida con `ruta.rfind("/")` (ver
+                # protein_mpnn_utils.py). Con barras invertidas de Windows no
+                # encuentra separador y toma la ruta entera como nombre, con lo
+                # que intenta escribir seqs/C:\...\1UBQ.fa y falla. Windows
+                # acepta barras normales, así que esto funciona en los dos.
+                "--pdb_path", estructura.as_posix(),
+                "--out_folder", salida.as_posix(),
                 "--num_seq_per_target", str(n_secuencias),
                 "--sampling_temp", str(temperatura),
                 "--model_name", self.modelo,
+                # Explícito a propósito: ver DisenadorProteinMPNN.pesos.
+                "--path_to_model_weights", str(self.pesos.resolve()),
                 # Lote de 1: en CPU no hay nada que ganar paralelizando y el
                 # pico de memoria queda acotado en una laptop.
                 "--batch_size", "1",
