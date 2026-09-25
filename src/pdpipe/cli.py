@@ -211,17 +211,74 @@ def fetch(
         Optional[list[str]],
         typer.Option("--uniprot", help="Accesión UniProt a descargar. Repetible."),
     ] = None,
+    formato: Annotated[
+        str,
+        typer.Option("--formato", help="Formato de coordenadas: pdb o cif."),
+    ] = "pdb",
     force: Annotated[
         bool,
         typer.Option("--force", help="Vuelve a descargar aunque ya esté en caché."),
     ] = False,
 ) -> None:
     """Descarga estructuras del RCSB PDB y anotaciones de UniProt (Fase 1)."""
-    _require_config()
+    from pdpipe.phase1_data import PDBIDInvalido
+    from pdpipe.phase1_data import pipeline as fase1
+
+    cfg = _require_config()
     if not pdb_id and not uniprot:
         console.print("[red]Error:[/red] indicá al menos un --pdb-id o un --uniprot.")
         raise typer.Exit(code=EXIT_ERROR)
-    _pending("fetch", hito=1)
+
+    manifest = RunManifest.start(
+        command="fetch",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
+        params={
+            "pdb_id": list(pdb_id or []),
+            "uniprot": list(uniprot or []),
+            "formato": formato,
+            "force": force,
+        },
+    )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    try:
+        resultado = fase1.fetch(
+            config=cfg,
+            pdb_ids=list(pdb_id or []),
+            uniprot_ids=list(uniprot or []),
+            formato=formato,
+            forzar=force,
+            manifest=manifest,
+        )
+    except PDBIDInvalido as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_ERROR) from exc
+
+    manifest.finish("ok")
+    manifest.save(directorio)
+
+    tabla = Table(title="fetch", expand=False)
+    tabla.add_column("Resultado", style="cyan")
+    tabla.add_column("Cantidad", justify="right")
+    tabla.add_row("Descargadas", str(len(resultado.descargadas)))
+    tabla.add_row("Rechazadas (bioseguridad)", str(len(resultado.rechazadas)))
+    tabla.add_row("Fallidas", str(len(resultado.fallidas)))
+    console.print(tabla)
+
+    for pid, motivo in resultado.rechazadas:
+        console.print(f"  [yellow]{pid}[/yellow] rechazada: {motivo}")
+    for pid, error in resultado.fallidas:
+        console.print(f"  [red]{pid}[/red] falló: {error}")
+
+    console.print(f"Manifiesto: [green]{directorio / 'run_manifest.json'}[/green]")
+
+    if resultado.fallidas:
+        raise typer.Exit(code=EXIT_ERROR)
 
 
 @app.command()
@@ -245,13 +302,105 @@ def curate(
         Optional[int], typer.Option("--length-max", help="Longitud máxima en residuos.")
     ] = None,
 ) -> None:
-    """Filtra lo descargado y lo carga en la base SQLite local (Fase 1)."""
-    _require_config()
-    _pending(
-        "curate",
-        hito=1,
-        detalle="Los filtros pasados por CLI sobrescriben los de config.yaml > data.",
+    """Filtra lo descargado y marca qué queda curado en la base (Fase 1).
+
+    No usa la red: trabaja sobre lo que ya bajó `fetch`, así que se puede
+    repetir con distintos criterios sin volver a descargar nada.
+    """
+    from pdpipe.phase1_data import pipeline as fase1
+
+    cfg = _require_config()
+
+    manifest = RunManifest.start(
+        command="curate",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
     )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    resultado = fase1.curate(
+        config=cfg,
+        resolucion_max=resolution_max,
+        organismos=list(organism) if organism else None,
+        metodos=list(method) if method else None,
+        longitud_min=length_min,
+        longitud_max=length_max,
+        manifest=manifest,
+    )
+    manifest.finish("ok")
+    manifest.save(directorio)
+
+    tabla = Table(title="curate", expand=False)
+    tabla.add_column("Resultado", style="cyan")
+    tabla.add_column("Cantidad", justify="right")
+    tabla.add_row("Aceptadas", str(len(resultado.aceptadas)))
+    tabla.add_row("Rechazadas", str(len(resultado.rechazadas)))
+    console.print(tabla)
+
+    for pid, motivo in resultado.rechazadas:
+        console.print(f"  [yellow]{pid}[/yellow]: {motivo}")
+
+    console.print(f"Manifiesto: [green]{directorio / 'run_manifest.json'}[/green]")
+
+
+@app.command(name="db-stats")
+def db_stats() -> None:
+    """Muestra el contenido de la base SQLite local (Fase 1)."""
+    from pdpipe.phase1_data import BaseDatos
+
+    cfg = _require_config()
+    ruta = Path(cfg.resolved_paths()["database"])
+    if not ruta.is_file():
+        console.print(
+            f"[yellow]La base todavía no existe[/yellow] ({ruta}).\n"
+            f"Corré [cyan]pdpipe fetch --pdb-id 1UBQ[/cyan] para crearla."
+        )
+        raise typer.Exit(code=EXIT_ERROR)
+
+    with BaseDatos(ruta) as db:
+        conteos = db.contar()
+        proteinas = db.listar_proteinas()
+
+    resumen = Table(title=f"Base: {ruta.name}", expand=False)
+    resumen.add_column("Tabla", style="cyan")
+    resumen.add_column("Filas", justify="right")
+    for clave in ("proteinas", "funciones", "interacciones", "ptms"):
+        resumen.add_row(clave, str(conteos[clave]))
+    resumen.add_row("[green]curadas[/green]", str(conteos["curadas"]))
+    resumen.add_row("[yellow]rechazadas[/yellow]", str(conteos["rechazadas"]))
+    resumen.add_row("[dim]sin curar[/dim]", str(conteos["sin_curar"]))
+    console.print(resumen)
+
+    if conteos["sin_curar"]:
+        console.print(
+            f"[dim]{conteos['sin_curar']} proteína(s) sin evaluar. "
+            f"Corré [cyan]pdpipe curate[/cyan] para aplicar los criterios.[/dim]"
+        )
+
+    if not proteinas:
+        return
+
+    detalle = Table(title="Proteínas", expand=False)
+    for columna in ("PDB", "UniProt", "Organismo", "Método", "Res. (Å)", "Long.", "Estado"):
+        detalle.add_column(columna)
+    for p in proteinas:
+        estado = (
+            "[green]curada[/green]"
+            if p.curada
+            else f"[yellow]{(p.motivo_rechazo or 'sin curar')[:40]}[/yellow]"
+        )
+        detalle.add_row(
+            p.pdb_id,
+            p.uniprot_id or "-",
+            (p.organismo or "-")[:25],
+            (p.metodo or "-")[:18],
+            f"{p.resolucion:.2f}" if p.resolucion is not None else "-",
+            str(p.longitud or "-"),
+            estado,
+        )
+    console.print(detalle)
 
 
 # ---------------------------------------------------------------------------
