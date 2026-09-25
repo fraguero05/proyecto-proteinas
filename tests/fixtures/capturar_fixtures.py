@@ -36,6 +36,10 @@ MAX_XREFS_GO = 40
 # de la cadena efectivamente cristalizada.
 ENTIDADES = [("1UBQ", "1"), ("1LYZ", "1")]
 
+# Modelos de AlphaFold DB (Fase 2). Se guardan los metadatos y el .pdb, del
+# que se extrae el pLDDT del campo B-factor.
+ACCESIONES_ALPHAFOLD = ["P00698"]
+
 
 def _get(url: str) -> dict:
     respuesta = requests.get(url, timeout=TIMEOUT)
@@ -96,6 +100,21 @@ def main() -> None:
             json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
         )
         print(f"{destino.name} ({descripcion}): {destino.stat().st_size // 1024} KiB")
+
+    for accesion in ACCESIONES_ALPHAFOLD:
+        data = _get(f"https://alphafold.ebi.ac.uk/api/prediction/{accesion}")
+        destino = AQUI / f"alphafold_{accesion}.json"
+        destino.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+        print(f"{destino.name}: {destino.stat().st_size // 1024} KiB")
+
+        prediccion = data[0] if isinstance(data, list) else data
+        modelo = requests.get(prediccion["pdbUrl"], timeout=TIMEOUT)
+        modelo.raise_for_status()
+        nombre = prediccion["pdbUrl"].rsplit("/", 1)[-1]
+        (AQUI / nombre).write_bytes(modelo.content)
+        print(f"{nombre}: {(AQUI / nombre).stat().st_size // 1024} KiB")
 
 
 if __name__ == "__main__":

@@ -109,7 +109,6 @@ def test_info_save_escribe_el_manifiesto(config_file: Path):
 @pytest.mark.parametrize(
     ("argumentos", "hito"),
     [
-        (["predict", "--uniprot", "P0CG48"], 2),
         (["analyze", "--run-id", "20260101T000000Z-abcdef"], 5),
         (["report", "--run-id", "20260101T000000Z-abcdef"], 5),
     ],
@@ -224,7 +223,17 @@ def test_design_respeta_el_override_de_cli(cfg, pdb_fixture: Path):
 
 
 def test_predict_respeta_el_override_de_fuente(cfg):
+    """ESMFold todavía no está: el override se respeta y lo informa."""
     resultado = runner.invoke(
         app, [*cfg, "predict", "--uniprot", "P0CG48", "--source", "esmfold"]
     )
-    assert "esmfold" in resultado.output
+    assert resultado.exit_code == EXIT_PENDING
+    assert "ESMFold" in resultado.output
+
+
+def test_predict_con_colabfold_manda_al_notebook(cfg):
+    resultado = runner.invoke(
+        app, [*cfg, "predict", "--uniprot", "P0CG48", "--source", "colabfold"]
+    )
+    assert resultado.exit_code == EXIT_PENDING
+    assert "notebook" in resultado.output
