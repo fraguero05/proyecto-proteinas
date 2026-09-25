@@ -54,3 +54,8 @@ htmlcov/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Claude Code: los skills del proyecto sí se versionan (son parte del flujo de
+# trabajo del repo); el estado local de la herramienta, no.
+.claude/*
+!.claude/skills/
