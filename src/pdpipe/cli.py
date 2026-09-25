@@ -417,14 +417,118 @@ def predict(
         Optional[str],
         typer.Option("--source", help="alphafold_db, colabfold o esmfold."),
     ] = None,
+    formato: Annotated[
+        str, typer.Option("--formato", help="Formato del modelo: pdb o cif.")
+    ] = "pdb",
+    force: Annotated[
+        bool, typer.Option("--force", help="Vuelve a descargar aunque esté en caché.")
+    ] = False,
 ) -> None:
     """Obtiene la estructura predicha y reporta el pLDDT por residuo (Fase 2)."""
+    from pdpipe.phase2_design import SinModeloPredicho
+    from pdpipe.phase2_design import pipeline as fase2
+    from pdpipe.phase2_design.pipeline import FuenteNoDisponible
+    from pdpipe.phase2_design.plddt import ErrorPLDDT
+
     cfg = _require_config()
     if uniprot is None:
         console.print("[red]Error:[/red] indicá --uniprot.")
         raise typer.Exit(code=EXIT_ERROR)
-    elegida = source or cfg.design.structure_source.value
-    _pending("predict", hito=2, detalle=f"Fuente de estructura seleccionada: {elegida}.")
+
+    manifest = RunManifest.start(
+        command="predict",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
+        params={
+            "uniprot": uniprot,
+            "source": source or cfg.design.structure_source.value,
+            "formato": formato,
+        },
+    )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    try:
+        modelo = fase2.predecir(
+            config=cfg,
+            uniprot_id=uniprot,
+            fuente=source,
+            formato=formato,
+            forzar=force,
+            manifest=manifest,
+        )
+    except FuenteNoDisponible as exc:
+        console.print(
+            Panel(str(exc), title="[yellow]Fuente no disponible[/yellow]",
+                  border_style="yellow", expand=False)
+        )
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_PENDING) from exc
+    except (SinModeloPredicho, ErrorPLDDT) as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_ERROR) from exc
+
+    manifest.finish("ok")
+    manifest.save(directorio)
+    _mostrar_modelo(modelo, cfg.design.plddt_min)
+    console.print(f"Manifiesto: [green]{directorio / 'run_manifest.json'}[/green]")
+
+
+def _mostrar_modelo(modelo, plddt_min: float) -> None:
+    """Imprime los metadatos del modelo y la distribución de su pLDDT."""
+    from pdpipe.phase2_design.models import BandaPLDDT
+
+    ficha = Table(title=f"Modelo predicho — {modelo.uniprot_id}", show_header=False)
+    ficha.add_column("clave", style="cyan")
+    ficha.add_column("valor")
+    ficha.add_row("Entrada", modelo.entry_id or "-")
+    ficha.add_row("Fuente", f"{modelo.fuente} v{modelo.version}")
+    ficha.add_row("Proteína", modelo.nombre or "-")
+    ficha.add_row("Organismo", modelo.organismo or "-")
+    ficha.add_row("Archivo", str(modelo.archivo))
+    console.print(ficha)
+
+    resumen = modelo.resumen
+    if resumen is None:
+        return
+
+    color = "green" if resumen.media >= plddt_min else "yellow"
+    estadisticos = Table(title="pLDDT", show_header=False)
+    estadisticos.add_column("clave", style="cyan")
+    estadisticos.add_column("valor")
+    estadisticos.add_row("Residuos", str(resumen.n_residuos))
+    estadisticos.add_row("Media", f"[{color}]{resumen.media}[/{color}]")
+    estadisticos.add_row("Mediana", str(resumen.mediana))
+    estadisticos.add_row("Rango", f"{resumen.minimo} – {resumen.maximo}")
+    estadisticos.add_row(
+        "Confiable (>=70)", f"{resumen.fraccion_confiable:.1%}"
+    )
+    if modelo.metrica_global_api is not None:
+        estadisticos.add_row(
+            "[dim]Media según la API[/dim]", f"[dim]{modelo.metrica_global_api}[/dim]"
+        )
+    console.print(estadisticos)
+
+    bandas = Table(title="Distribución por banda de confianza")
+    bandas.add_column("Banda", style="cyan")
+    bandas.add_column("Residuos", justify="right")
+    bandas.add_column("Fracción", justify="right")
+    for banda in BandaPLDDT:
+        cantidad = resumen.conteo_por_banda.get(banda.value, 0)
+        fraccion = resumen.fraccion_por_banda.get(banda.value, 0.0)
+        bandas.add_row(banda.descripcion, str(cantidad), f"{fraccion:.1%}")
+    console.print(bandas)
+
+    if resumen.media < plddt_min:
+        console.print(
+            f"[yellow]Aviso:[/yellow] el pLDDT medio ({resumen.media}) está por "
+            f"debajo del mínimo configurado ({plddt_min}). El modelo puede no ser "
+            f"confiable para diseñar sobre él."
+        )
 
 
 @app.command()

@@ -9,7 +9,40 @@ Dos pasos encadenados:
   interfaz abstracta ``SequenceDesigner``. La primera implementación es
   ProteinMPNN sobre CPU; Rosetta queda para una segunda iteración.
 
-Estado: pendiente — se implementa en el Hito 2.
+Estado: parte A (AlphaFold DB + pLDDT) implementada en el Hito 2.
+La parte B (ProteinMPNN) está pendiente.
 """
 
-__all__: list[str] = []
+from pdpipe.phase2_design.alphafold import ClienteAlphaFold, SinModeloPredicho
+from pdpipe.phase2_design.models import (
+    BandaPLDDT,
+    ModeloPredicho,
+    ResiduoPLDDT,
+    ResumenPLDDT,
+    clasificar_plddt,
+)
+from pdpipe.phase2_design.pipeline import FuenteNoDisponible, predecir
+from pdpipe.phase2_design.plddt import (
+    ErrorPLDDT,
+    anotar_modelo,
+    extraer_plddt,
+    resumir_plddt,
+    secuencia_de_residuos,
+)
+
+__all__ = [
+    "BandaPLDDT",
+    "ClienteAlphaFold",
+    "ErrorPLDDT",
+    "FuenteNoDisponible",
+    "ModeloPredicho",
+    "ResiduoPLDDT",
+    "ResumenPLDDT",
+    "SinModeloPredicho",
+    "anotar_modelo",
+    "clasificar_plddt",
+    "extraer_plddt",
+    "predecir",
+    "resumir_plddt",
+    "secuencia_de_residuos",
+]
