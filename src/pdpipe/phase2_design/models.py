@@ -112,3 +112,88 @@ class ModeloPredicho(_Base):
     def residuos_bajo(self, umbral: float) -> list[ResiduoPLDDT]:
         """Residuos por debajo de un pLDDT dado, en orden de secuencia."""
         return [r for r in self.residuos if r.plddt < umbral]
+
+
+# ---------------------------------------------------------------------------
+# Parte B — diseño de secuencias
+# ---------------------------------------------------------------------------
+
+
+class Mutacion(_Base):
+    """Un cambio de aminoácido respecto de la secuencia original.
+
+    ``posicion`` va en **numeración del PDB**, no en índice de la secuencia,
+    para que coincida con el CSV de pLDDT de la parte A y con lo que se ve en
+    un visualizador. Las dos numeraciones difieren en cuanto la estructura no
+    empieza en 1 o le falta un tramo.
+    """
+
+    posicion: int
+    original: str
+    nueva: str
+
+    def __str__(self) -> str:
+        """Notación estándar de mutación puntual, p. ej. ``K48R``."""
+        return f"{self.original}{self.posicion}{self.nueva}"
+
+
+class VarianteSecuencia(_Base):
+    """Una secuencia generada por el diseñador sobre el esqueleto de entrada."""
+
+    id: str
+    secuencia: str
+    mutaciones: list[Mutacion] = Field(default_factory=list)
+
+    # Métricas que reporta ProteinMPNN. Son log-verosimilitudes negativas:
+    # **más bajo es mejor**, al revés de lo que sugiere la palabra "score".
+    score: float | None = None
+    global_score: float | None = None
+    # Fracción de la secuencia original que el modelo reprodujo por su cuenta.
+    recuperacion: float | None = None
+    temperatura: float | None = None
+
+    @property
+    def n_mutaciones(self) -> int:
+        return len(self.mutaciones)
+
+    @property
+    def identidad(self) -> float:
+        """Identidad con la secuencia original, entre 0 y 1."""
+        if not self.secuencia:
+            return 0.0
+        return round(1 - self.n_mutaciones / len(self.secuencia), 4)
+
+    def notacion_mutaciones(self) -> str:
+        """Las mutaciones en una sola cadena, p. ej. ``K48R,T22S``."""
+        return ",".join(str(m) for m in self.mutaciones)
+
+
+class ResultadoDiseno(_Base):
+    """Salida de una corrida de diseño sobre una estructura."""
+
+    estructura: Path
+    secuencia_original: str
+    designer: str
+    variantes: list[VarianteSecuencia] = Field(default_factory=list)
+
+    modelo: str | None = None
+    seed: int | None = None
+    posiciones_fijas: list[int] = Field(default_factory=list)
+
+    fasta: Path | None = None
+    tabla: Path | None = None
+
+    @property
+    def n_variantes(self) -> int:
+        return len(self.variantes)
+
+    def mejor(self) -> VarianteSecuencia | None:
+        """La variante de menor ``global_score`` (más baja = más probable).
+
+        Devuelve ``None`` si no hay variantes o si ninguna trae score, en vez
+        de inventar un orden arbitrario.
+        """
+        con_score = [v for v in self.variantes if v.global_score is not None]
+        if not con_score:
+            return None
+        return min(con_score, key=lambda v: v.global_score)  # type: ignore[arg-type,return-value]

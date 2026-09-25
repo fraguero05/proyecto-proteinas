@@ -27,6 +27,10 @@ runs/
 *.pkl
 *.joblib
 
+# Herramientas de terceros que se clonan, no se versionan (ProteinMPNN trae
+# sus pesos adentro). Ver "Cómo reproducir el Hito 2, parte B" en el README.
+tools/
+
 # Python
 __pycache__/
 *.py[cod]

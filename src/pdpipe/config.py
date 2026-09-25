@@ -142,6 +142,21 @@ class DesignConfig(_Base):
     temperature: float = Field(default=0.1, gt=0, le=10)
     fixed_positions: list[int] = Field(default_factory=list)
 
+    # ProteinMPNN no se instala con pip: es un repositorio con los pesos
+    # adentro, así que hace falta saber dónde quedó clonado. Relativa se
+    # resuelve contra la raíz del repo.
+    proteinmpnn_home: Path = Path("tools/ProteinMPNN")
+    proteinmpnn_model: str = "v_48_020"
+
+    @field_serializer("proteinmpnn_home", when_used="json")
+    def _serializar_como_posix(self, value: Path) -> str:
+        """Mismo criterio que en :class:`PathsConfig`: barras POSIX siempre.
+
+        Si no, dos corridas idénticas en Windows y en Linux dejan rutas
+        distintas en el ``run_manifest.json`` y parecen no serlo.
+        """
+        return value.as_posix()
+
 
 class MDConfig(_Base):
     """Fase 3 — dinámica molecular con GROMACS."""

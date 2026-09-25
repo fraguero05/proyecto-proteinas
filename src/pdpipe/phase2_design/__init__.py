@@ -9,19 +9,28 @@ Dos pasos encadenados:
   interfaz abstracta ``SequenceDesigner``. La primera implementación es
   ProteinMPNN sobre CPU; Rosetta queda para una segunda iteración.
 
-Estado: parte A (AlphaFold DB + pLDDT) implementada en el Hito 2.
-La parte B (ProteinMPNN) está pendiente.
+Estado: partes A (AlphaFold DB + pLDDT) y B (ProteinMPNN) implementadas en
+el Hito 2. ColabFold y ESMFold quedan pendientes.
 """
 
 from pdpipe.phase2_design.alphafold import ClienteAlphaFold, SinModeloPredicho
+from pdpipe.phase2_design.designer import (
+    DisenadorNoDisponible,
+    ErrorDeDiseno,
+    SequenceDesigner,
+    obtener_disenador,
+)
 from pdpipe.phase2_design.models import (
     BandaPLDDT,
     ModeloPredicho,
+    Mutacion,
     ResiduoPLDDT,
+    ResultadoDiseno,
     ResumenPLDDT,
+    VarianteSecuencia,
     clasificar_plddt,
 )
-from pdpipe.phase2_design.pipeline import FuenteNoDisponible, predecir
+from pdpipe.phase2_design.pipeline import FuenteNoDisponible, disenar, predecir
 from pdpipe.phase2_design.plddt import (
     ErrorPLDDT,
     anotar_modelo,
@@ -33,15 +42,23 @@ from pdpipe.phase2_design.plddt import (
 __all__ = [
     "BandaPLDDT",
     "ClienteAlphaFold",
+    "DisenadorNoDisponible",
+    "ErrorDeDiseno",
     "ErrorPLDDT",
     "FuenteNoDisponible",
     "ModeloPredicho",
+    "Mutacion",
     "ResiduoPLDDT",
+    "ResultadoDiseno",
     "ResumenPLDDT",
+    "SequenceDesigner",
     "SinModeloPredicho",
+    "VarianteSecuencia",
     "anotar_modelo",
     "clasificar_plddt",
+    "disenar",
     "extraer_plddt",
+    "obtener_disenador",
     "predecir",
     "resumir_plddt",
     "secuencia_de_residuos",

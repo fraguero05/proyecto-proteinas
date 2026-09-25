@@ -56,6 +56,11 @@ design:
   temperature: 0.1                # muestreo de ProteinMPNN (más alto = más diverso)
   fixed_positions: []             # residuos a no mutar (numeración del PDB)
 
+  # ProteinMPNN no es un paquete de PyPI: se clona y trae sus pesos adentro.
+  #   git clone https://github.com/dauparas/ProteinMPNN tools/ProteinMPNN
+  proteinmpnn_home: tools/ProteinMPNN
+  proteinmpnn_model: v_48_020     # pesos: v_48_002 / v_48_010 / v_48_020 / v_48_030
+
 # ---------------------------------------------------------------------------
 # Fase 3 — Validación estructural (dinámica molecular)
 # ---------------------------------------------------------------------------

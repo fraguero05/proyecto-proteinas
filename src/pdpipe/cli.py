@@ -547,6 +547,9 @@ def design(
     ] = None,
 ) -> None:
     """Genera variantes de secuencia con ProteinMPNN sobre CPU (Fase 2)."""
+    from pdpipe.phase2_design import pipeline as fase2
+    from pdpipe.phase2_design.designer import DisenadorNoDisponible, ErrorDeDiseno
+
     cfg = _require_config()
     if input is None:
         console.print("[red]Error:[/red] indicá --input con la estructura de partida.")
@@ -554,8 +557,97 @@ def design(
     if not input.exists():
         console.print(f"[red]Error:[/red] no existe el archivo de entrada: {input}")
         raise typer.Exit(code=EXIT_ERROR)
+
     n = n_sequences if n_sequences is not None else cfg.design.n_sequences
-    _pending("design", hito=2, detalle=f"Se generarían {n} variantes.")
+    t = temperature if temperature is not None else cfg.design.temperature
+
+    manifest = RunManifest.start(
+        command="design",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
+        params={
+            "input": str(input),
+            "n_sequences": n,
+            "temperature": t,
+            "designer": cfg.design.designer.value,
+        },
+    )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    try:
+        resultado = fase2.disenar(
+            config=cfg,
+            estructura=input,
+            n_secuencias=n,
+            temperatura=t,
+            manifest=manifest,
+        )
+    except DisenadorNoDisponible as exc:
+        # No es un error de los datos sino del entorno: el mensaje dice cómo
+        # instalar la herramienta, así que va en panel y con el código de
+        # "pendiente", igual que las fuentes de estructura no implementadas.
+        console.print(
+            Panel(str(exc), title="[yellow]Diseñador no disponible[/yellow]",
+                  border_style="yellow", expand=False)
+        )
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_PENDING) from exc
+    except ErrorDeDiseno as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_ERROR) from exc
+
+    manifest.finish("ok")
+    manifest.save(directorio)
+    _mostrar_diseno(resultado)
+    console.print(f"Manifiesto: [green]{directorio / 'run_manifest.json'}[/green]")
+
+
+def _mostrar_diseno(resultado) -> None:
+    """Imprime la tabla de variantes con su score y sus mutaciones."""
+    tabla = Table(
+        title=f"Variantes de {resultado.estructura.stem} — {resultado.designer}"
+    )
+    tabla.add_column("variante", style="cyan")
+    tabla.add_column("global_score", justify="right")
+    tabla.add_column("recuperación", justify="right")
+    tabla.add_column("mut.", justify="right")
+    tabla.add_column("identidad", justify="right")
+    tabla.add_column("mutaciones")
+
+    mejor = resultado.mejor()
+    for v in resultado.variantes:
+        # global_score es una log-verosimilitud negativa: más bajo es mejor.
+        destacar = mejor is not None and v.id == mejor.id
+        estilo = "bold green" if destacar else ""
+        mutaciones = v.notacion_mutaciones() or "(ninguna)"
+        if len(mutaciones) > 60:
+            mutaciones = mutaciones[:57] + "…"
+        tabla.add_row(
+            v.id,
+            f"{v.global_score:.4f}" if v.global_score is not None else "-",
+            f"{v.recuperacion:.3f}" if v.recuperacion is not None else "-",
+            str(v.n_mutaciones),
+            f"{v.identidad:.1%}",
+            mutaciones,
+            style=estilo,
+        )
+
+    console.print(tabla)
+    console.print(
+        "[dim]global_score es una log-verosimilitud negativa: "
+        "más bajo es mejor. En verde, la mejor variante.[/dim]"
+    )
+    if resultado.posiciones_fijas:
+        console.print(
+            f"Posiciones fijas (sin mutar): {resultado.posiciones_fijas}"
+        )
+    console.print(f"Variantes: [green]{resultado.fasta}[/green]")
+    console.print(f"Tabla:     [green]{resultado.tabla}[/green]")
 
 
 # ---------------------------------------------------------------------------
