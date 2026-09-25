@@ -755,9 +755,20 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+data = [
+    { name = "biopython" },
+    { name = "requests" },
+]
 dev = [
     { name = "pytest" },
     { name = "pytest-cov" },
+]
+md = [
+    { name = "matplotlib" },
+    { name = "mdanalysis" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "scipy" },
 ]
 ml = [
     { name = "scikit-learn" },
@@ -770,28 +781,31 @@ sci = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "requests" },
+    { name = "scikit-learn" },
     { name = "scipy" },
+    { name = "torch" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "biopython", marker = "extra == 'sci'", specifier = ">=1.83" },
-    { name = "matplotlib", marker = "extra == 'sci'", specifier = ">=3.8" },
-    { name = "mdanalysis", marker = "extra == 'sci'", specifier = ">=2.7" },
-    { name = "numpy", marker = "extra == 'sci'", specifier = ">=1.26" },
-    { name = "pandas", marker = "extra == 'sci'", specifier = ">=2.2" },
+    { name = "biopython", marker = "extra == 'data'", specifier = ">=1.83" },
+    { name = "matplotlib", marker = "extra == 'md'", specifier = ">=3.8" },
+    { name = "mdanalysis", marker = "extra == 'md'", specifier = ">=2.7" },
+    { name = "numpy", marker = "extra == 'md'", specifier = ">=1.26" },
+    { name = "pandas", marker = "extra == 'md'", specifier = ">=2.2" },
+    { name = "pdpipe", extras = ["data", "md", "ml"], marker = "extra == 'sci'" },
     { name = "pydantic", specifier = ">=2.7" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.2" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0" },
     { name = "pyyaml", specifier = ">=6.0" },
-    { name = "requests", marker = "extra == 'sci'", specifier = ">=2.32" },
+    { name = "requests", marker = "extra == 'data'", specifier = ">=2.32" },
     { name = "rich", specifier = ">=13.7" },
     { name = "scikit-learn", marker = "extra == 'ml'", specifier = ">=1.4" },
-    { name = "scipy", marker = "extra == 'sci'", specifier = ">=1.13" },
+    { name = "scipy", marker = "extra == 'md'", specifier = ">=1.13" },
     { name = "torch", marker = "extra == 'ml'", specifier = ">=2.2" },
     { name = "typer", specifier = ">=0.12" },
 ]
-provides-extras = ["sci", "ml", "dev"]
+provides-extras = ["data", "md", "ml", "sci", "dev"]
 
 [[package]]
 name = "pillow"

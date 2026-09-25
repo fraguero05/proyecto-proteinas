@@ -23,10 +23,14 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Fases 1, 3 y 5: descarga/curación, dinámica molecular y análisis estructural.
-sci = [
+# Un extra por fase, para no instalar PyTorch cuando solo hace falta bajar un PDB.
+# Fase 1: descarga y curación.
+data = [
     "requests>=2.32",
     "biopython>=1.83",
+]
+# Fases 3 y 5: dinámica molecular y análisis estructural.
+md = [
     "numpy>=1.26",
     "scipy>=1.13",
     "pandas>=2.2",
@@ -37,6 +41,10 @@ sci = [
 ml = [
     "torch>=2.2",
     "scikit-learn>=1.4",
+]
+# Atajo: todo lo científico de una.
+sci = [
+    "pdpipe[data,md,ml]",
 ]
 dev = [
     "pytest>=8.2",
