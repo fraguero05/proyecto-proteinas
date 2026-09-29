@@ -7,7 +7,10 @@ name = "pdpipe"
 version = "0.1.0"
 description = "Pipeline reproducible de diseño computacional de proteínas (tesis de grado, FP-UNA)"
 readme = "README.md"
-requires-python = ">=3.11,<3.12"
+# El tope <3.12 impedia instalar el paquete en Google Colab, que corre sobre
+# Ubuntu noble con Python 3.12, y ahi es donde se ejecuta la Fase 3 (GROMACS).
+# El desarrollo sigue siendo en 3.11; esto solo deja de prohibir las mayores.
+requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Francisco Agüero" }]
 keywords = ["proteinas", "bioinformatica", "diseño-computacional", "alphafold", "gromacs"]
