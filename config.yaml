@@ -81,6 +81,8 @@ md:
   timestep_fs: 2.0
   threads: 0                      # 0 = que GROMACS decida según la máquina
 
+  sasa_stride: 1                  # analizar 1 de cada N cuadros para la SASA
+
 # ---------------------------------------------------------------------------
 # Fase 4 — Modelos de IA
 # ---------------------------------------------------------------------------

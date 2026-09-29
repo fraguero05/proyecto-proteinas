@@ -692,6 +692,137 @@ def simulate(
     _pending("simulate", hito=3, detalle=f"Producción configurada: {duracion} ns.")
 
 
+@app.command(name="md-analyze")
+def md_analyze(
+    topology: Annotated[
+        Optional[Path],
+        typer.Option("--topology", "-t", help="Topología: .gro, .pdb o .tpr."),
+    ] = None,
+    trajectory: Annotated[
+        Optional[Path],
+        typer.Option("--trajectory", "-x", help="Trayectoria: .xtc, .trr o .dcd."),
+    ] = None,
+    selection: Annotated[
+        Optional[str],
+        typer.Option("--selection", help="Selección de átomos para RMSD y RMSF."),
+    ] = None,
+    sasa_stride: Annotated[
+        Optional[int],
+        typer.Option("--sasa-stride", help="Analizar 1 de cada N cuadros para la SASA."),
+    ] = None,
+    no_figures: Annotated[
+        bool, typer.Option("--no-figures", help="No generar los PNG.")
+    ] = False,
+) -> None:
+    """Analiza una trayectoria de MD: RMSD, RMSF, Rg, SASA y puentes (Fase 3).
+
+    No requiere GROMACS: trabaja sobre una trayectoria ya simulada, venga de
+    donde venga. Si la simulación corrió en Colab, este es el paso que la
+    trae de vuelta al pipeline.
+    """
+    from pdpipe.phase3_md import pipeline as fase3
+    from pdpipe.phase3_md.analysis import ErrorDeAnalisis
+
+    cfg = _require_config()
+    if topology is None:
+        console.print("[red]Error:[/red] indicá --topology con la estructura.")
+        raise typer.Exit(code=EXIT_ERROR)
+    if not topology.exists():
+        console.print(f"[red]Error:[/red] no existe la topología: {topology}")
+        raise typer.Exit(code=EXIT_ERROR)
+    if trajectory is not None and not trajectory.exists():
+        console.print(f"[red]Error:[/red] no existe la trayectoria: {trajectory}")
+        raise typer.Exit(code=EXIT_ERROR)
+
+    manifest = RunManifest.start(
+        command="md-analyze",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
+        params={
+            "topology": str(topology),
+            "trajectory": str(trajectory) if trajectory else None,
+            "sasa_stride": sasa_stride if sasa_stride is not None else cfg.md.sasa_stride,
+        },
+    )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    try:
+        resultado = fase3.analizar(
+            config=cfg,
+            topologia=topology,
+            trayectoria=trajectory,
+            paso_sasa=sasa_stride,
+            con_figuras=not no_figures,
+            manifest=manifest,
+            **({"seleccion": selection} if selection else {}),
+        )
+    except ErrorDeAnalisis as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_ERROR) from exc
+
+    manifest.finish("ok")
+    manifest.save(directorio)
+    _mostrar_analisis_md(resultado)
+    console.print(f"Manifiesto: [green]{directorio / 'run_manifest.json'}[/green]")
+
+
+def _mostrar_analisis_md(resultado) -> None:
+    """Imprime el resumen de las medidas y dónde quedaron las salidas."""
+    ficha = Table(title=f"Trayectoria — {resultado.topologia.stem}", show_header=False)
+    ficha.add_column("clave", style="cyan")
+    ficha.add_column("valor")
+    ficha.add_row("Cuadros", str(resultado.n_frames))
+    ficha.add_row("Átomos", str(resultado.n_atomos))
+    ficha.add_row("Residuos", str(resultado.n_residuos))
+    if resultado.dt_ps:
+        ficha.add_row("Paso de tiempo", f"{resultado.dt_ps} ps")
+    if resultado.duracion_ps is not None:
+        ficha.add_row("Duración analizada", f"{resultado.duracion_ps} ps")
+    console.print(ficha)
+
+    medidas = Table(title="Medidas")
+    medidas.add_column("magnitud", style="cyan")
+    medidas.add_column("media", justify="right")
+    medidas.add_column("desvío", justify="right")
+    medidas.add_column("inicial", justify="right")
+    medidas.add_column("final", justify="right")
+    medidas.add_column("deriva", justify="right")
+    for serie in resultado.series().values():
+        medidas.add_row(
+            f"{serie.nombre} ({serie.unidad})",
+            f"{serie.media:g}",
+            f"{serie.desvio:g}",
+            f"{serie.inicial:g}",
+            f"{serie.final:g}",
+            f"{serie.deriva:+g}",
+        )
+    if resultado.rmsf:
+        medidas.add_row(
+            f"RMSF ({resultado.rmsf.unidad})",
+            f"{resultado.rmsf.media:g}", "-", "-", "-", "-",
+        )
+    console.print(medidas)
+
+    if resultado.rmsf:
+        moviles = ", ".join(f"{r} ({v:g} Å)" for r, v in resultado.rmsf.mas_moviles(5))
+        console.print(f"Residuos más móviles: {moviles}")
+
+    for aviso in resultado.advertencias:
+        console.print(f"[yellow]Advertencia:[/yellow] {aviso}")
+
+    console.print(f"Series:  [green]{resultado.tabla}[/green]")
+    console.print(f"Resumen: [green]{resultado.resumen_json}[/green]")
+    if resultado.figuras:
+        console.print(
+            f"Figuras: [green]{len(resultado.figuras)} PNG en "
+            f"{resultado.figuras[0].parent}[/green]"
+        )
+
+
 # ---------------------------------------------------------------------------
 # Fase 5 — Análisis y reportes
 # ---------------------------------------------------------------------------

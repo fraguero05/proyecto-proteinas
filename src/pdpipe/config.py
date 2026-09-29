@@ -177,6 +177,11 @@ class MDConfig(_Base):
     timestep_fs: float = Field(default=2.0, gt=0, le=5)
     threads: int = Field(default=0, ge=0, description="0 = automático")
 
+    # La SASA es la medida más cara del análisis: rueda una esfera de prueba
+    # sobre cada átomo, cuadro por cuadro. En una trayectoria de producción
+    # conviene analizar uno de cada N.
+    sasa_stride: int = Field(default=1, ge=1)
+
 
 class MLConfig(_Base):
     """Fase 4 — predicción de estructura secundaria a partir de secuencia."""
