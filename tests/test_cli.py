@@ -133,10 +133,26 @@ def test_design_sin_proteinmpnn_explica_como_instalarlo(cfg, pdb_fixture: Path):
     assert "git clone" in resultado.output
 
 
-def test_simulate_pendiente(cfg, pdb_fixture: Path):
+def test_simulate_sin_gromacs_explica_como_instalarlo(cfg, pdb_fixture: Path):
+    """Implementado en el Hito 3, pero GROMACS es un binario externo.
+
+    Sigue saliendo con EXIT_PENDING porque falta una herramienta del entorno,
+    no porque falten datos: el mensaje tiene que traer la instalación.
+    """
     resultado = runner.invoke(app, [*cfg, "simulate", "--input", str(pdb_fixture)])
     assert resultado.exit_code == EXIT_PENDING
-    assert "Hito 3" in resultado.output
+    assert "apt install gromacs" in resultado.output
+
+
+def test_simulate_clean_only_no_necesita_gromacs(cfg):
+    """La limpieza de la estructura corre con Biopython, sin GROMACS."""
+    resultado = runner.invoke(
+        app,
+        [*cfg, "simulate", "--input", str(FIXTURES_DIR / "1UBQ.pdb"), "--clean-only"],
+    )
+
+    assert resultado.exit_code == 0, resultado.output
+    assert "58" in resultado.output, "no reportó las aguas quitadas"
 
 
 # ------------------------------------------------------- validación de argumentos
