@@ -514,6 +514,21 @@ flexibilidad en todos los residuos por igual.
 > RMSF sin alinear da 2.06 Å contra 0.76 Å alineado: casi el triple. El pipeline alinea
 > siempre antes del RMSF, y hay un test que lo fija.
 
+### Leer las salidas en PowerShell
+
+Las tablas y los JSON se escriben en UTF-8 sin BOM. `Get-Content` de Windows PowerShell
+5.1 los lee en la codepage ANSI del sistema, así que los acentos y los símbolos como
+`Å` aparecen como `Ã…`. El archivo está bien; es el comando:
+
+```powershell
+Get-Content data\processed	raj_1UBQ_md_resumen.json -Encoding UTF8
+```
+
+El RMSF se reporta **promediado por residuo**, no por átomo. MDAnalysis lo devuelve por
+átomo; con la selección por defecto hay un carbono alfa por residuo y coinciden, pero
+`--selection backbone` son cuatro átomos por residuo y sin promediar el perfil repetiría
+cada número de residuo cuatro veces.
+
 ### Las fixtures de trayectoria
 
 Los tests no tocan la red ni requieren GROMACS. Las dos trayectorias son sintéticas y
