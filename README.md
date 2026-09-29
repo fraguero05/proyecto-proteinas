@@ -18,14 +18,19 @@ local de menor costo como alternativa.
 | 4. Modelos de IA | `phase4_ml` | Estructura secundaria a partir de secuencia (BiLSTM vs. baseline) | 4 |
 | 5. Análisis y comparación | `phase5_analysis` | RMSD, TM-score y reportes contra la referencia experimental | 5 |
 
-**Estado actual: Hitos 1 y 2 completos, Hito 3 en curso.** Funcionan `fetch`,
-`curate`, `db-stats`, `predict` (AlphaFold DB + pLDDT), `design` (variantes con
-ProteinMPNN) y `md-analyze` (análisis de trayectorias). Dentro del Hito 2 quedan
-pendientes ColabFold y ESMFold como fuentes alternativas de estructura. Del Hito 3
-está hecha la parte C (análisis); las partes A y B requieren GROMACS, que no se
-puede instalar en el entorno de desarrollo — ver "Cómo reproducir el Hito 3". Faltan
-las fases 4 y 5, cuyos comandos validan argumentos y configuración pero informan en
-qué hito se implementan y terminan con código de salida `2`.
+**Estado actual: Hitos 1, 2 y 3 completos.** Funcionan `fetch`, `curate`,
+`db-stats`, `predict` (AlphaFold DB + pLDDT), `design` (variantes con ProteinMPNN),
+`simulate` (preparación del sistema y las cuatro etapas de MD) y `md-analyze`
+(análisis de trayectorias). Dentro del Hito 2 quedan pendientes ColabFold y ESMFold
+como fuentes alternativas de estructura.
+
+`simulate` necesita GROMACS, que **no se puede instalar en el entorno de desarrollo**
+(Windows administrado, sin permisos de administrador). El mismo código corre desde
+`notebooks/md_gromacs.ipynb` en Google Colab — ver "Cómo reproducir el Hito 3,
+partes A y B".
+
+Faltan las fases 4 y 5, cuyos comandos validan argumentos y configuración pero
+informan en qué hito se implementan y terminan con código de salida `2`.
 
 ## Instalación
 
@@ -95,6 +100,7 @@ pdpipe db-stats                                      # contenido de la base
 pdpipe predict --uniprot P0CG48                      # Fase 2
 pdpipe design --input data/processed/1UBQ.pdb --n-sequences 8
 pdpipe simulate --input designs/1UBQ_var03.pdb --ns 2   # Fase 3 (requiere GROMACS)
+pdpipe simulate --input 1UBQ.pdb --clean-only           # solo limpieza, sin GROMACS
 pdpipe md-analyze --topology md/sistema.gro --trajectory md/prod.xtc   # Fase 3
 pdpipe analyze --run-id <id>                         # Fase 5
 pdpipe report --run-id <id>
@@ -452,6 +458,110 @@ a mano desde `tools/ProteinMPNN` vas a encontrarte con esos dos errores.
 
 ---
 
+## Cómo reproducir el Hito 3, partes A y B
+
+Fase 3, la simulación propiamente dicha: del PDB a una trayectoria.
+
+**GROMACS no se puede instalar en el entorno de desarrollo** de este proyecto: es una
+máquina Windows administrada sin permisos de administrador, GROMACS no publica binarios
+para Windows nativo, no está en conda-forge para esa plataforma, y WSL2 requiere
+elevación. El mismo código corre en Colab, que es lo que el plan original previó para
+lo que no entra en una laptop.
+
+### Con GROMACS disponible (Linux, WSL, macOS)
+
+```bash
+pdpipe simulate --input tests/fixtures/1UBQ.pdb --ns 2
+pdpipe md-analyze --topology data/interim/md_1UBQ/prod.gro \
+                  --trajectory data/interim/md_1UBQ/prod.xtc
+```
+
+### Sin GROMACS: el notebook de Colab
+
+Abrí `notebooks/md_gromacs.ipynb` en Google Colab y corré las celdas en orden. El
+notebook instala GROMACS, instala este mismo paquete desde el repositorio y llama a las
+mismas funciones (`preparar_sistema`, `simular`, `analizar`). **No hay una segunda
+implementación**: lo único que cambia es dónde existe el ejecutable `gmx`.
+
+### Sin GROMACS: lo que sí corre localmente
+
+La limpieza de la estructura usa Biopython, no GROMACS, así que se puede revisar antes
+de simular:
+
+```bash
+pdpipe simulate --input tests/fixtures/1UBQ.pdb --clean-only
+```
+
+Sobre 1UBQ tiene que reportar `660 -> 602` átomos y 58 aguas quitadas. Mirá las
+advertencias: si la estructura traía un cofactor o un ion catalítico, se quitó, y la
+simulación no lo va a tener en cuenta.
+
+Y si GROMACS no está, `simulate` sale con código `2` y el mensaje trae la instalación
+para Ubuntu, macOS y Colab, que es el comportamiento especificado desde el principio.
+
+### Las cuatro etapas y por qué ese orden
+
+| Etapa | Qué hace | Restricciones | Continúa de |
+|---|---|---|---|
+| **Minimización** | Saca los choques del sistema recién solvatado | — | el sistema armado |
+| **NVT** | Equilibra la temperatura a volumen constante | sí (`-DPOSRES`) | la estructura minimizada |
+| **NPT** | Equilibra la presión, y con ella la densidad del agua | sí (`-DPOSRES`) | el **checkpoint** del NVT |
+| **Producción** | La trayectoria que se analiza | no | el checkpoint del NPT |
+
+Las restricciones de posición sujetan la proteína mientras el solvente se acomoda a su
+alrededor. En producción se sueltan: si quedaran, la proteína no se movería y la
+simulación no serviría para nada.
+
+> **Advertencia:** el NPT tiene que continuar del checkpoint del NVT (`grompp -t
+> nvt.cpt`). Sin eso arranca con velocidades nuevas, **no falla, no avisa**, y los
+> 100 ps de equilibración térmica se tiran. Hay un test que fija ese encadenado.
+
+### Cuánto tarda
+
+`apt install gromacs` instala una compilación **solo para CPU**, sin CUDA: una GPU de
+Colab no la acelera. Órdenes de magnitud para la ubiquitina solvatada (~14.000 átomos),
+estimados y no medidos:
+
+| Entorno | Velocidad aproximada | 2 ns tardarían |
+|---|---|---|
+| Colab gratuito, 2 núcleos | ~8 ns/día | ~6 h |
+| 4 núcleos | ~15 ns/día | ~3 h |
+| GPU T4 con build CUDA | ~150 ns/día | ~20 min |
+
+Seis horas no entran en una sesión gratuita de Colab. Por eso el notebook arranca con
+`NS_PRODUCCION = 0.2`, que valida la cadena completa en unos 40 minutos. Para la
+corrida de la tesis hay que subirlo y contar con Colab Pro o una build con CUDA.
+
+### Los parámetros de simulación salen del config
+
+Los cuatro `.mdp` se generan desde el `config.yaml`, no son plantillas fijas: cambiar
+la temperatura o la duración es editar el config, no cuatro archivos a mano.
+
+| Config | Va a |
+|---|---|
+| `md.force_field`, `md.water_model` | `pdb2gmx` |
+| `md.box_shape`, `md.box_padding_nm` | `editconf` |
+| `md.ion_concentration_m` | `genion` |
+| `md.temperature_k`, `md.pressure_bar` | termostato y barostato de los `.mdp` |
+| `md.timestep_fs`, `md.nvt_ps`, `md.npt_ps`, `md.production_ns` | cuenta de pasos |
+| `md.output_every_ps` | frecuencia de escritura de la trayectoria |
+| `seed` | velocidades iniciales del NVT |
+
+La semilla es lo que hace reproducible la simulación y queda registrada en el
+`run_manifest.json`.
+
+### Qué se puede verificar sin GROMACS
+
+Los 41 tests de las partes A y B no ejecutan GROMACS. Prueban la limpieza de la
+estructura, la generación de los `.mdp` con su cuenta de pasos, el parseo de los
+mensajes de error de GROMACS contra texto real, y el **encadenado de las cuatro
+etapas** con un cliente falso que anota los comandos en vez de correrlos.
+
+> **Ojo:** eso verifica que el pipeline arme los comandos correctos, **no** que GROMACS
+> los acepte. Esa validación llega corriendo el notebook.
+
+---
+
 ## Cómo reproducir el Hito 3, parte C
 
 Fase 3, análisis de trayectorias: qué hizo la proteína durante la simulación.
@@ -545,18 +655,3 @@ binarias por peso, y un PDB de texto se puede revisar en un diff.
 > **Ojo:** son fixtures para probar el *código de análisis*, no simulaciones reales. No
 > tienen física atrás. La validación contra una trayectoria de verdad llega con la
 > parte B.
-
-### Partes A y B: el estado de GROMACS
-
-Las partes A (preparación del sistema) y B (simulación) necesitan GROMACS, y **no está
-instalado en el entorno de desarrollo**: es una máquina Windows administrada, sin
-permisos de administrador, y GROMACS no publica binarios para Windows nativo ni está
-en conda-forge para esa plataforma. WSL2 requiere elevación.
-
-Eso no bloquea el hito: `pdb2gmx`, la caja, la solvatación, los iones y las cuatro
-etapas de simulación se ejecutan desde un notebook de Colab, que es exactamente lo que
-el plan original previó para lo que no entra en una laptop. El código del envoltorio es
-el mismo en los dos lados; lo único que cambia es dónde existe el ejecutable `gmx`.
-
-Mientras tanto, `pdpipe simulate` falla con un mensaje claro y la sugerencia de
-instalación, que es el comportamiento especificado desde el principio.
