@@ -18,11 +18,14 @@ local de menor costo como alternativa.
 | 4. Modelos de IA | `phase4_ml` | Estructura secundaria a partir de secuencia (BiLSTM vs. baseline) | 4 |
 | 5. Análisis y comparación | `phase5_analysis` | RMSD, TM-score y reportes contra la referencia experimental | 5 |
 
-**Estado actual: Hitos 1 y 2 completos.** Funcionan `fetch`, `curate`, `db-stats`,
-`predict` (AlphaFold DB + pLDDT) y `design` (variantes de secuencia con ProteinMPNN).
-Dentro del Hito 2 quedan pendientes ColabFold y ESMFold como fuentes alternativas de
-estructura. Faltan las fases 3 a 5, cuyos comandos validan argumentos y configuración
-pero informan en qué hito se implementan y terminan con código de salida `2`.
+**Estado actual: Hitos 1 y 2 completos, Hito 3 en curso.** Funcionan `fetch`,
+`curate`, `db-stats`, `predict` (AlphaFold DB + pLDDT), `design` (variantes con
+ProteinMPNN) y `md-analyze` (análisis de trayectorias). Dentro del Hito 2 quedan
+pendientes ColabFold y ESMFold como fuentes alternativas de estructura. Del Hito 3
+está hecha la parte C (análisis); las partes A y B requieren GROMACS, que no se
+puede instalar en el entorno de desarrollo — ver "Cómo reproducir el Hito 3". Faltan
+las fases 4 y 5, cuyos comandos validan argumentos y configuración pero informan en
+qué hito se implementan y terminan con código de salida `2`.
 
 ## Instalación
 
@@ -91,7 +94,8 @@ pdpipe curate --resolution-max 2.0 --organism "Homo sapiens"
 pdpipe db-stats                                      # contenido de la base
 pdpipe predict --uniprot P0CG48                      # Fase 2
 pdpipe design --input data/processed/1UBQ.pdb --n-sequences 8
-pdpipe simulate --input designs/1UBQ_var03.pdb --ns 2   # Fase 3
+pdpipe simulate --input designs/1UBQ_var03.pdb --ns 2   # Fase 3 (requiere GROMACS)
+pdpipe md-analyze --topology md/sistema.gro --trajectory md/prod.xtc   # Fase 3
 pdpipe analyze --run-id <id>                         # Fase 5
 pdpipe report --run-id <id>
 ```
@@ -445,3 +449,99 @@ dos deducciones salen mal — busca los pesos bajo `protein_mpnn_run.p` y quiere
 El pipeline lo esquiva solo: pasa `--path_to_model_weights` explícito y le da las rutas
 con barras normales, que Windows acepta igual. No hay que hacer nada, pero si lo corrés
 a mano desde `tools/ProteinMPNN` vas a encontrarte con esos dos errores.
+
+---
+
+## Cómo reproducir el Hito 3, parte C
+
+Fase 3, análisis de trayectorias: qué hizo la proteína durante la simulación.
+
+Esta parte **no necesita GROMACS**. Trabaja sobre una trayectoria ya simulada, venga
+de donde venga — de `pdpipe simulate` si tenés GROMACS, o de un notebook de Colab.
+
+```bash
+uv pip install -e ".[data,md,dev]"
+
+# 1. La suite completa
+pytest -q
+
+# 2. Análisis sobre la trayectoria de ejemplo incluida en el repo
+pdpipe md-analyze --topology tests/fixtures/traj_1UBQ.pdb
+
+# 3. Sobre una simulación real: topología y trayectoria por separado
+pdpipe md-analyze --topology md/sistema.gro --trajectory md/produccion.xtc
+```
+
+**Qué mirar:**
+
+- La tabla de medidas, con media, desvío, valor inicial, final y **deriva**. En el
+  RMSD la deriva es la señal más directa de si el sistema se estabilizó: si sigue
+  creciendo al final de la simulación, la producción fue demasiado corta.
+- Los residuos más móviles del RMSF. Sobre la trayectoria de ejemplo salen el 76 y el
+  75 — la cola C-terminal de la ubiquitina, que es justamente su región flexible.
+- Las advertencias. La trayectoria de ejemplo dispara dos, a propósito: que no declara
+  paso de tiempo y que no se pueden contar puentes de hidrógeno.
+- Las cinco figuras en `data/processed/figuras/`, más el panel `_resumen.png` con
+  todo junto, que es la que suele ir al documento.
+
+### Qué mide cada cosa
+
+| Medida | Pregunta que responde | Si sube sostenidamente |
+|---|---|---|
+| **RMSD** | ¿Cuánto se alejó de la estructura de partida? | El sistema todavía no se equilibró |
+| **RMSF** | ¿Dónde está la flexibilidad, residuo por residuo? | (es un perfil, no una serie) |
+| **Radio de giro** | ¿Qué tan compacta está? | Se está desplegando |
+| **SASA** | ¿Cuánta superficie queda expuesta al solvente? | Se está abriendo; acompaña al radio de giro |
+| **Puentes de hidrógeno** | ¿Cuántos hay cuadro a cuadro? | Si *bajan*, se pierde estructura secundaria |
+
+### Dos decisiones que conviene conocer
+
+**La SASA no la calcula MDAnalysis.** El plan original decía "análisis con MDAnalysis:
+RMSD, RMSF, radio de giro, SASA, puentes de hidrógeno", pero MDAnalysis no tiene módulo
+de superficie: no existe `MDAnalysis.analysis.sasa` ni equivalente. Se usa la
+implementación de Shrake-Rupley de Biopython (`Bio.PDB.SASA.ShrakeRupley`), que ya era
+dependencia del proyecto por la Fase 1. Es además la medida más cara de las cinco, así
+que `md.sasa_stride` permite analizar uno de cada N cuadros.
+
+**El RMSF exige alinear la trayectoria antes; el RMSD no.** El RMSD superpone cada
+cuadro contra la referencia por su cuenta, así que una proteína que rota o se traslada
+dentro de la caja no lo afecta. El RMSF, en cambio, mide la dispersión de cada átomo
+alrededor de su posición media: si el conjunto rota, esa rotación aparece como
+flexibilidad en todos los residuos por igual.
+
+> **Advertencia:** un RMSF calculado sin alinear no da error — da números plausibles y
+> equivocados. Sobre la trayectoria de ejemplo, que rota 4° por cuadro a propósito, el
+> RMSF sin alinear da 2.06 Å contra 0.76 Å alineado: casi el triple. El pipeline alinea
+> siempre antes del RMSF, y hay un test que lo fija.
+
+### Las fixtures de trayectoria
+
+Los tests no tocan la red ni requieren GROMACS. Las dos trayectorias son sintéticas y
+están construidas para que la respuesta correcta se conozca de antemano:
+
+| Fixture | Qué es | Respuesta esperada |
+|---|---|---|
+| `traj_1UBQ.pdb` | 11 cuadros de la ubiquitina, con ruido proporcional a la distancia al centro y una rotación rígida de 4° por cuadro | El RMSD ignora la rotación; el RMSF la acusa si no se alinea |
+| `aguas_hbond.pdb` | Dos aguas con hidrógenos explícitos: puente lineal a 2.80 Å en el primer cuadro, separadas a 6.00 Å en el segundo | Exactamente `[1, 0]` puentes |
+
+Son PDB multi-modelo y no `.xtc` a propósito: el `.gitignore` excluye las trayectorias
+binarias por peso, y un PDB de texto se puede revisar en un diff.
+
+> **Ojo:** son fixtures para probar el *código de análisis*, no simulaciones reales. No
+> tienen física atrás. La validación contra una trayectoria de verdad llega con la
+> parte B.
+
+### Partes A y B: el estado de GROMACS
+
+Las partes A (preparación del sistema) y B (simulación) necesitan GROMACS, y **no está
+instalado en el entorno de desarrollo**: es una máquina Windows administrada, sin
+permisos de administrador, y GROMACS no publica binarios para Windows nativo ni está
+en conda-forge para esa plataforma. WSL2 requiere elevación.
+
+Eso no bloquea el hito: `pdb2gmx`, la caja, la solvatación, los iones y las cuatro
+etapas de simulación se ejecutan desde un notebook de Colab, que es exactamente lo que
+el plan original previó para lo que no entra en una laptop. El código del envoltorio es
+el mismo en los dos lados; lo único que cambia es dónde existe el ejecutable `gmx`.
+
+Mientras tanto, `pdpipe simulate` falla con un mensaje claro y la sugerencia de
+instalación, que es el comportamiento especificado desde el principio.
