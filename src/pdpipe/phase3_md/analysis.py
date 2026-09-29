@@ -22,6 +22,7 @@ from __future__ import annotations
 import tempfile
 import warnings
 from pathlib import Path
+from statistics import mean
 
 from pdpipe.phase3_md.models import PerfilPorResiduo, SerieTemporal
 from pdpipe.utils.logging import get_logger
@@ -156,6 +157,13 @@ def calcular_rmsf(
 
     Se asume que :func:`alinear` corrió antes. Si no, el resultado incluye el
     movimiento de cuerpo rígido y no significa lo que parece.
+
+    MDAnalysis devuelve un RMSF **por átomo**. Con la selección por defecto
+    hay un carbono alfa por residuo y las dos cosas coinciden, pero con
+    cualquier otra (``backbone`` son cuatro átomos por residuo) habría varios
+    valores para el mismo número de residuo: el perfil repetiría residuos y
+    ``mas_moviles`` devolvería el mismo tres veces. Se promedia por residuo
+    para que el resultado sea de verdad lo que dice ser.
     """
     from MDAnalysis.analysis import rms
 
@@ -167,11 +175,16 @@ def calcular_rmsf(
         warnings.simplefilter("ignore")
         analisis = rms.RMSF(atomos).run()
 
+    por_residuo: dict[int, list[float]] = {}
+    for atomo, valor in zip(atomos, analisis.results.rmsf):
+        por_residuo.setdefault(int(atomo.resid), []).append(float(valor))
+
+    residuos = sorted(por_residuo)
     return PerfilPorResiduo(
         nombre="RMSF",
         unidad="Å",
-        residuos=[int(a.resid) for a in atomos],
-        valores=[float(v) for v in analisis.results.rmsf],
+        residuos=residuos,
+        valores=[mean(por_residuo[r]) for r in residuos],
     )
 
 

@@ -161,6 +161,27 @@ def test_los_extremos_son_los_mas_moviles(universo):
     assert 76 in moviles
 
 
+@pytest.mark.parametrize("seleccion", ["protein and name CA", "backbone", "protein"])
+def test_el_perfil_tiene_un_valor_por_residuo_con_cualquier_seleccion(seleccion):
+    """Regresión: MDAnalysis devuelve el RMSF por átomo, no por residuo.
+
+    Con la selección por defecto hay un carbono alfa por residuo y coinciden,
+    pero ``backbone`` son cuatro átomos por residuo y ``protein`` muchos más.
+    Sin promediar, el perfil repetía el mismo número de residuo y
+    ``mas_moviles`` devolvía tres veces el 76.
+    """
+    perfil = an.calcular_rmsf(
+        an.alinear(an.cargar(TRAYECTORIA), seleccion), seleccion
+    )
+
+    assert len(perfil.residuos) == 76
+    assert len(set(perfil.residuos)) == 76, "hay residuos repetidos en el perfil"
+    assert perfil.residuos == sorted(perfil.residuos)
+
+    moviles = [r for r, _ in perfil.mas_moviles(5)]
+    assert len(set(moviles)) == 5, f"mas_moviles repite residuos: {moviles}"
+
+
 # ----------------------------------------------------------- radio de giro
 
 
