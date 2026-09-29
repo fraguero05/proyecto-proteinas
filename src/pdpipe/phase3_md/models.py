@@ -132,4 +132,95 @@ class ResultadoAnalisisMD(_Base):
         return {k: v for k, v in candidatas.items() if v is not None}
 
 
-__all__ = ["PerfilPorResiduo", "ResultadoAnalisisMD", "SerieTemporal"]
+
+
+# ---------------------------------------------------------------------------
+# Partes A y B — preparación del sistema y simulación
+# ---------------------------------------------------------------------------
+
+
+class ResultadoLimpieza(_Base):
+    """Qué se sacó de la estructura antes de armar el sistema.
+
+    Se reporta en detalle a propósito: quitar un cofactor o un ion catalítico
+    sin avisar cambiaría la biología de la simulación en silencio.
+    """
+
+    entrada: Path
+    salida: Path
+
+    atomos_iniciales: int = 0
+    atomos_finales: int = 0
+
+    aguas_quitadas: int = 0
+    heteroatomos_quitados: int = 0
+    hidrogenos_quitados: int = 0
+    altloc_descartadas: int = 0
+    modelos_descartados: int = 0
+
+    # Nombres de residuo de los heteroátomos que se sacaron, con su conteo.
+    # Es la lista que hay que mirar antes de confiar en la simulación.
+    heteroatomos: dict[str, int] = Field(default_factory=dict)
+    advertencias: list[str] = Field(default_factory=list)
+
+
+class EtapaSimulacion(_Base):
+    """Una etapa de GROMACS que se ejecutó."""
+
+    nombre: str
+    pasos: int = 0
+    ps_simulados: float = 0.0
+    estructura: Path | None = None
+    trayectoria: Path | None = None
+    energia: Path | None = None
+    log: Path | None = None
+    segundos: float | None = None
+
+
+class SistemaPreparado(_Base):
+    """Sistema listo para simular: topología, coordenadas y parámetros."""
+
+    directorio: Path
+    estructura: Path
+    topologia: Path
+    restricciones: Path | None = None
+    mdp: dict[str, Path] = Field(default_factory=dict)
+
+    campo_de_fuerza: str = ""
+    modelo_de_agua: str = ""
+    forma_de_caja: str = ""
+
+    n_atomos: int = 0
+    n_aguas: int = 0
+    iones: dict[str, int] = Field(default_factory=dict)
+
+    limpieza: ResultadoLimpieza | None = None
+    version_gromacs: str | None = None
+
+
+class ResultadoSimulacion(_Base):
+    """Salida de una corrida completa de MD."""
+
+    sistema: SistemaPreparado
+    etapas: list[EtapaSimulacion] = Field(default_factory=list)
+
+    trayectoria: Path | None = None
+    estructura_final: Path | None = None
+    ns_simulados: float = 0.0
+    version_gromacs: str | None = None
+
+    @property
+    def duracion_total_s(self) -> float:
+        return round(sum(e.segundos or 0.0 for e in self.etapas), 1)
+
+
+__all__ = [
+
+    "EtapaSimulacion",
+    "PerfilPorResiduo",
+    "ResultadoAnalisisMD",
+    "ResultadoLimpieza",
+    "ResultadoSimulacion",
+    "SerieTemporal",
+    "SistemaPreparado",
+]

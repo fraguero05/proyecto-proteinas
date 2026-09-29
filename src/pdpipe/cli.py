@@ -665,8 +665,28 @@ def simulate(
         Optional[float],
         typer.Option("--ns", help="Nanosegundos de producción."),
     ] = None,
+    outdir: Annotated[
+        Optional[Path],
+        typer.Option("--outdir", "-o", help="Carpeta de trabajo de la simulación."),
+    ] = None,
+    clean_only: Annotated[
+        bool,
+        typer.Option(
+            "--clean-only",
+            help="Solo limpiar la estructura (aguas y heteroátomos). No requiere GROMACS.",
+        ),
+    ] = False,
 ) -> None:
-    """Corre minimización, equilibración y MD corta con GROMACS (Fase 3)."""
+    """Corre minimización, equilibración y MD corta con GROMACS (Fase 3).
+
+    Con ``--clean-only`` hace únicamente la limpieza de la estructura, que es
+    la parte que no necesita GROMACS y sirve para revisar qué se va a sacar
+    antes de simular.
+    """
+    from pdpipe.phase3_md.gromacs import ErrorDeGromacs, GromacsNoDisponible
+    from pdpipe.phase3_md.preparation import limpiar_estructura, preparar_sistema
+    from pdpipe.phase3_md.simulation import simular
+
     cfg = _require_config()
     if input is None:
         console.print("[red]Error:[/red] indicá --input con la estructura a simular.")
@@ -676,20 +696,136 @@ def simulate(
         raise typer.Exit(code=EXIT_ERROR)
 
     duracion = ns if ns is not None else cfg.md.production_ns
-    if shutil.which(cfg.md.gromacs_bin) is None:
+    destino = outdir or (Path(cfg.resolved_paths()["data_interim"]) / f"md_{input.stem}")
+
+    if clean_only:
+        try:
+            limpieza = limpiar_estructura(input, Path(destino) / "limpio.pdb")
+        except ValueError as exc:
+            console.print(f"[red]Error:[/red] {exc}")
+            raise typer.Exit(code=EXIT_ERROR) from exc
+        _mostrar_limpieza(limpieza)
+        return
+
+    manifest = RunManifest.start(
+        command="simulate",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
+        params={
+            "input": str(input),
+            "ns": duracion,
+            "outdir": str(destino),
+            "force_field": cfg.md.force_field,
+            "water_model": cfg.md.water_model,
+        },
+    )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    try:
+        sistema = preparar_sistema(cfg, input, destino)
+        resultado = simular(cfg, sistema, ns=ns)
+    except GromacsNoDisponible as exc:
+        # Falta una herramienta del entorno, no un dato: el mensaje trae la
+        # instalación y el código de salida es el de "pendiente".
         console.print(
-            Panel(
-                f"No se encontró el ejecutable [bold]{cfg.md.gromacs_bin}[/bold] en el PATH.\n"
-                f"GROMACS es necesario desde el Hito 3. En Ubuntu/WSL:\n\n"
-                f"    [cyan]sudo apt install gromacs[/cyan]\n\n"
-                f"Si lo instalaste en otra ruta, ajustá [cyan]md.gromacs_bin[/cyan] "
-                f"en el config.yaml.",
-                title="[yellow]GROMACS no disponible[/yellow]",
-                border_style="yellow",
-                expand=False,
-            )
+            Panel(str(exc), title="[yellow]GROMACS no disponible[/yellow]",
+                  border_style="yellow", expand=False)
         )
-    _pending("simulate", hito=3, detalle=f"Producción configurada: {duracion} ns.")
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_PENDING) from exc
+    except (ErrorDeGromacs, ValueError) as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        manifest.finish("error", error=str(exc))
+        manifest.save(directorio)
+        raise typer.Exit(code=EXIT_ERROR) from exc
+
+    if sistema.limpieza:
+        manifest.add_input(input, key=input.name)
+    for etapa in resultado.etapas:
+        if etapa.trayectoria:
+            manifest.add_output(etapa.trayectoria, key=etapa.trayectoria.name)
+        if etapa.estructura:
+            manifest.add_output(etapa.estructura, key=etapa.estructura.name)
+    manifest.add_note(
+        f"GROMACS {resultado.version_gromacs or '?'}: {resultado.ns_simulados} ns "
+        f"en {resultado.duracion_total_s} s"
+    )
+
+    manifest.finish("ok")
+    manifest.save(directorio)
+    _mostrar_simulacion(resultado)
+    console.print(f"Manifiesto: [green]{directorio / 'run_manifest.json'}[/green]")
+
+
+def _mostrar_limpieza(limpieza) -> None:
+    """Imprime qué se sacó de la estructura."""
+    tabla = Table(title=f"Limpieza — {limpieza.entrada.name}", show_header=False)
+    tabla.add_column("clave", style="cyan")
+    tabla.add_column("valor")
+    # Flecha ASCII a propósito: la consola de Windows usa cp1252 y U+2192 no
+    # existe en esa codepage, así que imprimirlo revienta con UnicodeEncodeError.
+    tabla.add_row("Átomos", f"{limpieza.atomos_iniciales} -> {limpieza.atomos_finales}")
+    tabla.add_row("Aguas quitadas", str(limpieza.aguas_quitadas))
+    tabla.add_row("Heteroátomos quitados", str(limpieza.heteroatomos_quitados))
+    tabla.add_row("Hidrógenos quitados", str(limpieza.hidrogenos_quitados))
+    if limpieza.altloc_descartadas:
+        tabla.add_row("Conformaciones alternativas", str(limpieza.altloc_descartadas))
+    if limpieza.modelos_descartados:
+        tabla.add_row("Modelos descartados", str(limpieza.modelos_descartados))
+    console.print(tabla)
+
+    if limpieza.heteroatomos:
+        detalle = ", ".join(f"{k} ×{v}" for k, v in sorted(limpieza.heteroatomos.items()))
+        console.print(f"Heteroátomos: {detalle}")
+    for aviso in limpieza.advertencias:
+        console.print(f"[yellow]Advertencia:[/yellow] {aviso}")
+    console.print(f"Estructura limpia: [green]{limpieza.salida}[/green]")
+
+
+def _mostrar_simulacion(resultado) -> None:
+    """Imprime el sistema armado y el resumen de las cuatro etapas."""
+    sistema = resultado.sistema
+    ficha = Table(title="Sistema simulado", show_header=False)
+    ficha.add_column("clave", style="cyan")
+    ficha.add_column("valor")
+    ficha.add_row("Campo de fuerza", sistema.campo_de_fuerza)
+    ficha.add_row("Modelo de agua", sistema.modelo_de_agua)
+    ficha.add_row("Caja", sistema.forma_de_caja)
+    ficha.add_row("Átomos", str(sistema.n_atomos))
+    ficha.add_row("Aguas", str(sistema.n_aguas))
+    if sistema.iones:
+        ficha.add_row("Iones", ", ".join(f"{k} ×{v}" for k, v in sorted(sistema.iones.items())))
+    if resultado.version_gromacs:
+        ficha.add_row("GROMACS", resultado.version_gromacs)
+    console.print(ficha)
+
+    etapas = Table(title="Etapas")
+    etapas.add_column("etapa", style="cyan")
+    etapas.add_column("pasos", justify="right")
+    etapas.add_column("ps", justify="right")
+    etapas.add_column("tiempo real", justify="right")
+    for etapa in resultado.etapas:
+        etapas.add_row(
+            etapa.nombre,
+            f"{etapa.pasos:,}",
+            f"{etapa.ps_simulados:g}" if etapa.ps_simulados else "-",
+            f"{etapa.segundos:.1f} s" if etapa.segundos else "-",
+        )
+    console.print(etapas)
+
+    if sistema.limpieza and sistema.limpieza.advertencias:
+        for aviso in sistema.limpieza.advertencias:
+            console.print(f"[yellow]Advertencia:[/yellow] {aviso}")
+
+    if resultado.trayectoria:
+        console.print(f"Trayectoria: [green]{resultado.trayectoria}[/green]")
+        console.print(
+            "[dim]Analizala con: pdpipe md-analyze --topology "
+            f"{resultado.estructura_final} --trajectory {resultado.trayectoria}[/dim]"
+        )
 
 
 @app.command(name="md-analyze")

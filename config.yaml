@@ -81,6 +81,7 @@ md:
   timestep_fs: 2.0
   threads: 0                      # 0 = que GROMACS decida según la máquina
 
+  output_every_ps: 10.0           # un cuadro de trayectoria cada N ps
   sasa_stride: 1                  # analizar 1 de cada N cuadros para la SASA
 
 # ---------------------------------------------------------------------------

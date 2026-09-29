@@ -177,6 +177,11 @@ class MDConfig(_Base):
     timestep_fs: float = Field(default=2.0, gt=0, le=5)
     threads: int = Field(default=0, ge=0, description="0 = automático")
 
+    # Cada cuántos picosegundos se guarda un cuadro. Guardar cada paso
+    # llenaría el disco sin aportar nada: los cuadros consecutivos están
+    # correlacionados. 10 ps sobre 2 ns dan ~200 cuadros.
+    output_every_ps: float = Field(default=10.0, gt=0)
+
     # La SASA es la medida más cara del análisis: rueda una esfera de prueba
     # sobre cada átomo, cuadro por cuadro. En una trayectoria de producción
     # conviene analizar uno de cada N.
