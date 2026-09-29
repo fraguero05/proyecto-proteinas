@@ -521,7 +521,7 @@ Las tablas y los JSON se escriben en UTF-8 sin BOM. `Get-Content` de Windows Pow
 `Å` aparecen como `Ã…`. El archivo está bien; es el comando:
 
 ```powershell
-Get-Content data\processed	raj_1UBQ_md_resumen.json -Encoding UTF8
+Get-Content data/processed/traj_1UBQ_md_resumen.json -Encoding UTF8
 ```
 
 El RMSF se reporta **promediado por residuo**, no por átomo. MDAnalysis lo devuelve por
