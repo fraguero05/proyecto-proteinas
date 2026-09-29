@@ -17,6 +17,8 @@ from typer.testing import CliRunner
 from pdpipe import __version__
 from pdpipe.cli import EXIT_ERROR, EXIT_PENDING, app
 
+FIXTURES_DIR = Path(__file__).parent / "fixtures"
+
 runner = CliRunner()
 
 
@@ -54,6 +56,7 @@ def test_sin_argumentos_muestra_ayuda():
         "predict",
         "design",
         "simulate",
+        "md-analyze",
         "analyze",
         "report",
         "info",
@@ -251,3 +254,51 @@ def test_predict_con_colabfold_manda_al_notebook(cfg):
     )
     assert resultado.exit_code == EXIT_PENDING
     assert "notebook" in resultado.output
+
+
+# -------------------------------------------------------------- md-analyze
+
+
+def test_md_analyze_sin_topology_es_error(cfg):
+    resultado = runner.invoke(app, [*cfg, "md-analyze"])
+    assert resultado.exit_code == EXIT_ERROR
+
+
+def test_md_analyze_con_topology_inexistente_es_error(cfg, tmp_path: Path):
+    resultado = runner.invoke(
+        app, [*cfg, "md-analyze", "--topology", str(tmp_path / "fantasma.pdb")]
+    )
+    assert resultado.exit_code == EXIT_ERROR
+    assert "no existe" in resultado.output.lower()
+
+
+def test_md_analyze_con_trayectoria_inexistente_es_error(cfg, tmp_path: Path):
+    traj = FIXTURES_DIR / "traj_1UBQ.pdb"
+    resultado = runner.invoke(
+        app,
+        [*cfg, "md-analyze", "--topology", str(traj),
+         "--trajectory", str(tmp_path / "fantasma.xtc")],
+    )
+    assert resultado.exit_code == EXIT_ERROR
+
+
+def test_md_analyze_analiza_y_deja_manifiesto(cfg, tmp_path: Path):
+    traj = FIXTURES_DIR / "traj_1UBQ.pdb"
+    resultado = runner.invoke(
+        app, [*cfg, "md-analyze", "--topology", str(traj), "--no-figures"]
+    )
+
+    assert resultado.exit_code == 0, resultado.output
+    assert "RMSD" in resultado.output
+    manifiestos = list((tmp_path / "runs").glob("*/run_manifest.json"))
+    assert len(manifiestos) == 1
+
+
+def test_md_analyze_avisa_de_los_puentes_sin_hidrogenos(cfg):
+    """La advertencia tiene que ser visible, no quedar solo en el JSON."""
+    traj = FIXTURES_DIR / "traj_1UBQ.pdb"
+    resultado = runner.invoke(
+        app, [*cfg, "md-analyze", "--topology", str(traj), "--no-figures"]
+    )
+
+    assert "Advertencia" in resultado.output
