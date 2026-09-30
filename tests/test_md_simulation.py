@@ -32,7 +32,7 @@ from pdpipe.phase3_md.gromacs import (
     extraer_error,
 )
 from pdpipe.phase3_md.preparation import (
-    _iones_agregados,
+    _iones_de_topologia,
     _resumen_gro,
     limpiar_estructura,
     preparar_sistema,
@@ -288,20 +288,72 @@ def test_un_gro_inexistente_no_rompe(tmp_path: Path):
     assert _resumen_gro(tmp_path / "fantasma.gro") == (0, 0)
 
 
-def test_lee_los_iones_que_reporta_genion():
-    """Texto tal como lo escribe genion."""
-    salida = (
-        "Reading file iones.tpr, VERSION 2023.1\n"
-        "Replacing 8 solute molecules in topology file (topol.top)\n"
-        " with 4 NA ions and 4 CL ions.\n"
+def _topologia(tmp_path: Path, cuerpo: str) -> Path:
+    ruta = tmp_path / "topol.top"
+    ruta.write_text(cuerpo, encoding="utf-8")
+    return ruta
+
+
+def test_lee_los_iones_de_la_topologia(tmp_path: Path):
+    """Regresión: antes se raspaba la salida de consola de genion.
+
+    genion menciona la misma cantidad en varias líneas, así que un sistema con
+    25 NA y 25 CL se reportaba como 25 y 50. No rompía la simulación, pero
+    ensuciaba el `run_manifest.json`. El `topol.top` es el registro
+    autoritativo: es lo que va a leer `grompp` en la etapa siguiente.
+    """
+    topologia = _topologia(
+        tmp_path,
+        "; topologia\n"
+        "[ system ]\n"
+        "Ubiquitina en agua\n"
+        "\n"
+        "[ molecules ]\n"
+        "; Compound        #mols\n"
+        "Protein_chain_A     1\n"
+        "SOL              8487\n"
+        "NA                 25\n"
+        "CL                 25\n",
     )
 
-    assert _iones_agregados(salida, "") == {"NA": 4, "CL": 4}
+    assert _iones_de_topologia(topologia) == {"NA": 25, "CL": 25}
 
 
-def test_sin_linea_de_iones_devuelve_vacio():
-    """Antes que inventar un número, ninguno."""
-    assert _iones_agregados("otra cosa cualquiera", "") == {}
+def test_el_conteo_cuadra_con_el_total_de_atomos(tmp_path: Path):
+    """La aritmética que destapó el bug, fijada como test.
+
+    8487 aguas por 3 átomos, más 1231 de la ubiquitina con hidrógenos, más 50
+    iones, dan los 26.742 átomos que reportó GROMACS en Colab. Con los 75 que
+    devolvía el parser viejo no cerraba.
+    """
+    topologia = _topologia(
+        tmp_path,
+        "[ molecules ]\nProtein_chain_A 1\nSOL 8487\nNA 25\nCL 25\n",
+    )
+    iones = _iones_de_topologia(topologia)
+
+    assert 8487 * 3 + 1231 + sum(iones.values()) == 26_742
+
+
+def test_ignora_lo_que_esta_fuera_de_molecules(tmp_path: Path):
+    """Un NA en `[ atomtypes ]` no es un ion agregado al sistema."""
+    topologia = _topologia(
+        tmp_path,
+        "[ atomtypes ]\nNA 11 22.99 0.0 A 0.33 0.01\n"
+        "\n[ molecules ]\nSOL 100\nCL 3\n",
+    )
+
+    assert _iones_de_topologia(topologia) == {"CL": 3}
+
+
+def test_una_topologia_sin_iones_devuelve_vacio(tmp_path: Path):
+    topologia = _topologia(tmp_path, "[ molecules ]\nProtein_chain_A 1\nSOL 100\n")
+
+    assert _iones_de_topologia(topologia) == {}
+
+
+def test_una_topologia_inexistente_no_rompe(tmp_path: Path):
+    assert _iones_de_topologia(tmp_path / "fantasma.top") == {}
 
 
 # -------------------------------------------- encadenado de las cuatro etapas
@@ -467,3 +519,63 @@ def test_simular_sin_gromacs_explica_como_instalarlo(cfg, sistema_falso):
 
     with pytest.raises(GromacsNoDisponible):
         simular(cfg, sistema_falso, cliente=gmx)
+
+
+# ----------------------------------------------------- reanudar una corrida
+
+
+def test_reutiliza_las_etapas_ya_terminadas(cfg, sistema_falso):
+    """El hueco que apareció corriendo de verdad en Colab.
+
+    Una producción de 2 ns en CPU son horas. Si la sesión se corta, sin esto
+    se rehacen también la minimización y las dos equilibraciones, que ya
+    estaban bien.
+    """
+    for nombre in ("em", "nvt", "npt"):
+        (sistema_falso.directorio / f"{nombre}.gro").write_text("listo\n", encoding="utf-8")
+    gmx = _ClienteFalso()
+
+    resultado = simular(cfg, sistema_falso, cliente=gmx, reanudar=True)
+
+    reutilizadas = [e.nombre for e in resultado.etapas if e.reutilizada]
+    assert reutilizadas == ["minim", "nvt", "npt"]
+    # Solo la producción se ejecuta: un grompp y un mdrun.
+    assert [h for h, _ in gmx.llamadas] == ["grompp", "mdrun"]
+
+
+def test_sin_reanudar_rehace_todo(cfg, sistema_falso):
+    for nombre in ("em", "nvt", "npt"):
+        (sistema_falso.directorio / f"{nombre}.gro").write_text("listo\n", encoding="utf-8")
+    gmx = _ClienteFalso()
+
+    resultado = simular(cfg, sistema_falso, cliente=gmx, reanudar=False)
+
+    assert not any(e.reutilizada for e in resultado.etapas)
+    assert [h for h, _ in gmx.llamadas] == ["grompp", "mdrun"] * 4
+
+
+def test_retoma_desde_el_checkpoint_una_etapa_a_medias(cfg, sistema_falso):
+    """Un `.cpt` sin `.gro` significa que mdrun se cortó a mitad de camino."""
+    for nombre in ("em", "nvt", "npt"):
+        (sistema_falso.directorio / f"{nombre}.gro").write_text("listo\n", encoding="utf-8")
+    (sistema_falso.directorio / "prod.cpt").write_text("a medias\n", encoding="utf-8")
+    gmx = _ClienteFalso()
+
+    simular(cfg, sistema_falso, cliente=gmx)
+
+    mdrun = gmx.argumentos_de("mdrun", 0)
+    assert "-cpi" in mdrun
+    assert mdrun[mdrun.index("-cpi") + 1] == "prod.cpt"
+
+
+def test_una_etapa_terminada_gana_sobre_su_checkpoint(cfg, sistema_falso):
+    """Con `.gro` y `.cpt` presentes la etapa está hecha: no hay que retomarla."""
+    for nombre in ("em", "nvt", "npt", "prod"):
+        (sistema_falso.directorio / f"{nombre}.gro").write_text("listo\n", encoding="utf-8")
+    (sistema_falso.directorio / "prod.cpt").write_text("viejo\n", encoding="utf-8")
+    gmx = _ClienteFalso()
+
+    resultado = simular(cfg, sistema_falso, cliente=gmx)
+
+    assert gmx.llamadas == [], "no debería haber corrido nada"
+    assert all(e.reutilizada for e in resultado.etapas)

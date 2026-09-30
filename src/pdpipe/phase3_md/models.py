@@ -176,6 +176,10 @@ class EtapaSimulacion(_Base):
     log: Path | None = None
     segundos: float | None = None
 
+    # True si la etapa ya estaba hecha de una corrida anterior y se reutilizo.
+    # Va al manifiesto: una corrida reanudada no es lo mismo que una de cero.
+    reutilizada: bool = False
+
 
 class SistemaPreparado(_Base):
     """Sistema listo para simular: topología, coordenadas y parámetros."""

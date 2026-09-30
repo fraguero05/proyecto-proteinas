@@ -42,8 +42,15 @@ def correr_etapa(
     referencia: str | None = None,
     checkpoint: str | None = None,
     threads: int = 0,
+    reanudar: bool = True,
 ) -> EtapaSimulacion:
     """Compila y ejecuta una etapa.
+
+    Con ``reanudar``, una etapa que ya terminó no se vuelve a correr y una que
+    quedó a medias se retoma desde su checkpoint. Importa más de lo que parece:
+    una producción de 2 ns en CPU son horas, y sin esto una sesión de Colab
+    cortada obliga a rehacer también la minimización y las dos equilibraciones,
+    que ya estaban bien.
 
     Args:
         gmx: cliente de GROMACS.
@@ -64,6 +71,28 @@ def correr_etapa(
     if mdp is None:
         raise ErrorDeGromacs(f"No hay archivo .mdp para la etapa '{etapa}'")
 
+    def _si_existe(nombre: str) -> Path | None:
+        ruta = directorio / nombre
+        return ruta if ruta.is_file() else None
+
+    # Una etapa terminada deja su .gro final. Si está, no hay nada que rehacer.
+    terminada = _si_existe(f"{prefijo}.gro")
+    if reanudar and terminada:
+        logger.info(
+            "Etapa %s ya estaba hecha, se reutiliza %s", etapa, terminada.name
+        )
+        return EtapaSimulacion(
+            nombre=etapa,
+            estructura=terminada,
+            trayectoria=_si_existe(f"{prefijo}.xtc"),
+            energia=_si_existe(f"{prefijo}.edr"),
+            log=_si_existe(f"{prefijo}.log"),
+            reutilizada=True,
+        )
+
+    # Un .cpt sin .gro significa que mdrun se cortó a mitad de camino.
+    a_medias = _si_existe(f"{prefijo}.cpt") if reanudar else None
+
     argumentos = [
         "-f", mdp.name,
         "-c", entrada_gro,
@@ -82,16 +111,17 @@ def correr_etapa(
     comando_mdrun = ["-deffnm", prefijo]
     if threads > 0:
         comando_mdrun += ["-nt", str(threads)]
+    if a_medias:
+        # GROMACS retoma desde el paso que quedó registrado en el checkpoint,
+        # no desde cero, y continúa escribiendo sobre la misma trayectoria.
+        comando_mdrun += ["-cpi", a_medias.name]
+        logger.info("Retomando %s desde %s", etapa, a_medias.name)
 
     arranque = time.monotonic()
     gmx.correr(
         "mdrun", *comando_mdrun, directorio=directorio, etiqueta=f"mdrun ({etapa})"
     )
     segundos = time.monotonic() - arranque
-
-    def _si_existe(nombre: str) -> Path | None:
-        ruta = directorio / nombre
-        return ruta if ruta.is_file() else None
 
     logger.info("Etapa %s terminada en %.1f s", etapa, segundos)
     return EtapaSimulacion(
@@ -109,6 +139,7 @@ def simular(
     sistema: SistemaPreparado,
     ns: float | None = None,
     cliente: ClienteGromacs | None = None,
+    reanudar: bool = True,
 ) -> ResultadoSimulacion:
     """Corre minimización, NVT, NPT y producción sobre un sistema preparado.
 
@@ -118,6 +149,8 @@ def simular(
         ns: sobrescribe ``md.production_ns``. Cambiar la duración obliga a
             reescribir el ``.mdp`` de producción, así que se hace acá.
         cliente: cliente de GROMACS; se construye del config si no se pasa.
+        reanudar: reutiliza las etapas ya terminadas y retoma las que quedaron
+            a medias. Poner ``False`` fuerza a rehacer todo desde cero.
 
     Raises:
         GromacsNoDisponible: si falta ``gmx``.
@@ -140,6 +173,7 @@ def simular(
             entrada_gro=sistema.estructura.name,
             prefijo="em",
             threads=md.threads,
+            reanudar=reanudar,
         )
     )
 
@@ -152,6 +186,7 @@ def simular(
             prefijo="nvt",
             referencia="em.gro",
             threads=md.threads,
+            reanudar=reanudar,
         )
     )
 
@@ -165,6 +200,7 @@ def simular(
             referencia="nvt.gro",
             checkpoint="nvt.cpt",
             threads=md.threads,
+            reanudar=reanudar,
         )
     )
 
@@ -176,8 +212,15 @@ def simular(
             prefijo="prod",
             checkpoint="npt.cpt",
             threads=md.threads,
+            reanudar=reanudar,
         )
     )
+
+    reutilizadas = [e.nombre for e in etapas if e.reutilizada]
+    if reutilizadas:
+        logger.info(
+            "Etapas reutilizadas de una corrida anterior: %s", ", ".join(reutilizadas)
+        )
 
     etapas = _anotar_duraciones(etapas, config, duracion_ns)
     produccion = etapas[-1]

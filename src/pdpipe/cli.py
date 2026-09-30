@@ -676,6 +676,13 @@ def simulate(
             help="Solo limpiar la estructura (aguas y heteroátomos). No requiere GROMACS.",
         ),
     ] = False,
+    no_resume: Annotated[
+        bool,
+        typer.Option(
+            "--no-resume",
+            help="Rehacer todas las etapas aunque ya estén hechas.",
+        ),
+    ] = False,
 ) -> None:
     """Corre minimización, equilibración y MD corta con GROMACS (Fase 3).
 
@@ -725,7 +732,7 @@ def simulate(
 
     try:
         sistema = preparar_sistema(cfg, input, destino)
-        resultado = simular(cfg, sistema, ns=ns)
+        resultado = simular(cfg, sistema, ns=ns, reanudar=not no_resume)
     except GromacsNoDisponible as exc:
         # Falta una herramienta del entorno, no un dato: el mensaje trae la
         # instalación y el código de salida es el de "pendiente".
@@ -812,7 +819,8 @@ def _mostrar_simulacion(resultado) -> None:
             etapa.nombre,
             f"{etapa.pasos:,}",
             f"{etapa.ps_simulados:g}" if etapa.ps_simulados else "-",
-            f"{etapa.segundos:.1f} s" if etapa.segundos else "-",
+            "reutilizada" if etapa.reutilizada
+            else (f"{etapa.segundos:.1f} s" if etapa.segundos else "-"),
         )
     console.print(etapas)
 

@@ -16,7 +16,6 @@ correspondiente, listo para las cuatro etapas de la parte B.
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 from pdpipe.config import Config
@@ -34,6 +33,13 @@ AGUAS = {"HOH", "WAT", "SOL", "TIP3", "DOD", "H2O"}
 # Iones monoatómicos que sí conviene conservar cuando se piden: son parte del
 # sitio activo en muchas enzimas, no contaminación del cristal.
 IONES_ESTRUCTURALES = {"ZN", "MG", "CA", "FE", "MN", "CU", "NA", "K", "CL"}
+
+# Cómo nombran los campos de fuerza a los iones en la sección [ molecules ].
+# AMBER usa NA/CL; CHARMM, SOD/CLA; algunos escriben la carga en el nombre.
+NOMBRES_DE_ION = {
+    "NA", "CL", "K", "MG", "CA", "ZN", "LI", "BR", "I", "F",
+    "NA+", "CL-", "K+", "SOD", "CLA", "POT",
+}
 
 
 def limpiar_estructura(
@@ -281,7 +287,7 @@ def preparar_sistema(
 
     # 5. Iones. Se responde "SOL" por stdin: es el grupo del que genion saca
     # moléculas de agua para reemplazarlas por iones.
-    salida_genion = gmx.correr(
+    gmx.correr(
         "genion",
         "-s", "iones.tpr",
         "-o", "sistema.gro",
@@ -309,7 +315,7 @@ def preparar_sistema(
         forma_de_caja=md.box_shape.value,
         n_atomos=n_atomos,
         n_aguas=n_aguas,
-        iones=_iones_agregados(salida_genion.stderr or "", salida_genion.stdout or ""),
+        iones=_iones_de_topologia(directorio / "topol.top"),
         limpieza=limpieza,
         version_gromacs=gmx.version(),
     )
@@ -349,24 +355,49 @@ def _resumen_gro(ruta: Path) -> tuple[int, int]:
     return total, aguas // 3
 
 
-def _iones_agregados(stderr: str, stdout: str) -> dict[str, int]:
-    """Lee cuántos iones puso ``genion`` de su propia salida.
+def _iones_de_topologia(topologia: Path) -> dict[str, int]:
+    """Lee los iones de la sección ``[ molecules ]`` del ``topol.top``.
 
-    GROMACS lo informa con una línea del estilo
-    ``Replacing 8 solute molecules in ... with 4 NA ions and 4 CL ions``.
-    Si el formato cambia, se devuelve un dict vacío en vez de un número
-    inventado.
+    Antes esto se sacaba raspando la salida de consola de ``genion`` con un
+    regex, y contaba de más: ``genion`` menciona la misma cantidad en varias
+    líneas, así que un sistema con 25 NA y 25 CL se reportaba como 25 y 50.
+    El error no rompía nada —la simulación estaba bien— pero ensuciaba el
+    ``run_manifest.json``, que es material de tesis.
+
+    El ``topol.top`` es el registro autoritativo: es lo que ``grompp`` va a
+    leer después, así que si dice 25 CL, hay 25 CL.
     """
-    texto = f"{stderr}\n{stdout}"
+    if not topologia.is_file():
+        return {}
+
     iones: dict[str, int] = {}
-    for cantidad, nombre in re.findall(r"(\d+)\s+([A-Z]{1,3})\s+ions", texto):
-        iones[nombre] = iones.get(nombre, 0) + int(cantidad)
+    en_moleculas = False
+    for linea in topologia.read_text(encoding="utf-8").splitlines():
+        limpia = linea.split(";", 1)[0].strip()
+        if not limpia:
+            continue
+        if limpia.startswith("["):
+            en_moleculas = limpia.replace(" ", "").lower() == "[molecules]"
+            continue
+        if not en_moleculas:
+            continue
+
+        partes = limpia.split()
+        if len(partes) < 2:
+            continue
+        nombre = partes[0].upper()
+        if nombre in NOMBRES_DE_ION:
+            try:
+                iones[nombre] = iones.get(nombre, 0) + int(partes[1])
+            except ValueError:
+                continue
     return iones
 
 
 __all__ = [
     "AGUAS",
     "IONES_ESTRUCTURALES",
+    "NOMBRES_DE_ION",
     "limpiar_estructura",
     "preparar_sistema",
 ]
