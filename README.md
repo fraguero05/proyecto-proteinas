@@ -519,18 +519,31 @@ simulación no serviría para nada.
 ### Cuánto tarda
 
 `apt install gromacs` instala una compilación **solo para CPU**, sin CUDA: una GPU de
-Colab no la acelera. Órdenes de magnitud para la ubiquitina solvatada (~14.000 átomos),
-estimados y no medidos:
+Colab no la acelera.
 
-| Entorno | Velocidad aproximada | 2 ns tardarían |
-|---|---|---|
-| Colab gratuito, 2 núcleos | ~8 ns/día | ~6 h |
-| 4 núcleos | ~15 ns/día | ~3 h |
-| GPU T4 con build CUDA | ~150 ns/día | ~20 min |
+**Velocidad medida**, no estimada. En una corrida real sobre la ubiquitina solvatada
+(26.742 átomos) en Colab gratuito con 2 núcleos: **4.0 ns/día**. Las tres etapas de
+dinámica dieron la misma velocidad entre sí, así que el número es sólido.
 
-Seis horas no entran en una sesión gratuita de Colab. Por eso el notebook arranca con
-`NS_PRODUCCION = 0.2`, que valida la cadena completa en unos 40 minutos. Para la
-corrida de la tesis hay que subirlo y contar con Colab Pro o una build con CUDA.
+| Cuánto simular | Cuánto tarda |
+|---|---|
+| 0.02 ns (validación) | ~7 min |
+| 0.2 ns | ~2.4 h |
+| 2 ns (la corrida de la tesis) | ~12 h |
+
+> **Ojo con la equilibración.** El NVT y el NPT son 100 ps cada uno, o sea 100.000
+> pasos, o sea **~72 minutos sin importar lo corta que sea la producción**. Bajar solo
+> `NS_PRODUCCION` no acorta una validación. Por eso el notebook tiene un modo
+> `VALIDACION_RAPIDA` que también los acorta a 10 ps: la cadena completa corre en ~15
+> minutos. Sirve para comprobar que todo funciona, **no** para sacar conclusiones.
+
+Doce horas no entran en una sesión gratuita de Colab. Para la corrida de la tesis hace
+falta Colab Pro o una compilación de GROMACS con CUDA.
+
+> **Advertencia:** Colab recicla la máquina sin aviso y se lleva su disco. Una corrida
+> de 2.4 horas se perdió así durante el desarrollo. Bajá los resultados apenas
+> terminen, o usá la celda de Google Drive del notebook, que los deja fuera del disco
+> efímero.
 
 ### Los parámetros de simulación salen del config
 
