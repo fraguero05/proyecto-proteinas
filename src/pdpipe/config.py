@@ -200,7 +200,9 @@ class MLConfig(_Base):
     hidden_size: int = Field(default=128, ge=1)
     num_layers: int = Field(default=2, ge=1, le=10)
     dropout: float = Field(default=0.3, ge=0, lt=1)
-    batch_size: int = Field(default=32, ge=1)
+    # Lotes chicos: con ~170 proteínas de entrenamiento, 32 por lote son solo
+    # 6 pasos del optimizador por época y el BiLSTM casi no aprende.
+    batch_size: int = Field(default=8, ge=1)
     epochs: int = Field(default=30, ge=1)
     learning_rate: float = Field(default=1e-3, gt=0)
     device: Device = Device.CPU

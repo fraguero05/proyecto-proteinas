@@ -97,7 +97,7 @@ ml:
   hidden_size: 128
   num_layers: 2
   dropout: 0.3
-  batch_size: 32
+  batch_size: 8                   # proteínas por lote; con pocas proteínas, lotes chicos = más pasos
   epochs: 30
   learning_rate: 0.001
   device: cpu                     # cpu | cuda | auto
