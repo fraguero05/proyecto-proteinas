@@ -18,10 +18,11 @@ local de menor costo como alternativa.
 | 4. Modelos de IA | `phase4_ml` | Estructura secundaria a partir de secuencia (BiLSTM vs. baseline) | 4 |
 | 5. Análisis y comparación | `phase5_analysis` | RMSD, TM-score y reportes contra la referencia experimental | 5 |
 
-**Estado actual: Hitos 1, 2 y 3 completos.** Funcionan `fetch`, `curate`,
+**Estado actual: Hitos 1, 2, 3 y 4 completos.** Funcionan `fetch`, `curate`,
 `db-stats`, `predict` (AlphaFold DB + pLDDT), `design` (variantes con ProteinMPNN),
-`simulate` (preparación del sistema y las cuatro etapas de MD) y `md-analyze`
-(análisis de trayectorias). Dentro del Hito 2 quedan pendientes ColabFold y ESMFold
+`simulate` (preparación del sistema y las cuatro etapas de MD), `md-analyze`
+(análisis de trayectorias), `dataset` (estructura secundaria con DSSP) y `train`
+(BiLSTM y baselines). Dentro del Hito 2 quedan pendientes ColabFold y ESMFold
 como fuentes alternativas de estructura.
 
 `simulate` necesita GROMACS, que **no se puede instalar en el entorno de desarrollo**
@@ -29,8 +30,9 @@ como fuentes alternativas de estructura.
 `notebooks/md_gromacs.ipynb` en Google Colab — ver "Cómo reproducir el Hito 3,
 partes A y B".
 
-Faltan las fases 4 y 5, cuyos comandos validan argumentos y configuración pero
-informan en qué hito se implementan y terminan con código de salida `2`.
+Falta la fase 5, cuyos comandos (`analyze` y `report`) validan argumentos y
+configuración pero informan en qué hito se implementan y terminan con código de
+salida `2`.
 
 ## Instalación
 
@@ -84,8 +86,11 @@ uv pip install -e ".[sci,dev]"    # todo lo científico de una
 |-------------|-----------------|-------------|
 | **ProteinMPNN** | Hito 2, parte B | `git clone https://github.com/dauparas/ProteinMPNN tools/ProteinMPNN` — no está en PyPI, trae los pesos adentro |
 | **GROMACS** | Hito 3 | `sudo apt install gromacs` (Ubuntu/WSL) |
-| **DSSP** | Hito 4 | `sudo apt install dssp` |
-| **CD-HIT** | Hito 4 (opcional) | `sudo apt install cd-hit` — si falta, se usa un clustering por identidad con Biopython |
+
+El Hito 4 **no necesita ninguna**: DSSP y el agrupamiento por identidad, que el plan
+original resolvía con los binarios `dssp` y `cd-hit`, se resuelven con paquetes de
+Python que entran con `uv pip install -e ".[ml,dev]"`. El motivo está en
+"Cómo reproducir el Hito 4".
 
 `pdpipe info` muestra cuáles están disponibles en tu máquina.
 
@@ -95,6 +100,7 @@ uv pip install -e ".[sci,dev]"    # todo lo científico de una
 pdpipe --help                                        # ayuda general
 pdpipe info                                          # diagnóstico del entorno
 pdpipe fetch --pdb-id 1UBQ                           # Fase 1
+pdpipe fetch --search 500                            # busca en el RCSB con los criterios del config
 pdpipe curate --resolution-max 2.0 --organism "Homo sapiens"
 pdpipe db-stats                                      # contenido de la base
 pdpipe predict --uniprot P0CG48                      # Fase 2
@@ -102,6 +108,8 @@ pdpipe design --input data/processed/1UBQ.pdb --n-sequences 8
 pdpipe simulate --input designs/1UBQ_var03.pdb --ns 2   # Fase 3 (requiere GROMACS)
 pdpipe simulate --input 1UBQ.pdb --clean-only           # solo limpieza, sin GROMACS
 pdpipe md-analyze --topology md/sistema.gro --trajectory md/prod.xtc   # Fase 3
+pdpipe dataset                                       # Fase 4: dataset de estructura secundaria
+pdpipe train --model all                             # Fase 4: BiLSTM + los dos baselines
 pdpipe analyze --run-id <id>                         # Fase 5
 pdpipe report --run-id <id>
 ```
@@ -685,3 +693,180 @@ binarias por peso, y un PDB de texto se puede revisar en un diff.
 > **Ojo:** son fixtures para probar el *código de análisis*, no simulaciones reales. No
 > tienen física atrás. La validación contra una trayectoria de verdad llega con la
 > parte B.
+
+---
+
+## Cómo reproducir el Hito 4
+
+Fase 4: predecir la estructura secundaria de cada residuo a partir de la secuencia.
+
+**No necesita GROMACS ni ningún binario externo.** Corre entero en una laptop sin GPU:
+la descarga son unos 5 minutos y el entrenamiento de los tres modelos, unos 6.
+
+```bash
+uv pip install -e ".[data,ml,dev]"
+
+# 1. La suite completa pasa (sin red: todo contra fixtures grabadas)
+pytest -q
+
+# 2. Baja ~500 estructuras del RCSB que cumplan los criterios de `data` del
+#    config. El muestreo usa la semilla del config, así que es reproducible.
+pdpipe fetch --search 500
+
+# 3. Aplica los criterios de curación sobre lo descargado. No vuelve a bajar nada.
+pdpipe curate
+
+# 4. Corre DSSP sobre las estructuras curadas y arma el dataset: etiquetas Q3,
+#    ventanas, y reparto train/val/test agrupando por identidad de secuencia.
+pdpipe dataset
+
+# 5. Entrena los tres modelos sobre ese mismo reparto y los compara.
+pdpipe train --model all
+```
+
+El paso 2 termina con **exit code 1** si alguna estructura falló: es esperable y no
+invalida la corrida. En la corrida de referencia fallaron 9 de 500 con un 404 — el
+índice de búsqueda lista entradas cuyo archivo PDB todavía no está publicado. Las
+otras 491 siguen su curso.
+
+Para entrenar un solo modelo, `--model bilstm` (o `logistic`, o `random_forest`), y
+`--epochs N` pisa el valor del config sin editarlo.
+
+### Los números de la corrida de referencia
+
+Con `seed: 42` y el `config.yaml` del repo, el dataset queda así:
+
+| | Proteínas | Residuos | H | E | C |
+|---|---|---|---|---|---|
+| **total** | 452 | 102.813 | 39,7% | 21,6% | 38,8% |
+| train | 316 | 71.622 | 39,4% | 21,4% | 39,2% |
+| val | 68 | 15.276 | 43,5% | 19,9% | 36,5% |
+| test | 68 | 15.915 | 37,0% | 23,7% | 39,2% |
+
+447 grupos de secuencia para 452 proteínas, y **cero pares redundantes** entre
+conjuntos al umbral del 30%.
+
+Y los modelos, sobre el conjunto de test:
+
+| Modelo | Q3 | F1 H | F1 E | F1 C | F1 macro | Entrenamiento |
+|---|---|---|---|---|---|---|
+| **bilstm** | **0,651** | 0,681 | **0,552** | 0,675 | **0,636** | 317 s (27 épocas) |
+| logistic | 0,623 | 0,646 | 0,484 | 0,670 | 0,600 | 7 s |
+| random_forest | 0,602 | 0,647 | 0,301 | 0,665 | 0,537 | 27 s |
+| *piso* | *0,370* | | | | | |
+
+El **piso** es predecir siempre la clase mayoritaria del entrenamiento. Es el número
+contra el que hay que comparar: un Q3 de 0,65 suena mediocre hasta que se ve que
+adivinar da 0,37.
+
+**Qué mirar:**
+
+- **El BiLSTM gana, pero por poco en Q3** (+2,8 puntos sobre la regresión logística).
+  Donde la diferencia es grande es en la **hebra beta**: F1 0,552 contra 0,484. Tiene
+  sentido estructural — una hebra beta se estabiliza apareándose con otra que puede
+  estar a decenas de residuos de distancia, y eso una ventana de 17 no lo ve. El
+  BiLSTM lee la cadena entera en los dos sentidos.
+- **El random forest casi no predice hebras** (F1 0,301). Con entradas one-hot
+  dispersas sus árboles se inclinan a las dos clases frecuentes. Es un comportamiento
+  conocido del método, no un error del pipeline.
+- **Las figuras** quedan en la carpeta de la corrida: una matriz de confusión por
+  modelo y la curva de aprendizaje del BiLSTM (pérdida de entrenamiento y Q3 de
+  validación por época, con la mejor época marcada).
+
+> **El tamaño del dataset es lo que limita el Q3, no el modelo.** Una primera corrida
+> con 238 proteínas dio 0,626; con 452 subió a 0,651. Los predictores publicados que
+> llegan a 0,70–0,80 usan decenas de miles de proteínas y **perfiles evolutivos**
+> (PSSM de un alineamiento múltiple), no la secuencia cruda. Eso queda fuera del
+> alcance del hito y es la vía natural de mejora si se retoma.
+
+### DSSP corre en Python, no con el binario
+
+El plan original pedía `sudo apt install dssp`. No se puede: el entorno de desarrollo
+es Windows administrado, sin permisos de administrador, y `Bio.PDB.DSSP` es solo un
+envoltorio que necesita el ejecutable `mkdssp` instalado aparte.
+
+Se usa la implementación de **MDTraj** (`mdtraj.compute_dssp`), que trae el algoritmo
+de Kabsch y Sander completo en el paquete y entra con `pip`. Es el mismo algoritmo
+sobre la misma geometría de puentes de hidrógeno, así que las etiquetas son las que
+reporta DSSP.
+
+Los ocho estados de DSSP se colapsan a tres, que es la convención de la literatura y
+lo que hace comparable un Q3 con los publicados:
+
+| DSSP | Qué es | Q3 |
+|---|---|---|
+| H, G, I | hélice alfa, 3-10, pi | **H** |
+| E, B | hebra extendida, puente beta aislado | **E** |
+| T, S, espacio | giro, codo, nada de lo anterior | **C** |
+
+### El agrupamiento por identidad reemplaza a CD-HIT
+
+Es el paso que decide si el Q3 que se reporta significa algo. Si dos proteínas de
+secuencia parecida caen una en entrenamiento y otra en test, el modelo acierta la
+segunda **recordando** la primera: el Q3 sale alto y mide memorización.
+
+Por eso no se reparten proteínas sueltas sino **grupos**: se agrupan las que superan
+el 30% de identidad (`ml.identity_threshold`) y cada grupo entero cae en un solo
+conjunto. CD-HIT tampoco se puede instalar, así que el agrupamiento se hace en el
+proyecto, con la misma estrategia de dos etapas:
+
+1. **Filtro por k-meros.** Comparar todos los pares de 452 secuencias son ~102.000
+   alineamientos. Dos proteínas que casi no comparten tripéptidos no pueden ser 30%
+   idénticas, así que esos pares se descartan con una medida barata. En la corrida de
+   referencia: **91.539 pares descartados, 10.387 alineados de verdad**.
+2. **Alineamiento global** de Biopython sobre los pares que pasaron el filtro.
+
+Después del reparto, `dataset` **verifica** el resultado y avisa si encuentra pares
+redundantes entre conjuntos. Que diga "Sin redundancia entre conjuntos" es la
+condición para que el Q3 del test se pueda citar.
+
+### El lote tiene que ser chico
+
+`ml.batch_size` vale **8**, no 32. Con ~316 proteínas de entrenamiento, lotes de 32
+son apenas 10 pasos del optimizador por época, y el BiLSTM no aprende: se queda en
+Q3 0,40, apenas sobre el piso. No es un problema de arquitectura ni de tasa de
+aprendizaje — es que no hay suficientes actualizaciones de los pesos.
+
+Es la clase de defecto que no da ningún error: el entrenamiento corre, la pérdida baja
+un poco y el resultado parece simplemente "un modelo que no anduvo bien".
+
+### Por qué el BiLSTM no usa `pack_padded_sequence`
+
+Las proteínas de un lote tienen largos distintos, así que las más cortas se rellenan.
+La dirección "hacia atrás" de un BiLSTM arrancaría leyendo ese relleno y llegaría a los
+residuos reales con el estado ya contaminado.
+
+La solución estándar es `pack_padded_sequence`, pero en CPU resultó **once veces más
+lenta** (71 s contra 6 s por época, medido sobre este dataset). Acá la bidireccionalidad
+se arma con dos LSTM unidireccionales por capa, y a la inversa se le pasa cada secuencia
+**invertida dentro de su propio largo**, de modo que el relleno siempre queda al final,
+donde solo afecta salidas que la pérdida ignora.
+
+Dos tests fijan que eso sea correcto: uno comprueba que una proteína da la misma
+predicción sola que acompañada de otras más largas, y otro entrena sobre un problema
+que **solo se puede resolver mirando hacia atrás** (la etiqueta de cada residuo es la
+del siguiente). Si la inversión se rompe, el segundo cae de Q3 0,9 a 0,4.
+
+### Bioseguridad: el dataset nunca usa lo rechazado
+
+`pdpipe dataset` excluye siempre las estructuras que la verificación de bioseguridad
+rechazó, **también con `--all`** y aunque sus coordenadas estén en disco. En la corrida
+de referencia se rechazaron 33 en `fetch` y 6 más en `curate`: toxinas, *Bacillus
+anthracis*, *Corynebacterium diphtheriae*, ebolavirus, *Vibrio cholerae*.
+
+> **Nota para la tesis:** `fetch --search` arma un conjunto diverso de todo el PDB, más
+> amplio que la lista de proteínas de referencia del proyecto (lisozima, ubiquitina,
+> GFP, hemoglobina). Para un dataset de estructura secundaria esa diversidad es
+> deseable —un modelo entrenado solo con lisozimas no generaliza— y la verificación de
+> bioseguridad se aplica a cada entrada. Entran así proteínas virales bien
+> caracterizadas, como la proteasa del VIH-1 (1A30), que son blancos farmacológicos
+> clásicos y no están en la lista de agentes seleccionados. Para restringir el
+> conjunto, se llena `data.organisms` en el `config.yaml` y se vuelve a correr
+> `curate` — no hace falta descargar de nuevo.
+
+### Las corridas cortadas dejan rastro
+
+`fetch`, `dataset` y `train` escriben su `run_manifest.json` aunque se corten: con
+Ctrl+C queda `"status": "interrumpida"`, y ante un error inesperado, `"status":
+"error"` con el tipo y el mensaje. Antes, una corrida larga cortada a la mitad dejaba
+una carpeta en `runs/` con un `run.log` vacío y ninguna pista de qué había pasado.
