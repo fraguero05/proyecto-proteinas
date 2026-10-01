@@ -12,9 +12,12 @@ import json
 import pytest
 
 from pdpipe.phase1_data.rcsb import (
+    FILAS_POR_PAGINA,
+    ClienteRCSB,
     PDBIDInvalido,
     _uniprot_de_entidad,
     construir_consulta,
+    extraer_codigos,
     parsear_entidad,
     parsear_entrada,
     validar_pdb_id,
@@ -307,3 +310,78 @@ def test_los_criterios_se_combinan_con_and():
 def test_el_limite_va_en_la_paginacion():
     consulta = construir_consulta(limite=25)
     assert consulta["request_options"]["paginate"]["rows"] == 25
+
+
+def test_sin_agrupar_se_piden_entradas():
+    consulta = construir_consulta()
+    assert consulta["return_type"] == "entry"
+    assert "group_by" not in consulta["request_options"]
+
+
+def test_agrupar_por_identidad_pide_representantes_de_entidades():
+    consulta = construir_consulta(identidad_max=30)
+    opciones = consulta["request_options"]
+    assert consulta["return_type"] == "polymer_entity"
+    assert opciones["group_by"] == {
+        "aggregation_method": "sequence_identity",
+        "similarity_cutoff": 30,
+    }
+    assert opciones["group_by_return_type"] == "representatives"
+
+
+def test_el_inicio_va_en_la_paginacion():
+    consulta = construir_consulta(limite=10, inicio=5000)
+    assert consulta["request_options"]["paginate"] == {"start": 5000, "rows": 10}
+
+
+# ------------------------------------------------------------ búsqueda
+
+
+def test_extrae_codigos_de_entidades_sin_repetir():
+    respuesta = {
+        "result_set": [
+            {"identifier": "1ubq_1"},
+            {"identifier": "4HHB_1"},
+            {"identifier": "4HHB_2"},
+            {"identifier": "1LYZ"},
+        ]
+    }
+    assert extraer_codigos(respuesta) == ["1UBQ", "4HHB", "1LYZ"]
+
+
+def test_extrae_codigos_de_una_respuesta_vacia():
+    assert extraer_codigos({}) == []
+
+
+class _HTTPFalso:
+    """Devuelve páginas consecutivas de una lista de identificadores."""
+
+    def __init__(self, identificadores: list[str]) -> None:
+        self.identificadores = identificadores
+        self.pedidos: list[dict] = []
+
+    def post_json(self, url: str, cuerpo: dict) -> dict:
+        self.pedidos.append(cuerpo)
+        pagina = cuerpo["request_options"]["paginate"]
+        trozo = self.identificadores[pagina["start"] : pagina["start"] + pagina["rows"]]
+        return {"result_set": [{"identifier": i} for i in trozo]}
+
+
+def test_la_busqueda_recorre_varias_paginas():
+    total = FILAS_POR_PAGINA + 3
+    http = _HTTPFalso([f"{i:04d}_1" for i in range(total)])
+    codigos = ClienteRCSB(http).buscar(limite=10 * FILAS_POR_PAGINA, identidad_max=30)
+    assert len(codigos) == total
+    # Dos páginas con datos y una tercera vacía que corta el recorrido.
+    assert [p["request_options"]["paginate"]["start"] for p in http.pedidos] == [
+        0,
+        FILAS_POR_PAGINA,
+        2 * FILAS_POR_PAGINA,
+    ]
+
+
+def test_la_busqueda_respeta_el_limite():
+    http = _HTTPFalso([f"{i:04d}" for i in range(50)])
+    codigos = ClienteRCSB(http).buscar(limite=7)
+    assert codigos == [f"{i:04d}" for i in range(7)]
+    assert len(http.pedidos) == 1

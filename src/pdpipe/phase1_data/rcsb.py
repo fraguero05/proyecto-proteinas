@@ -24,6 +24,10 @@ from pdpipe.utils.logging import get_logger
 logger = get_logger(__name__)
 
 URL_BUSQUEDA = "https://search.rcsb.org/rcsbsearch/v2/query"
+
+#: Máximo de resultados que la Search API devuelve por pedido. Para recorrer
+#: los ~23.600 grupos no redundantes del PDB hacen falta unas cinco páginas.
+FILAS_POR_PAGINA = 5000
 URL_DATOS = "https://data.rcsb.org/rest/v1/core"
 URL_ARCHIVOS = "https://files.rcsb.org/download"
 
@@ -167,23 +171,60 @@ class ClienteRCSB:
         longitud_min: int | None = None,
         longitud_max: int | None = None,
         limite: int = 100,
+        identidad_max: int | None = None,
     ) -> list[str]:
-        """Busca entradas que cumplan los criterios y devuelve sus códigos PDB."""
-        consulta = construir_consulta(
-            resolucion_max=resolucion_max,
-            organismos=organismos,
-            metodos=metodos,
-            longitud_min=longitud_min,
-            longitud_max=longitud_max,
-            limite=limite,
-        )
-        respuesta = self.http.post_json(URL_BUSQUEDA, consulta)
-        return [item["identifier"] for item in respuesta.get("result_set", [])]
+        """Busca entradas que cumplan los criterios y devuelve sus códigos PDB.
+
+        Con ``identidad_max`` se agrupa por identidad de secuencia y se
+        devuelve un representante por grupo, que es la unica forma de obtener
+        un conjunto diverso: el orden por defecto del PDB es alfabetico y
+        arranca con decenas de mutantes de mioglobina y lisozima T4.
+        """
+        codigos: list[str] = []
+        inicio = 0
+        while len(codigos) < limite:
+            consulta = construir_consulta(
+                resolucion_max=resolucion_max,
+                organismos=organismos,
+                metodos=metodos,
+                longitud_min=longitud_min,
+                longitud_max=longitud_max,
+                limite=min(FILAS_POR_PAGINA, limite - len(codigos)),
+                identidad_max=identidad_max,
+                inicio=inicio,
+            )
+            respuesta = self.http.post_json(URL_BUSQUEDA, consulta)
+            nuevos = extraer_codigos(respuesta)
+            if not nuevos:
+                break
+            codigos.extend(nuevos)
+            inicio += FILAS_POR_PAGINA
+            logger.info("Búsqueda: %d códigos acumulados", len(codigos))
+
+        return list(dict.fromkeys(codigos))[:limite]
 
 
 # ---------------------------------------------------------------------------
 # Parsers y constructores — funciones puras, testeables sin red
 # ---------------------------------------------------------------------------
+
+
+def extraer_codigos(respuesta: dict[str, Any]) -> list[str]:
+    """Saca los códigos PDB de una respuesta de la Search API.
+
+    Una búsqueda por entradas devuelve identificadores como ``1UBQ``, pero una
+    agrupada por identidad devuelve entidades como ``1UBQ_1``: el sufijo es la
+    entidad polimérica dentro de la entrada. Se corta en el guion bajo y se
+    quitan repetidos, porque dos entidades distintas pueden venir del mismo
+    archivo.
+    """
+    codigos: list[str] = []
+    for item in respuesta.get("result_set", []):
+        identificador = item.get("identifier", "") if isinstance(item, dict) else str(item)
+        codigo = identificador.split("_", 1)[0].strip().upper()
+        if codigo:
+            codigos.append(codigo)
+    return list(dict.fromkeys(codigos))
 
 
 def parsear_entrada(data: dict[str, Any]) -> EntradaPDB:
@@ -271,12 +312,20 @@ def construir_consulta(
     longitud_min: int | None = None,
     longitud_max: int | None = None,
     limite: int = 100,
+    identidad_max: int | None = None,
+    inicio: int = 0,
 ) -> dict[str, Any]:
     """Arma el cuerpo JSON de una consulta a la Search API del RCSB.
 
     Se construye como un ``and`` de nodos ``terminal``. Si no se pasa ningún
     criterio, se usa uno que siempre matchea, porque la API rechaza una
     consulta vacía.
+
+    Args:
+        identidad_max: porcentaje de identidad de secuencia para agrupar
+            (30, 50, 70, 90 o 95). Con esto se devuelve un representante por
+            grupo en vez de todas las entradas, que es lo que hace falta para
+            armar un conjunto diverso y no una pila de mutantes puntuales.
     """
     nodos: list[dict[str, Any]] = []
 
@@ -359,11 +408,31 @@ def construir_consulta(
             }
         )
 
+    opciones: dict[str, Any] = {
+        "paginate": {"start": inicio, "rows": limite},
+        "results_content_type": ["experimental"],
+    }
+
+    if identidad_max is not None:
+        # Sin esto la busqueda devuelve las entradas en orden alfabetico, que
+        # para el PDB significa decenas de mutantes puntuales de la misma
+        # proteina: 101M, 103M y 104M son todos mioglobina de cachalote, y
+        # 102L, 107L y 109L son lisozima T4. Un dataset asi no tiene
+        # diversidad aunque tenga muchas filas.
+        #
+        # Agrupando por identidad de secuencia y pidiendo representantes, el
+        # RCSB devuelve una entrada por grupo de secuencias similares.
+        opciones["group_by"] = {
+            "aggregation_method": "sequence_identity",
+            "similarity_cutoff": identidad_max,
+        }
+        opciones["group_by_return_type"] = "representatives"
+
     return {
         "query": {"type": "group", "logical_operator": "and", "nodes": nodos},
-        "return_type": "entry",
-        "request_options": {
-            "paginate": {"start": 0, "rows": limite},
-            "results_content_type": ["experimental"],
-        },
+        # Al agrupar por identidad hay que pedir entidades y no entradas: la
+        # identidad se define sobre la secuencia de una cadena, no sobre el
+        # archivo completo, que puede tener varias cadenas distintas.
+        "return_type": "polymer_entity" if identidad_max is not None else "entry",
+        "request_options": opciones,
     }
