@@ -151,6 +151,15 @@ class Proteina(_Base):
     interacciones: list[Interaccion] = Field(default_factory=list)
     ptms: list[PTM] = Field(default_factory=list)
 
+    @property
+    def rechazada_por_bioseguridad(self) -> bool:
+        """Si la verificación de bioseguridad la rechazó.
+
+        Es un rechazo distinto de los de curación: no se revierte aflojando
+        criterios, y ninguna fase posterior debe usar la proteína.
+        """
+        return bool(self.motivo_rechazo and self.motivo_rechazo.startswith("[bioseguridad"))
+
 
 class ResultadoFiltro(_Base):
     """Veredicto de la curación sobre una proteína."""

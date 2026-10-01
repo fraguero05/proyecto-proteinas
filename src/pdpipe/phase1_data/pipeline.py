@@ -271,9 +271,7 @@ def curate(
 
         for proteina in proteinas:
             # Un rechazo por bioseguridad no se revisa: se mantiene.
-            if proteina.motivo_rechazo and proteina.motivo_rechazo.startswith(
-                "[bioseguridad"
-            ):
+            if proteina.rechazada_por_bioseguridad:
                 resultado.rechazadas.append((proteina.pdb_id, proteina.motivo_rechazo))
                 continue
 

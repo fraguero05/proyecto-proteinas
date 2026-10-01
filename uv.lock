@@ -1008,6 +1008,36 @@ wheels = [
 ]
 
 [[package]]
+name = "mdtraj"
+version = "1.11.1.post2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "packaging" },
+    { name = "pyparsing" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1a/6e/1e95f2e47056509bd7a4f397b367abbad5741b7cdccd7404b5dcf2d26e60/mdtraj-1.11.1.post2.tar.gz", hash = "sha256:9d5268988712b141535ece2183ccb3391b240a58480d37570f7e4f0f2164afe7", size = 2745085, upload-time = "2026-07-08T15:47:50.794Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/58/b47fcbab7704fbbc6531506729fb88d11f35f3f176bbb9e8ef6e1d4f0b95/mdtraj-1.11.1.post2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:ef02ed7d2f3fb765d073ca1ecba76eff963c4a3c20b056b2f10afdb54bbb2a1a", size = 2473184, upload-time = "2026-07-08T15:47:25.215Z" },
+    { url = "https://files.pythonhosted.org/packages/8e/61/e49d7d8b750991ce44de81b20bcd036d5507bb8671a3286b8775e219590a/mdtraj-1.11.1.post2-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:c64776dafcba9e81633cf1f11cf7abc7ac986bdc155a8572c040798e6db597a7", size = 8145940, upload-time = "2026-07-08T15:47:27.08Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/77/923e9506bdfd82b4849ec48d16dd569b95bfbf13bf7032a2759effe70468/mdtraj-1.11.1.post2-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:52375f062d350f101f0ba4ba8cadb836fcd3d8db252d7699839e3b1914e7b73c", size = 8355708, upload-time = "2026-07-08T15:47:28.718Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/3c/798b5a8eb5b0fb1f91e8331e45c8ccae686303ad08b09db67bda79ecfbb0/mdtraj-1.11.1.post2-cp311-cp311-win_amd64.whl", hash = "sha256:724060036b2744e412984918c54378ff0566e595744ef82387a27f5319b33255", size = 1359048, upload-time = "2026-07-08T15:47:30.733Z" },
+    { url = "https://files.pythonhosted.org/packages/06/b6/e5a272257d4d1fe1de28fd4435502241ef3f176401b7872327e47856e69d/mdtraj-1.11.1.post2-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:fc7c76a84c09f3d0d2d288f3c9b57468aa5941cdb905b04a669afd03896bf005", size = 2490338, upload-time = "2026-07-08T15:47:32.312Z" },
+    { url = "https://files.pythonhosted.org/packages/9a/01/aadbbb949d601a76d80a97e61ae658fb6d8af9548765551431fbdcc5511a/mdtraj-1.11.1.post2-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:71aec3a8098527deb4931988ad8d63dbf91f1dbd5b9e46d5440ff3652ff59ea0", size = 8131154, upload-time = "2026-07-08T15:47:33.716Z" },
+    { url = "https://files.pythonhosted.org/packages/ba/35/6ad03095ce0be3913350d5d0c0dd775b6d2be57ede3cb79470844a5a108d/mdtraj-1.11.1.post2-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c03621274dda3c6d57f2420499837f6a838755e091ffdff5307282c211abd6ee", size = 8416463, upload-time = "2026-07-08T15:47:35.253Z" },
+    { url = "https://files.pythonhosted.org/packages/fc/58/c8953ea8af8aefb90e5e0d55f234f457373fcb4ac594de1341595fba8121/mdtraj-1.11.1.post2-cp312-cp312-win_amd64.whl", hash = "sha256:125bf6849d0d7bf01e45a3ad28ffa833f29fca178d7c7c761fbbb8a0a0337830", size = 1349897, upload-time = "2026-07-08T15:47:37.294Z" },
+    { url = "https://files.pythonhosted.org/packages/35/44/f7031a4fe98f1a81ea1812e040e89ab9820dc23cac0d10ad21d033f3a5ee/mdtraj-1.11.1.post2-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:9ab6f3acd29407b0991196170a0864b9119de1725b3d6fc15a685badfb67dc2a", size = 2480062, upload-time = "2026-07-08T15:47:38.567Z" },
+    { url = "https://files.pythonhosted.org/packages/b9/d6/a13abf6ddb449c0c6e5891db78caa27abf7d87d4b30f602f0fe247e965ee/mdtraj-1.11.1.post2-cp313-cp313-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:2f0b3bf1118b69f27317b87b0de3ca64b0d4535d531a06805634cc2b5167d0fd", size = 8047486, upload-time = "2026-07-08T15:47:40.197Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/88/cd3ee7af40702ac9b92ae58ddbe5926aa3e150727481e85c5b4d836658aa/mdtraj-1.11.1.post2-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:75e9f76b1b3c83a5e74bb9f5c2b039c672edea9edb1d21763394c71f3bc651c8", size = 8367194, upload-time = "2026-07-08T15:47:41.762Z" },
+    { url = "https://files.pythonhosted.org/packages/42/78/cffb3aed1d8e2da3fdde222234a975a85984e5a42259b56f486b5da77117/mdtraj-1.11.1.post2-cp313-cp313-win_amd64.whl", hash = "sha256:451a7fc7f87105f75bc75b3e9e75ab5ad4142a4e8a0a726ff7b20711c5f7d882", size = 1346739, upload-time = "2026-07-08T15:47:43.343Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/fd/368bfb88d12a55bb72c79b895985fa44c7e034ad29123329e087bf25608d/mdtraj-1.11.1.post2-cp314-cp314-macosx_10_15_universal2.whl", hash = "sha256:ca9eb1509b93a3f48fa7995df58c0115222662bf37db1dc572a5f12c40d421e6", size = 2486543, upload-time = "2026-07-08T15:47:44.728Z" },
+    { url = "https://files.pythonhosted.org/packages/a4/3c/ac53cb7f3f1f0d12e7497f255573b58bb17834a438d7293f4876da8770ec/mdtraj-1.11.1.post2-cp314-cp314-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:fc5b6c16ebb3350f56037bf26b8bdd6230b552c1c7a0c7ba1c3a38c9a0960692", size = 8035206, upload-time = "2026-07-08T15:47:46.064Z" },
+    { url = "https://files.pythonhosted.org/packages/af/9f/109a7e69ffbc2fac018c7c1a2f68f568d81bbdff77a0086ef95ab349f3b4/mdtraj-1.11.1.post2-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:66ef5d3faa28a52c2a52defaf8bb06ae08664b89cf77e401c22279a4a6ee71cb", size = 8298484, upload-time = "2026-07-08T15:47:47.614Z" },
+    { url = "https://files.pythonhosted.org/packages/c9/5d/cb0c6791de682392388665e0ded5dcd59c837247780b5b22422f2e986f44/mdtraj-1.11.1.post2-cp314-cp314-win_amd64.whl", hash = "sha256:579e2d56650859f2711043874a8a49a14ac3ed4fa983f83fd5cdcdaa182525a5", size = 1374983, upload-time = "2026-07-08T15:47:49.463Z" },
+]
+
+[[package]]
 name = "mdurl"
 version = "0.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1490,6 +1520,7 @@ md = [
     { name = "scipy" },
 ]
 ml = [
+    { name = "mdtraj" },
     { name = "scikit-learn" },
     { name = "torch" },
 ]
@@ -1497,6 +1528,7 @@ sci = [
     { name = "biopython" },
     { name = "matplotlib" },
     { name = "mdanalysis" },
+    { name = "mdtraj" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "requests" },
@@ -1510,6 +1542,7 @@ requires-dist = [
     { name = "biopython", marker = "extra == 'data'", specifier = ">=1.83" },
     { name = "matplotlib", marker = "extra == 'md'", specifier = ">=3.8" },
     { name = "mdanalysis", marker = "extra == 'md'", specifier = ">=2.7" },
+    { name = "mdtraj", marker = "extra == 'ml'", specifier = ">=1.10" },
     { name = "numpy", marker = "extra == 'md'", specifier = ">=1.26" },
     { name = "pandas", marker = "extra == 'md'", specifier = ">=2.2" },
     { name = "pdpipe", extras = ["data", "md", "ml"], marker = "extra == 'sci'" },

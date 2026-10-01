@@ -44,6 +44,7 @@ md = [
 ml = [
     "torch>=2.2",
     "scikit-learn>=1.4",
+    "mdtraj>=1.10",      # DSSP en Python: mkdssp no se instala sin permisos de admin
 ]
 # Atajo: todo lo científico de una.
 sci = [
