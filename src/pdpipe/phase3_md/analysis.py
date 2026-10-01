@@ -282,14 +282,30 @@ def tiene_hidrogenos(universo) -> bool:
 
 def calcular_puentes_de_hidrogeno(
     universo,
+    seleccion: str = SELECCION_PROTEINA,
     donantes: str | None = None,
     hidrogenos: str | None = None,
     aceptores: str | None = None,
 ) -> SerieTemporal:
-    """Cuenta puentes de hidrógeno cuadro a cuadro.
+    """Cuenta puentes de hidrógeno **dentro de la proteína**, cuadro a cuadro.
 
     Criterios geométricos por defecto de MDAnalysis: donante y aceptor a
     menos de 3.0 Å y ángulo D-H···A mayor a 150°.
+
+    La restricción a la proteína no es un detalle: en un sistema solvatado el
+    agua aporta órdenes de magnitud más puentes que la proteína. Contando
+    todo, la ubiquitina con sus ~8.500 aguas da unos 8.700 puentes, de los
+    cuales apenas medio centenar son suyos. Ese número no sirve para lo que
+    se lo quiere: si la proteína perdiera toda su estructura secundaria, la
+    caída de ~50 puentes sería indistinguible del ruido del solvente.
+
+    Args:
+        universo: trayectoria abierta.
+        seleccion: a qué átomos limitar el conteo. Por defecto la proteína.
+            Con ``"all"`` cuenta todo el sistema, agua incluida.
+        donantes, hidrogenos, aceptores: selecciones explícitas, para los
+            casos en que no haya cargas o se quiera otro criterio. Si se
+            pasan, ``seleccion`` se ignora para ese rol.
 
     Raises:
         ErrorDeAnalisis: si la estructura no tiene hidrógenos explícitos. Sin
@@ -309,18 +325,31 @@ def calcular_puentes_de_hidrogeno(
             "trayectoria de GROMACS sí los trae."
         )
 
-    argumentos: dict[str, str] = {}
-    if donantes:
-        argumentos["donors_sel"] = donantes
-    if hidrogenos:
-        argumentos["hydrogens_sel"] = hidrogenos
-    if aceptores:
-        argumentos["acceptors_sel"] = aceptores
-
     try:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            analisis = HydrogenBondAnalysis(universo, **argumentos)
+
+            if hidrogenos and aceptores:
+                # Con las selecciones dadas a mano no hace falta adivinar
+                # nada, y por lo tanto tampoco hacen falta las cargas. Es la
+                # única vía para una topología que no las trae.
+                analisis = HydrogenBondAnalysis(
+                    universo,
+                    donors_sel=donantes,
+                    hydrogens_sel=hidrogenos,
+                    acceptors_sel=aceptores,
+                )
+            else:
+                # El constructor sin selecciones adivina sobre todo el
+                # sistema, agua incluida. Se lo deja construir así —necesita
+                # las cargas— y recién después se acotan las selecciones a
+                # `seleccion`, antes de correr.
+                analisis = HydrogenBondAnalysis(universo)
+                analisis.hydrogens_sel = hidrogenos or analisis.guess_hydrogens(seleccion)
+                analisis.acceptors_sel = aceptores or analisis.guess_acceptors(seleccion)
+                if donantes:
+                    analisis.donors_sel = donantes
+
             analisis.run()
     except Exception as exc:  # noqa: BLE001 - MDAnalysis lanza NoDataError y otros
         if "charge" in str(exc).lower():

@@ -383,3 +383,34 @@ def test_el_error_de_cargas_explica_que_hay_que_usar_el_tpr():
         # Sin selecciones explícitas MDAnalysis intenta deducir los donantes
         # por las cargas parciales, que un PDB no trae.
         an.calcular_puentes_de_hidrogeno(universo)
+
+
+def test_las_selecciones_explicitas_evitan_necesitar_cargas():
+    """Es la única vía para una topología sin cargas, como un PDB.
+
+    Con selecciones dadas a mano MDAnalysis no adivina nada, así que no
+    consulta las cargas parciales. Sin ellas, el constructor falla.
+    """
+    puentes = an.calcular_puentes_de_hidrogeno(
+        an.cargar(AGUAS),
+        donantes="name OW",
+        hidrogenos="name HW1 HW2",
+        aceptores="name OW",
+    )
+
+    assert puentes.valores == [1.0, 0.0]
+
+
+def test_por_defecto_el_conteo_se_limita_a_la_proteina():
+    """El agua aporta órdenes de magnitud más puentes que la proteína.
+
+    En la primera corrida real, la ubiquitina con sus ~8.500 aguas dio 8.672
+    puentes contando todo el sistema. De esos, apenas medio centenar eran de
+    la proteína: si hubiera perdido toda su estructura secundaria, la caída
+    habría sido indistinguible del ruido del solvente.
+    """
+    import inspect
+
+    firma = inspect.signature(an.calcular_puentes_de_hidrogeno)
+
+    assert firma.parameters["seleccion"].default == an.SELECCION_PROTEINA

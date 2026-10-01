@@ -621,7 +621,18 @@ pdpipe md-analyze --topology md/sistema.gro --trajectory md/produccion.xtc
 | **RMSF** | ¿Dónde está la flexibilidad, residuo por residuo? | (es un perfil, no una serie) |
 | **Radio de giro** | ¿Qué tan compacta está? | Se está desplegando |
 | **SASA** | ¿Cuánta superficie queda expuesta al solvente? | Se está abriendo; acompaña al radio de giro |
-| **Puentes de hidrógeno** | ¿Cuántos hay cuadro a cuadro? | Si *bajan*, se pierde estructura secundaria |
+| **Puentes de hidrógeno** | ¿Cuántos hay **dentro de la proteína**, cuadro a cuadro? | Si *bajan*, se pierde estructura secundaria |
+
+### Los puentes de hidrógeno se cuentan solo en la proteína
+
+En un sistema solvatado el agua aporta órdenes de magnitud más puentes que la proteína.
+Midiendo todo, la ubiquitina con sus ~8.500 aguas da unos **8.672 puentes**, de los
+cuales apenas medio centenar son suyos.
+
+Ese número no sirve para lo que se lo quiere: si la proteína perdiera toda su estructura
+secundaria, la caída de ~50 puentes sería indistinguible del ruido del solvente. Por eso
+el conteo se limita a `protein` por defecto. Con `seleccion="all"` se cuenta el sistema
+entero, que es útil para mirar el agua pero no la proteína.
 
 ### Dos decisiones que conviene conocer
 
