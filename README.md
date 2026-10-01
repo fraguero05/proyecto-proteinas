@@ -472,9 +472,15 @@ lo que no entra en una laptop.
 
 ```bash
 pdpipe simulate --input tests/fixtures/1UBQ.pdb --ns 2
-pdpipe md-analyze --topology data/interim/md_1UBQ/prod.gro \
+pdpipe md-analyze --topology data/interim/md_1UBQ/prod.tpr \
                   --trajectory data/interim/md_1UBQ/prod.xtc
 ```
+
+> **Para analizar, pasá el `.tpr` y no el `.gro`.** El `.gro` tiene solo coordenadas y
+> alcanza para RMSD, RMSF, radio de giro y SASA, pero no para los puentes de hidrógeno:
+> MDAnalysis deduce qué átomos son donantes a partir de las cargas parciales, y las
+> cargas están en el `.tpr`, que es lo que compila `grompp` juntando la topología con el
+> campo de fuerza. `simulate` ya sugiere el comando correcto al terminar.
 
 ### Sin GROMACS: el notebook de Colab
 
