@@ -318,3 +318,47 @@ def test_md_analyze_avisa_de_los_puentes_sin_hidrogenos(cfg):
     )
 
     assert "Advertencia" in resultado.output
+
+
+# ------------------------------------------------- corridas cortadas a la mitad
+
+
+@pytest.mark.parametrize(
+    ("falla", "estado", "texto"),
+    [
+        (KeyboardInterrupt(), "interrumpida", "Ctrl+C"),
+        (RuntimeError("se rompió algo"), "error", "RuntimeError: se rompió algo"),
+    ],
+)
+def test_una_corrida_cortada_deja_su_manifiesto(cfg, config_file, monkeypatch, falla, estado, texto):
+    """Antes, un Ctrl+C o un error no previsto dejaban un run.log vacío y nada más."""
+    from pdpipe.phase4_ml import training
+
+    def romper(**_):
+        raise falla
+
+    monkeypatch.setattr(training, "entrenar_modelos", romper)
+    resultado = runner.invoke(app, [*cfg, "train", "--model", "logistic"])
+    assert resultado.exit_code != 0
+
+    manifiestos = list((config_file.parent / "runs").glob("*/run_manifest.json"))
+    assert len(manifiestos) == 1
+    datos = json.loads(manifiestos[0].read_text(encoding="utf-8"))
+    assert datos["status"] == estado
+    assert texto in datos["error"]
+
+
+def test_un_fetch_cortado_deja_su_manifiesto(cfg, config_file, monkeypatch):
+    """El caso real: un fetch --search largo cortado con Ctrl+C a mitad de camino."""
+    from pdpipe.phase1_data import pipeline as fase1
+
+    def romper(**_):
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(fase1, "fetch", romper)
+    resultado = runner.invoke(app, [*cfg, "fetch", "--pdb-id", "1UBQ"])
+    assert resultado.exit_code != 0
+
+    manifiestos = list((config_file.parent / "runs").glob("*/run_manifest.json"))
+    assert len(manifiestos) == 1
+    assert json.loads(manifiestos[0].read_text(encoding="utf-8"))["status"] == "interrumpida"

@@ -8,8 +8,9 @@ con código de salida 2.
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Annotated, NoReturn, Optional
+from typing import Annotated, Iterator, NoReturn, Optional
 
 import shutil
 
@@ -30,6 +31,31 @@ EXIT_ERROR = 1
 
 console = Console()
 logger = get_logger(__name__)
+
+
+@contextmanager
+def _manifiesto_ante_fallas(manifest: RunManifest, directorio: Path) -> Iterator[None]:
+    """Garantiza que una corrida cortada deje su ``run_manifest.json``.
+
+    Los errores previstos los maneja cada comando con su propio mensaje; esto
+    cubre el resto: un Ctrl+C o una excepción inesperada. Sin esto quedaba la
+    carpeta de la corrida con un ``run.log`` vacío y sin rastro de qué pasó.
+    La excepción se vuelve a lanzar, así que el traceback se sigue viendo.
+    """
+    try:
+        yield
+    except typer.Exit:
+        raise
+    except KeyboardInterrupt:
+        logger.warning("Corrida interrumpida por el usuario")
+        manifest.finish("interrumpida", error="Cortada con Ctrl+C")
+        manifest.save(directorio)
+        raise
+    except Exception as exc:
+        logger.exception("Error inesperado")
+        manifest.finish("error", error=f"{type(exc).__name__}: {exc}")
+        manifest.save(directorio)
+        raise
 
 app = typer.Typer(
     name="pdpipe",
@@ -219,15 +245,41 @@ def fetch(
         bool,
         typer.Option("--force", help="Vuelve a descargar aunque ya esté en caché."),
     ] = False,
+    search: Annotated[
+        Optional[int],
+        typer.Option(
+            "--search",
+            help="Busca en el RCSB con los criterios del config y baja hasta N entradas.",
+        ),
+    ] = None,
 ) -> None:
-    """Descarga estructuras del RCSB PDB y anotaciones de UniProt (Fase 1)."""
+    """Descarga estructuras del RCSB PDB y anotaciones de UniProt (Fase 1).
+
+    Con ``--search N`` consulta la Search API con los criterios de ``data``
+    del config (resolución, organismos, método, longitud) y baja las primeras
+    N entradas que los cumplan. Es la forma de armar un conjunto grande, como
+    el que necesita el dataset de la Fase 4.
+    """
     from pdpipe.phase1_data import PDBIDInvalido
     from pdpipe.phase1_data import pipeline as fase1
 
     cfg = _require_config()
-    if not pdb_id and not uniprot:
-        console.print("[red]Error:[/red] indicá al menos un --pdb-id o un --uniprot.")
+    if not pdb_id and not uniprot and not search:
+        console.print(
+            "[red]Error:[/red] indicá al menos un --pdb-id, un --uniprot o --search N."
+        )
         raise typer.Exit(code=EXIT_ERROR)
+
+    if search:
+        encontrados = _buscar_en_rcsb(cfg, search)
+        if not encontrados:
+            console.print(
+                "[yellow]La búsqueda no devolvió entradas.[/yellow] "
+                "Revisá los criterios de `data` en el config.yaml."
+            )
+            raise typer.Exit(code=EXIT_ERROR)
+        console.print(f"La búsqueda devolvió [green]{len(encontrados)}[/green] entradas.")
+        pdb_id = list(dict.fromkeys([*(pdb_id or []), *encontrados]))
 
     manifest = RunManifest.start(
         command="fetch",
@@ -244,20 +296,21 @@ def fetch(
     if cfg.logging.to_file:
         setup_logging(level=state.log_level, log_file=directorio / "run.log")
 
-    try:
-        resultado = fase1.fetch(
-            config=cfg,
-            pdb_ids=list(pdb_id or []),
-            uniprot_ids=list(uniprot or []),
-            formato=formato,
-            forzar=force,
-            manifest=manifest,
-        )
-    except PDBIDInvalido as exc:
-        console.print(f"[red]Error:[/red] {exc}")
-        manifest.finish("error", error=str(exc))
-        manifest.save(directorio)
-        raise typer.Exit(code=EXIT_ERROR) from exc
+    with _manifiesto_ante_fallas(manifest, directorio):
+        try:
+            resultado = fase1.fetch(
+                config=cfg,
+                pdb_ids=list(pdb_id or []),
+                uniprot_ids=list(uniprot or []),
+                formato=formato,
+                forzar=force,
+                manifest=manifest,
+            )
+        except PDBIDInvalido as exc:
+            console.print(f"[red]Error:[/red] {exc}")
+            manifest.finish("error", error=str(exc))
+            manifest.save(directorio)
+            raise typer.Exit(code=EXIT_ERROR) from exc
 
     manifest.finish("ok")
     manifest.save(directorio)
@@ -279,6 +332,67 @@ def fetch(
 
     if resultado.fallidas:
         raise typer.Exit(code=EXIT_ERROR)
+
+
+#: Identidad de secuencia a la que se agrupa la búsqueda. 30% es el corte
+#: habitual para considerar dos proteínas no redundantes.
+IDENTIDAD_BUSQUEDA = 30
+
+#: Tope de representantes a listar antes de muestrear. La Search API devuelve
+#: en orden alfabético y los códigos PDB son casi cronológicos, así que tomar
+#: los primeros N daría puras estructuras de los años noventa. Se listan todos
+#: los grupos (~21.000, cinco páginas, unos 15 s) y se muestrea de ahí.
+TOPE_CANDIDATOS = 30_000
+
+
+def _buscar_en_rcsb(cfg, limite: int) -> list[str]:
+    """Consulta la Search API del RCSB con los criterios del config.
+
+    Dos cosas que no son obvias y sin las cuales el conjunto no sirve para
+    entrenar nada:
+
+    * **Se agrupa por identidad de secuencia.** Sin eso la búsqueda devuelve
+      decenas de mutantes puntuales de la misma proteína —101M, 103M y 104M
+      son todos mioglobina de cachalote— y el conjunto tiene muchas filas
+      pero casi ninguna diversidad.
+    * **Se muestrea al azar sobre el listado completo.** El orden de la API es
+      alfabético y los códigos PDB son casi cronológicos, así que tomar los
+      primeros N sesga hacia las estructuras más viejas: 500 entradas serían
+      todas de los años noventa. Se listan los ~21.000 grupos del PDB entero y
+      se sortean los que hagan falta. El muestreo usa la semilla del config,
+      así que la selección es reproducible.
+    """
+    import random
+
+    from pdpipe.phase1_data.http_client import ClienteHTTP
+    from pdpipe.phase1_data.rcsb import ClienteRCSB
+
+    rutas = cfg.resolved_paths()
+    http = ClienteHTTP(
+        timeout_s=cfg.data.http.timeout_s,
+        max_retries=cfg.data.http.max_retries,
+        cache_dir=rutas["data_raw"],
+        usar_cache=cfg.data.http.cache,
+    )
+    try:
+        candidatos = ClienteRCSB(http).buscar(
+            resolucion_max=cfg.data.resolution_max,
+            organismos=list(cfg.data.organisms) or None,
+            metodos=[m.value if hasattr(m, "value") else str(m)
+                     for m in cfg.data.experimental_methods] or None,
+            longitud_min=cfg.data.length_min,
+            longitud_max=cfg.data.length_max,
+            limite=TOPE_CANDIDATOS,
+            identidad_max=IDENTIDAD_BUSQUEDA,
+        )
+    finally:
+        http.close()
+
+    if len(candidatos) <= limite:
+        return candidatos
+
+    sorteo = random.Random(cfg.seed)
+    return sorted(sorteo.sample(candidatos, limite))
 
 
 @app.command()
@@ -968,6 +1082,237 @@ def _mostrar_analisis_md(resultado) -> None:
             f"Figuras: [green]{len(resultado.figuras)} PNG en "
             f"{resultado.figuras[0].parent}[/green]"
         )
+
+
+# ---------------------------------------------------------------------------
+# Fase 4 — Modelos de IA
+# ---------------------------------------------------------------------------
+
+
+@app.command()
+def dataset(
+    all_structures: Annotated[
+        bool,
+        typer.Option(
+            "--all",
+            help="Incluir también las estructuras que no pasaron la curación.",
+        ),
+    ] = False,
+    min_length: Annotated[
+        Optional[int],
+        typer.Option("--min-length", help="Descartar cadenas más cortas que N residuos."),
+    ] = None,
+) -> None:
+    """Arma el dataset de estructura secundaria con DSSP (Fase 4).
+
+    Corre DSSP sobre las estructuras curadas en la Fase 1, colapsa los ocho
+    estados a tres, y reparte las proteínas en train/val/test agrupando por
+    identidad de secuencia para que el test no mida memorización.
+    """
+    from pdpipe.phase4_ml.pipeline import ErrorDeDataset, construir_dataset
+
+    cfg = _require_config()
+
+    manifest = RunManifest.start(
+        command="dataset",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
+        params={
+            "solo_curadas": not all_structures,
+            "min_length": min_length if min_length is not None else cfg.data.length_min,
+            "identidad_max": cfg.ml.identity_threshold,
+        },
+    )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    with _manifiesto_ante_fallas(manifest, directorio):
+        try:
+            _, division, resumen = construir_dataset(
+                config=cfg,
+                solo_curadas=not all_structures,
+                longitud_min=min_length,
+                manifest=manifest,
+            )
+        except ErrorDeDataset as exc:
+            console.print(f"[red]Error:[/red] {exc}")
+            manifest.finish("error", error=str(exc))
+            manifest.save(directorio)
+            raise typer.Exit(code=EXIT_ERROR) from exc
+
+    manifest.finish("ok")
+    manifest.save(directorio)
+    _mostrar_dataset(division, resumen)
+    console.print(f"Manifiesto: [green]{directorio / 'run_manifest.json'}[/green]")
+
+
+def _mostrar_dataset(division, resumen: dict) -> None:
+    """Imprime el tamaño del dataset, su composición y los controles."""
+    ficha = Table(title="Dataset de estructura secundaria", show_header=False)
+    ficha.add_column("clave", style="cyan")
+    ficha.add_column("valor")
+    ficha.add_row("Proteínas", str(resumen["n_proteinas"]))
+    ficha.add_row("Residuos", f"{resumen['n_residuos']:,}")
+    ficha.add_row("Grupos de secuencia", str(resumen["n_grupos"]))
+    ficha.add_row("Identidad máxima", f"{resumen['identidad_max']:.0%}")
+    ficha.add_row("Ventana", str(resumen["ventana"]))
+    console.print(ficha)
+
+    tabla = Table(title="Conjuntos")
+    tabla.add_column("conjunto", style="cyan")
+    tabla.add_column("proteínas", justify="right")
+    tabla.add_column("residuos", justify="right")
+    for clase in resumen["clases"]:
+        tabla.add_column(clase, justify="right")
+    for nombre in ("train", "val", "test"):
+        datos = resumen["conjuntos"][nombre]
+        tabla.add_row(
+            nombre,
+            str(datos["n_proteinas"]),
+            f"{datos['n_residuos']:,}",
+            *[f"{datos['composicion'][c]:.1%}" for c in resumen["clases"]],
+        )
+    console.print(tabla)
+
+    mayoritaria = max(resumen["composicion"], key=lambda c: resumen["composicion"][c])
+    console.print(
+        f"[dim]Clase mayoritaria: {mayoritaria} "
+        f"({resumen['composicion'][mayoritaria]:.1%}). Un modelo que prediga "
+        "siempre esa ya acierta esa fracción: es el piso a superar.[/dim]"
+    )
+
+    if resumen["descartadas"]:
+        console.print(
+            f"[yellow]{len(resumen['descartadas'])} estructuras descartadas.[/yellow] "
+            "El detalle está en el JSON del resumen."
+        )
+    if resumen["pares_redundantes"]:
+        console.print(
+            f"[red]Atención:[/red] {len(resumen['pares_redundantes'])} pares "
+            "redundantes entre conjuntos. El Q3 del test va a estar inflado."
+        )
+    else:
+        console.print(
+            "[green]Sin redundancia entre conjuntos[/green] al umbral configurado."
+        )
+
+
+@app.command()
+def train(
+    model: Annotated[
+        Optional[list[str]],
+        typer.Option(
+            "--model",
+            "-m",
+            help="bilstm, logistic o random_forest. Repetible; 'all' entrena los tres. "
+            "Por defecto, ml.model del config.",
+        ),
+    ] = None,
+    epochs: Annotated[
+        Optional[int],
+        typer.Option("--epochs", min=1, help="Pisa ml.epochs del config."),
+    ] = None,
+    no_figures: Annotated[
+        bool,
+        typer.Option("--no-figures", help="No generar las figuras."),
+    ] = False,
+) -> None:
+    """Entrena y evalúa los predictores de estructura secundaria (Fase 4).
+
+    Usa el dataset que dejó `pdpipe dataset`. Todos los modelos pedidos se
+    entrenan sobre el mismo reparto train/val/test, así que sus Q3 son
+    directamente comparables.
+    """
+    from pdpipe.phase4_ml.classifiers import MODELOS, ErrorDeModelo
+    from pdpipe.phase4_ml.pipeline import ErrorDeDataset
+    from pdpipe.phase4_ml.training import entrenar_modelos
+
+    cfg = _require_config()
+
+    pedidos = model or [cfg.ml.model.value]
+    modelos = list(MODELOS) if "all" in pedidos else list(dict.fromkeys(pedidos))
+    desconocidos = [m for m in modelos if m not in MODELOS]
+    if desconocidos:
+        console.print(
+            f"[red]Error:[/red] modelo desconocido: {', '.join(desconocidos)}. "
+            f"Opciones: {', '.join(MODELOS)} o all."
+        )
+        raise typer.Exit(code=EXIT_ERROR)
+
+    manifest = RunManifest.start(
+        command="train",
+        seed=cfg.seed,
+        config=cfg.to_dict(),
+        params={
+            "modelos": modelos,
+            "epochs": epochs if epochs is not None else cfg.ml.epochs,
+        },
+    )
+    directorio = Path(cfg.resolved_paths()["runs"]) / manifest.run_id
+    if cfg.logging.to_file:
+        setup_logging(level=state.log_level, log_file=directorio / "run.log")
+
+    with _manifiesto_ante_fallas(manifest, directorio):
+        try:
+            resultados = entrenar_modelos(
+                config=cfg,
+                modelos=modelos,
+                destino=directorio,
+                epocas=epochs,
+                con_figuras=not no_figures,
+                manifest=manifest,
+            )
+        except (ImportError, ErrorDeDataset, ErrorDeModelo) as exc:
+            console.print(f"[red]Error:[/red] {exc}")
+            manifest.finish("error", error=str(exc))
+            manifest.save(directorio)
+            raise typer.Exit(code=EXIT_ERROR) from exc
+
+    manifest.finish("ok")
+    manifest.save(directorio)
+    _mostrar_entrenamiento(resultados)
+    console.print(f"Modelos, métricas y figuras: [green]{directorio}[/green]")
+
+
+def _mostrar_entrenamiento(resultados) -> None:
+    """Tabla comparativa de los modelos sobre el test."""
+    from pdpipe.phase4_ml.dssp import CLASES_Q3
+    from pdpipe.phase4_ml.metrics import f1_macro
+
+    tabla = Table(title="Estructura secundaria — conjunto de test")
+    tabla.add_column("modelo", style="cyan")
+    tabla.add_column("Q3", justify="right")
+    tabla.add_column("Q3 val", justify="right")
+    for clase in CLASES_Q3:
+        tabla.add_column(f"F1 {clase}", justify="right")
+    tabla.add_column("F1 macro", justify="right")
+    tabla.add_column("época", justify="right")
+    tabla.add_column("tiempo", justify="right")
+
+    for r in resultados:
+        tabla.add_row(
+            r.nombre,
+            f"{r.test.q3:.3f}",
+            f"{r.val.q3:.3f}",
+            *[f"{r.test.f1[c]:.3f}" for c in CLASES_Q3],
+            f"{f1_macro(r.test):.3f}",
+            str(r.historial["mejor_epoca"]) if len(r.historial["epocas"]) > 1 else "—",
+            f"{r.segundos:.0f} s",
+        )
+    console.print(tabla)
+
+    piso = resultados[0].test.q3_base
+    console.print(
+        f"[dim]Piso: predecir siempre la clase mayoritaria del entrenamiento "
+        f"da Q3 = {piso:.3f} en el test.[/dim]"
+    )
+    for r in resultados:
+        if r.test.mejora_sobre_base <= 0.05:
+            console.print(
+                f"[yellow]{r.nombre} apenas supera el piso "
+                f"(+{r.test.mejora_sobre_base:.3f}).[/yellow] No aprendió mucho."
+            )
 
 
 # ---------------------------------------------------------------------------

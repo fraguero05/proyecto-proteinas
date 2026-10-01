@@ -159,7 +159,7 @@ class RunManifest(BaseModel):
     command: str | None = None
     started_at: datetime = Field(default_factory=utc_now)
     finished_at: datetime | None = None
-    status: str = "running"  # running | ok | error
+    status: str = "running"  # running | ok | error | interrumpida
     error: str | None = None
 
     seeds: dict[str, Any] = Field(default_factory=dict)
