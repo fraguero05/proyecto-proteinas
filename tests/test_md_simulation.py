@@ -579,3 +579,44 @@ def test_una_etapa_terminada_gana_sobre_su_checkpoint(cfg, sistema_falso):
 
     assert gmx.llamadas == [], "no debería haber corrido nada"
     assert all(e.reutilizada for e in resultado.etapas)
+
+
+# -------------------------------------------- topología para el análisis
+
+
+def test_prefiere_el_tpr_sobre_el_gro_para_analizar(cfg, sistema_falso):
+    """El `.gro` no trae cargas y sin cargas no hay puentes de hidrógeno.
+
+    Apareció corriendo en Colab: el análisis recibía `prod.gro` y fallaba con
+    "This Universe does not contain charge information". El `.tpr` compila la
+    topología con el campo de fuerza, así que sí las trae.
+    """
+    for nombre in ("em", "nvt", "npt", "prod"):
+        (sistema_falso.directorio / f"{nombre}.gro").write_text("x\n", encoding="utf-8")
+    (sistema_falso.directorio / "prod.tpr").write_text("x\n", encoding="utf-8")
+
+    resultado = simular(cfg, sistema_falso, cliente=_ClienteFalso())
+
+    assert resultado.topologia_para_analisis.name == "prod.tpr"
+
+
+def test_sin_tpr_cae_al_gro(cfg, sistema_falso):
+    """Degradar a RMSD, RMSF, Rg y SASA es mejor que no analizar nada."""
+    for nombre in ("em", "nvt", "npt", "prod"):
+        (sistema_falso.directorio / f"{nombre}.gro").write_text("x\n", encoding="utf-8")
+
+    resultado = simular(cfg, sistema_falso, cliente=_ClienteFalso())
+
+    assert resultado.topologia_para_analisis.name == "prod.gro"
+
+
+def test_sin_etapas_no_hay_topologia():
+    from pdpipe.phase3_md.models import ResultadoSimulacion, SistemaPreparado
+
+    resultado = ResultadoSimulacion(
+        sistema=SistemaPreparado(
+            directorio=Path("x"), estructura=Path("x/s.gro"), topologia=Path("x/t.top")
+        )
+    )
+
+    assert resultado.topologia_para_analisis is None

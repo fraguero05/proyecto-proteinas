@@ -368,3 +368,18 @@ def test_las_figuras_se_nombran_por_la_topologia(cfg, tmp_path: Path):
     nombres = {f.name for f in figuras}
     assert "traj_1UBQ_rmsd.png" in nombres
     assert "traj_1UBQ_rmsf.png" in nombres
+
+
+def test_el_error_de_cargas_explica_que_hay_que_usar_el_tpr():
+    """El mensaje tiene que decir cómo salir del paso, no solo qué falló.
+
+    MDAnalysis dice "This Universe does not contain charge information", que
+    no le sugiere a nadie que el problema es haber pasado el `.gro` en vez del
+    `.tpr`.
+    """
+    universo = an.cargar(AGUAS)
+
+    with pytest.raises(an.ErrorDeAnalisis, match=r"\.tpr"):
+        # Sin selecciones explícitas MDAnalysis intenta deducir los donantes
+        # por las cargas parciales, que un PDB no trae.
+        an.calcular_puentes_de_hidrogeno(universo)

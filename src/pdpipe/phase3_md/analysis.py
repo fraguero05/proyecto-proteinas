@@ -317,10 +317,27 @@ def calcular_puentes_de_hidrogeno(
     if aceptores:
         argumentos["acceptors_sel"] = aceptores
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        analisis = HydrogenBondAnalysis(universo, **argumentos)
-        analisis.run()
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            analisis = HydrogenBondAnalysis(universo, **argumentos)
+            analisis.run()
+    except Exception as exc:  # noqa: BLE001 - MDAnalysis lanza NoDataError y otros
+        if "charge" in str(exc).lower():
+            raise ErrorDeAnalisis(
+                "La topología no trae cargas parciales, y sin ellas MDAnalysis "
+                "no puede deducir qué átomos son donantes.\n\n"
+                "Si la trayectoria viene de GROMACS, pasá el archivo .tpr como "
+                "topología en vez del .gro: el .gro tiene solo coordenadas, "
+                "mientras que el .tpr compila también el campo de fuerza y sus "
+                "cargas.\n\n"
+                "    pdpipe md-analyze --topology md/prod.tpr --trajectory md/prod.xtc\n\n"
+                "La otra salida es indicar las selecciones a mano con los "
+                "parámetros donantes, hidrogenos y aceptores."
+            ) from exc
+        raise ErrorDeAnalisis(
+            f"No se pudieron contar los puentes de hidrógeno: {exc}"
+        ) from exc
 
     conteos = analisis.count_by_time()
     with warnings.catch_warnings():

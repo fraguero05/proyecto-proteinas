@@ -830,9 +830,12 @@ def _mostrar_simulacion(resultado) -> None:
 
     if resultado.trayectoria:
         console.print(f"Trayectoria: [green]{resultado.trayectoria}[/green]")
+        # Se sugiere el .tpr y no el .gro: es el unico que trae las cargas
+        # del campo de fuerza, sin las cuales no se pueden contar puentes.
+        topologia = resultado.topologia_para_analisis or resultado.estructura_final
         console.print(
             "[dim]Analizala con: pdpipe md-analyze --topology "
-            f"{resultado.estructura_final} --trajectory {resultado.trayectoria}[/dim]"
+            f"{topologia} --trajectory {resultado.trayectoria}[/dim]"
         )
 
 

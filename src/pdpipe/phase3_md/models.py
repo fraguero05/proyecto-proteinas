@@ -172,6 +172,10 @@ class EtapaSimulacion(_Base):
     ps_simulados: float = 0.0
     estructura: Path | None = None
     trayectoria: Path | None = None
+    # El .tpr es el unico que trae las cargas del campo de fuerza, y por eso
+    # es la topologia que hay que pasarle al analisis: un .gro tiene solo
+    # coordenadas y sin cargas no se pueden contar puentes de hidrogeno.
+    tpr: Path | None = None
     energia: Path | None = None
     log: Path | None = None
     segundos: float | None = None
@@ -216,6 +220,19 @@ class ResultadoSimulacion(_Base):
     @property
     def duracion_total_s(self) -> float:
         return round(sum(e.segundos or 0.0 for e in self.etapas), 1)
+
+    @property
+    def topologia_para_analisis(self) -> Path | None:
+        """Topologia a pasarle a ``analizar``: el ``.tpr`` si existe.
+
+        El ``.gro`` final alcanza para RMSD, RMSF, radio de giro y SASA, pero
+        no para los puentes de hidrogeno: MDAnalysis deduce los donantes a
+        partir de las cargas parciales, y las cargas estan en el ``.tpr``.
+        """
+        produccion = self.etapas[-1] if self.etapas else None
+        if produccion is None:
+            return None
+        return produccion.tpr or produccion.estructura
 
 
 __all__ = [
